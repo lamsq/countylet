@@ -1,0 +1,113 @@
+
+
+
+:root {
+    --charcoal: #364652;
+    --metal: #1F2C2D;
+    --night: #071108;
+    --onyx: #353937;
+    --gray: #636165;
+    --thistle: #BFB1C1;
+    --pinkgray: #BAB8C4;
+    --gray: #B5BEC6;
+    --blue: #C7DBE6;
+  }
+
+html {
+    width: 80%;
+    
+}
+
+
+header {
+   
+    
+}
+
+body, html {
+    margin:  0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+
+.container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: #071108;
+}
+
+
+.boxes {
+    display: flex; 
+    justify-content: center;
+    
+}
+
+
+.box {
+    width: 200px; 
+    height: 200px; 
+    background-color: #ffffff; 
+    border: 1px solid #ccc; 
+    margin: 10px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+
+    
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    background-color: var(--pinkgray);
+}
+
+.option {
+    margin: 0.5rem 0;
+    padding: 1rem 1.5rem;
+    border-right: 1px solid #ccc; 
+    border-left: 1px solid #ccc;
+    
+}
+
+
+.suboptions  {
+    display: flex;
+    justify-content: center;
+    background-color: var(--blue);
+}
+
+.suboption {
+    margin: 0.5rem 0;
+    padding: 1rem 1.5rem;
+    border-right: 1px solid #ccc; 
+    border-left: 1px solid #ccc;
+    
+}
+
+
+#log_reg {
+    
+    display: flex;
+}
+
+#log_reg a div {
+    text-align: center;
+    padding: 1rem; 
+    border: 1px solid #ccc; 
+    margin:  1rem;
+
+}
+
+#login_suboptions {
+    display: block;
+    padding: 1rem 8rem;
+    
+    
+}
+
+

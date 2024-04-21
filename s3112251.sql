@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 21 2024 г., 20:51
+-- Время создания: Апр 22 2024 г., 01:45
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -84,21 +84,23 @@ CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(75) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `surname` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `email`) VALUES
-(2, 'Kirill', '$2y$10$QvoMtotder8cEcLg0tyNteAWaihK2N2u4F6drEUSXT.tmQw/zsaZu', 'zumw@ro.ru'),
-(4, 'admin', '$2y$10$roAtRIi792TWUP9cpuB/1u/Iws5WhxJbzvcLK1Nb3o5v9XScEC.1S', 'admin@a.com'),
-(5, 'landlord', '$2y$10$uidOpBf4T/zt3/WYLYlzBuDcOMGAzOcj3ZuRJ7/PhlN1JllE62Q5C', 'landlord@a.com'),
-(6, 'tenant', '$2y$10$jY1kIm/30CtlfDVTRAI3uOkyKp1CmJPjfALnbVUoFUt4W5ic4d77C', 'tenant@a.com'),
-(7, 'regtest', '$2y$10$Y.x07RJ.NCX2U73admvIP..V3NqvjDvCcK/YAYx01QcHXZ0T9Jd52', 'reg@test.com'),
-(8, 'awefaefg', '$2y$10$.cEVvUl6cxNl0FOwwHpviO73I7MZTbrExGkErKSoKXQv4033Ff47q', 'asefse@rr'),
-(9, 'wrgerg', '$2y$10$HmNqPyfAJxe7MSgP.XfmP.KIghOfkso0Xros4HWX.lPN/0/3x7chS', 'test@test.ff');
+INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
+(2, 'Kirill', '$2y$10$QvoMtotder8cEcLg0tyNteAWaihK2N2u4F6drEUSXT.tmQw/zsaZu', 'zumw@ro.ru', 'Test'),
+(4, 'admin', '$2y$10$roAtRIi792TWUP9cpuB/1u/Iws5WhxJbzvcLK1Nb3o5v9XScEC.1S', 'admin@a.com', 'Test'),
+(5, 'landlord', '$2y$10$uidOpBf4T/zt3/WYLYlzBuDcOMGAzOcj3ZuRJ7/PhlN1JllE62Q5C', 'landlord@a.com', 'Test'),
+(6, 'tenant', '$2y$10$jY1kIm/30CtlfDVTRAI3uOkyKp1CmJPjfALnbVUoFUt4W5ic4d77C', 'tenant@a.com', 'Test'),
+(7, 'regtest', '$2y$10$Y.x07RJ.NCX2U73admvIP..V3NqvjDvCcK/YAYx01QcHXZ0T9Jd52', 'reg@test.com', 'Test'),
+(8, 'awefaefg', '$2y$10$.cEVvUl6cxNl0FOwwHpviO73I7MZTbrExGkErKSoKXQv4033Ff47q', 'asefse@rr', 'Test'),
+(9, 'wrgerg', '$2y$10$HmNqPyfAJxe7MSgP.XfmP.KIghOfkso0Xros4HWX.lPN/0/3x7chS', 'test@test.ff', 'Test'),
+(10, 'KIRILL', '$2y$10$37ffJdQsssqsGrGXZFA1NOTQaevnZFZcQZ3KOXKIgBX8W8hcb.9SC', 'lamsquirrel75@gmail.com', '');
 
 --
 -- Индексы сохранённых таблиц
@@ -151,7 +153,7 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

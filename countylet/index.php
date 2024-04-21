@@ -15,6 +15,7 @@
         <div class="options">
 
             <?php
+            
 
                $role;
                function sanitized($input) {  
@@ -38,6 +39,7 @@
                         }
                     }
 
+                    //options for different access levels
                     if ($role=="admin"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\" \"><div id=\"option1\" class=\"option\">Landlord options</div></a>";
@@ -67,14 +69,14 @@
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
                 }
-
+                //options for public level
                 else {
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                     echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
                     echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                     echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                     echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
-                    echo "<a href=\"login_page.php\"><div id=\"option5\" class=\"option\">Login/Register</div></a>";
+                    echo "<a href=\"#\" onclick=\"show_login_suboptions()\"><div id=\"option5\" class=\"option\">Login/Register</div></a>";
                 }
 
             ?>
@@ -82,9 +84,10 @@
 
                 <?php 
 
-                    $error = '';
-                    $error_reg='';
-                
+                $error = '';
+                $error_reg='';
+
+                //conditions for different access levels with corresponding suboptions
                 if (isset($_COOKIE['logged_in']) && $role=="admin"){
 
                     echo "<div id=\"home_suboptions\" class=\"suboptions\" hidden>";
@@ -143,27 +146,36 @@
                     echo "</div>";
 
                 }
-
+                //if user isnt logged in
                 else {
 
                     
                         require_once ("../mysql_connect.php");
                         require_once ("session.php");
                         
-                        
+                        //if login button pressed
                         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
-                        
-                            $email = trim($_POST['email']);
-                            $password = trim($_POST['password']);
-                        
-                            // validate if email is empty
-                            if (empty($email)) {
-                                $error .= '<p class="error">Please enter email.</p>';
+
+                            // validate email 
+                            if (isset($_POST['email']) && !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', sanitized($_POST['email']))){
+                                $error.= '<p class="error">Incorrect email format;</p>';
+                            }
+                            else if (empty(sanitized($_POST['email']))) {
+                                $error.= '<p class="error">Please enter email;</p>';
+                            }
+                            else {
+                                $email = htmlentities(sanitized($_POST['email']));
                             }
                         
-                            // validate if password is empty
-                            if (empty($password)) {
-                                $error .= '<p class="error">Please enter your password.</p>';
+                            // validate password
+                            if (isset($_POST['password']) && strlen($_POST['password'])<8){
+                                $error.= '<p class="error">Incorrect password format;</p>';
+                            }
+                            else if (empty(sanitized($_POST['password']))) {
+                                $error.= '<p class="error">Please enter your password;</p>';
+                            }
+                            else {
+                                $password = htmlentities(sanitized($_POST['password']));
                             }
                         
                             if (empty($error)) {
@@ -182,29 +194,55 @@
                                         $_SESSION["userid"] = $row['id'];
                                         $_SESSION["user"] = $row;
                                         $_SESSION["name"] = $row['name'];
-                        
+
+                                        //$_SESSION["surname"] = $row['surname'];
+
                                         setcookie('logged_in', true, time()+30*24*60*60, '/', '', true, true);
                                         setcookie('user_id', $row['id'], time()+30*24*60*60, '/', '', true, true);
                         
-                        
                                         // Redirect the user to welcome page
                                         header("location: index.php");
+
                                         exit;
                                     } else {
-                                        $error .= '<p class="error">The password is not valid.</p>';
+                                        $error.= '<p class="error">The password is not valid;</p>';
                                     }
                                 } else {
-                                    $error .= '<p class="error">No User exist with that email address.</p>';
+                                    $error.= '<p class="error">User is not registered;</p>';
                                 }
-                        
+
                                 $stmt->close();
                             }
+                            
                             
                             mysqli_close($db_connection);
                             
                         }
 
+                        //if register button pressed
                         else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reg'])){
+
+
+
+
+
+                            // validate email 
+                            if (isset($_POST['email']) && !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', sanitized($_POST['email']))){
+                                $error.= '<p class="error">Incorrect email format;</p>';
+                            }
+                            else if (empty(sanitized($_POST['email']))) {
+                                $error.= '<p class="error">Please enter email;</p>';
+                            }
+                            else {
+                                $email = htmlentities(sanitized($_POST['email']));
+                            } 
+
+
+
+
+
+
+                            
 
                             $fullname = trim($_POST['name']);
                             $email = trim($_POST['email']);
@@ -224,7 +262,7 @@
                                 } else {
                                     // Validate password
                                     if (strlen($password ) < 6) {
-                                        $error_reg .= '<p class="error">Password must have atleast 6 characters.</p>';
+                                        $error_reg .= '<p class="error">Password must have at least 6 characters.</p>';
                                     }
                         
                                     // Validate confirm password
@@ -258,147 +296,113 @@
                         
                         
                     
-                    // echo "
-                    // <div id=\"login_suboptions\" class=\"suboptions\" hidden>    
-                    // <div id=\"log_reg\">
-                    //     <div id=\"log\">
-                    //     Log in
-                    //     </div>
-                    //     <div id=\"reg\">
-                    //     Register
-                    //     </div>
-
-                    // </div>
-        
-                    // ";
+                    echo "
 
 
-                    // echo "
-
-                    //         <div id=\"login_form\">
-
-                    //         <form method=\"post\" action=\"";
-                    //         echo $_SERVER['PHP_SELF'];
-                    // echo "
-
-                    //         
-                    //         \">
-                    //     <div class=\"form-group\">
-                    //         <label>Email Address</label>
-                    //         <input type=\"email\" id=\"email_input\" name=\"email\" class=\"form-control\" required autofocus/>
-                    //     </div>    
-                    //     <div class=\"form-group\">
-                    //         <label>Password</label>
-                    //         <input type=\"password\" id=\"password_input\" name=\"password\" class=\"form-control\" required>
-                    //     </div>
-                    
-                    
-                    // ";
-                    // if (!empty($error)) {
-                    //     echo '<div class=" ">' . $error . '</div>';
-                    // }
-
-                    // echo "
-                            
-                            
-                    //         <div class=\"form-group\">
-                    //         <input type=\"submit\" name=\"submit\" class=\"btn btn-primary\" value=\"Log in\">
-                    //         </div>";
-                    
-                     
-
-                    // echo "
-                    //     <p>Don't have an account? <a href=\"register.php\">Register here</a>.</p>
-                    // </form>";
-
-                    // echo "</div>";
-
-
-
-                }
-                
-                ?>
-
-
-
-
-
-                    <div id="login_suboptions" class="suboptions"   >    
-                    <div id="log_reg">
-                        <a id="log" href=""><div id="">  Log in   </div></a>
-                        <a id="reg" href=""><div id="">    Register   </div></a>
+                    <div id=\"login_suboptions\" class=\"suboptions\"   hidden>    
+                    <div id=\"log_reg\">
+                        <a id=\"log\" href=\"\"><div id=\"\">  Log in   </div></a>
+                        <a id=\"reg\" href=\"\"><div id=\"\">    Register   </div></a>
 
                     </div>
         
-                    <div id="login_form" >
+                    <div id=\"login_form\" >
 
-                        <form method="post" action=" <?php echo $_SERVER['PHP_SELF'] ?> ">
-                        <div class="form-group">
+                        <form method=\"post\" novalidate action=\""; 
+
+                        echo htmlspecialchars($_SERVER["PHP_SELF"]);
+                        
+                        echo "\">
+                        <div class=\"form-group\">
                             <label>Email Address</label>
-                            <input type="email" id="email_input" name="email" class="form-control" required autofocus/>
+                            <input type=\"email\" id=\"email_input\" name=\"email\" class=\"form-control\"  value=\"";
+                            
+                            if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']);
+
+                        echo "\" autofocus/>
                         </div> 
                            
-                        <div class="form-group">
+                        <div class=\"form-group\">
                             <label>Password</label>
-                            <input type="password" id="password_input" name="password" class="form-control" required>
-                        </div>
+                            <input type=\"password\" id=\"password_input\" name=\"password\" class=\"form-control\" >
+                        </div>";
                     
-                    
-                    
-                        <?php if (!empty($error)) {
-                            echo '<div class=" ">' . $error . '</div>';
-                        } ?>
-
-                        <div class="form-group">
-                        <input type="submit" name="login" class="btn btn-primary" value="Log in">
+                        if (!empty($error)) { echo '<div class=" ">' . $error . '</div>'; } 
+                        
+                        echo"
+                        <div class=\"form-group\">
+                        <input type=\"submit\" name=\"login\" class=\"btn btn-primary\" value=\"Log in\">
                         </div>
                     
                     </form>
-
                     </div>
 
 
+                    <div id=\"registration_form\" hidden>
 
+                        <form method=\"post\" novalidate action=\"";                       
+                        echo $_SERVER['PHP_SELF'];                         
+                        echo "\">
 
-                    <div id="registration_form" hidden>
+                            <div class=\"form-group\">
+                                <label>Name</label>
+                                <input type=\"text\" name=\"name\" class=\"form-control\"  value=\"";                                
+                                if(isset($_POST['name'])) echo htmlspecialchars($_POST['name']);                                
+                            echo "\">
+                            </div>   
 
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>    
-                            <div class="form-group">
+                            <div class=\"form-group\">
+                                <label>Surname</label>
+                                <input type=\"text\" name=\"surname\" class=\"form-control\"  value=\"";                                
+                                if(isset($_POST['surname'])) echo htmlspecialchars($_POST['surname']);                                
+                            echo "\">
+                            </div> 
+                            
+                            
+                            <div class=\"form-group\">
                                 <label>Email Address</label>
-                                <input type="email" name="email" class="form-control" required />
+                                <input type=\"email\" name=\"email\" class=\"form-control\" value=\"";                                
+                                if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']);                                
+                            echo "    \" >
                             </div>    
-                            <div class="form-group">
+
+
+                            <div class=\"form-group\">
                                 <label>Password</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type=\"password\" name=\"password\" class=\"form-control\" >
                             </div>
-                            <div class="form-group">
+
+
+                            <div class=\"form-group\">
                                 <label>Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control" required>
-                            </div>
+                                <input type=\"password\" name=\"confirm_password\" class=\"form-control\" >
+                            </div>";
 
-                            <?php if (!empty($error_reg)) {
+                            if (!empty($error_reg)) {
                                 echo '<div class=" ">' . $error_reg . '</div>';
-                            } ?>
+                            } 
 
-                            <div class="form-group">
-                                <input type="submit" name="reg" class="btn btn-primary" value="Register">
+                            echo "
+                            <div class=\"form-group\">
+                                <input type=\"submit\" name=\"reg\" class=\"btn btn-primary\" value=\"Register\">
                             </div>
                             
                         </form>
 
                     </div>
+                    
+                    ";
 
-            
+                }
+                
+                ?>
+
         
     </header>
 
     <main>
 
-        <!-- bootstrap container -->
+        <!-- Title and description -->
         <div class="">
             <!-- bootstrap form-group -->
             <div class="form-group mx-auto col-md-6 pt-4 text-center">
@@ -408,6 +412,7 @@
             </div>
         </div>
 
+        <!-- content -->
         <div class="boxes">
                 
                 <div class="box">
@@ -427,7 +432,7 @@
     </main>
 
 
-    <?php
+    <?php //scripts to show/hide suboptions when user hovers header options
 
         if (isset($_COOKIE['logged_in']) && $role=="admin"){
             echo "
@@ -586,42 +591,14 @@
         }
         else {
 
-            echo "
 
-                <script>
-                let login = document.getElementById('option5');
-                let login_sub = document.getElementById('login_suboptions');
+        }
 
-                let array =[login_sub];
 
-                function show(element) {
-                    clearTimeout(element.timeoutId);
-                    for (let i = 0; i < array.length; i++) {
-                        hideNow(array[i]);
-                    }
-                    element.removeAttribute('hidden');
-                }
-                
-                function hide(element) {
-                    element.timeoutId = setTimeout(() => {
-                        element.setAttribute('hidden', true);
-                    }, 500);
-                }
-
-                function hideNow(element) {
-                    clearTimeout(element.timeoutId);
-                    element.setAttribute('hidden', true);
-                }
-
-                login.addEventListener('mouseover', () => {show(login_sub); });
-                login.addEventListener('mouseout', () => { hide(login_sub);  });
-                login_sub.addEventListener('mouseover', () => {show(login_sub);});
-                login_sub.addEventListener('mouseout', () => { hide(login_sub); });
-
-                </script>
-            
-            ";
-
+        if (!empty($error)){
+            echo "<script>
+            document.getElementById('login_suboptions').removeAttribute('hidden'); // Hide the suboptions
+            </script>";
         }
     
     ?>
@@ -647,8 +624,6 @@
                 registration_form.removeAttribute('hidden');
             }
             
-            
-            
             log_link.addEventListener('click', function(event) {
                 event.preventDefault(); 
                 show_log(); 
@@ -658,8 +633,21 @@
                 event.preventDefault(); 
                 show_reg(); 
             });
+
+
+            function show_login_suboptions() {
+                let login_suboptions = document.getElementById('login_suboptions');
+                
+                // Toggle visibility of login_suboptions
+                if (!login_suboptions.hasAttribute("hidden")) {                    
+                    login_suboptions.setAttribute('hidden', true); // Show the suboptions
+                } else {                    
+                    login_suboptions.removeAttribute('hidden'); // Hide the suboptions
+                }
+            }
         
-    </script>
+        </script>
+
 
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 21 2024 г., 03:52
+-- Время создания: Апр 21 2024 г., 20:44
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- База данных: `s3112251`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `inventory_type` varchar(25) NOT NULL,
+  `id` int(11) NOT NULL,
+  `model_num` varchar(25) NOT NULL,
+  `serial_num` varchar(25) NOT NULL,
+  `warranty_due` date NOT NULL,
+  `property_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `property`
+--
+
+CREATE TABLE `property` (
+  `type` varchar(20) NOT NULL,
+  `bedrooms` int(2) NOT NULL,
+  `description` varchar(300) NOT NULL,
+  `photos` varchar(50) NOT NULL,
+  `property_id` int(11) NOT NULL,
+  `owner_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -72,6 +102,20 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`) VALUES
 --
 
 --
+-- Индексы таблицы `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `property_id` (`property_id`);
+
+--
+-- Индексы таблицы `property`
+--
+ALTER TABLE `property`
+  ADD PRIMARY KEY (`property_id`),
+  ADD KEY `owner_id` (`owner_id`);
+
+--
 -- Индексы таблицы `roles`
 --
 ALTER TABLE `roles`
@@ -89,6 +133,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `property`
+--
+ALTER TABLE `property`
+  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
@@ -97,6 +153,18 @@ ALTER TABLE `users`
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `inventory`
+--
+ALTER TABLE `inventory`
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `property`
+--
+ALTER TABLE `property`
+  ADD CONSTRAINT `property_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `roles`

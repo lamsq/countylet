@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 21 2024 г., 20:44
+-- Время создания: Апр 21 2024 г., 20:51
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -48,7 +48,10 @@ CREATE TABLE `property` (
   `description` varchar(300) NOT NULL,
   `photos` varchar(50) NOT NULL,
   `property_id` int(11) NOT NULL,
-  `owner_id` int(11) UNSIGNED NOT NULL
+  `owner_id` int(11) UNSIGNED NOT NULL,
+  `mon_rent` int(15) NOT NULL,
+  `eircode` varchar(10) NOT NULL,
+  `address` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 22 2024 г., 01:45
+-- Время создания: Апр 22 2024 г., 13:38
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- База данных: `s3112251`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `contracts`
+--
+
+CREATE TABLE `contracts` (
+  `tenant_id` int(11) UNSIGNED NOT NULL,
+  `property_id` int(11) NOT NULL,
+  `fee` int(50) NOT NULL,
+  `tenancy_length` int(15) NOT NULL,
+  `start` date NOT NULL,
+  `end` date NOT NULL,
+  `paid` int(30) NOT NULL,
+  `owed` int(30) NOT NULL,
+  `contract` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -107,6 +125,13 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 --
 
 --
+-- Индексы таблицы `contracts`
+--
+ALTER TABLE `contracts`
+  ADD KEY `property_id` (`property_id`),
+  ADD KEY `tenant_id` (`tenant_id`);
+
+--
 -- Индексы таблицы `inventory`
 --
 ALTER TABLE `inventory`
@@ -158,6 +183,13 @@ ALTER TABLE `users`
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `contracts`
+--
+ALTER TABLE `contracts`
+  ADD CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `inventory`

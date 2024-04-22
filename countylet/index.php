@@ -86,7 +86,7 @@
 
                 $error = '';
                 $error_reg='';
-                $user_isreg ='';
+                $reg_msg ='';
 
                 //conditions for different access levels with corresponding suboptions
                 if (isset($_COOKIE['logged_in']) && $role=="admin"){
@@ -289,6 +289,17 @@
                                 }
                             } 
 
+
+                            if(isset($_POST['tenant']) && !empty($_POST['tenant'])){    
+                                $user_role = 'tenant';
+                            }
+                            else if (isset($_POST['landlord']) && !empty($_POST['landlord'])){
+                                $user_role = "landlord";
+                            }
+                            else {
+                                $error_reg.='<p class="error">Choose user type;</p>';
+                            }
+
                             
 
                             if(empty($error_reg)){
@@ -322,6 +333,7 @@
                                         $surname = mysqli_real_escape_string($db_connection, $surname);
                                         $email = mysqli_real_escape_string($db_connection, $email);
                                         $password_hash = mysqli_real_escape_string($db_connection, $password_hash);
+                                        $user_role = mysqli_real_escape_string($db_connection, $user_role);
                                         
                                         //mysql statement
                                         $add_user_statement = "INSERT INTO users (name, surname, email, password) VALUES ('$name', '$surname', '$email', '$password_hash')";
@@ -329,15 +341,41 @@
                                         $result = mysqli_query($db_connection, $add_user_statement); //passes the statement
 
                                         if ($result) { //if user was registered
+
+                                            require_once '../mysql_connect.php';   //requires the connection script
+
+                                            $query = "SELECT id FROM users WHERE email='$email'"; //mysql statement to check the user data
+                                            $result = mysqli_query($db_connection, $query);
                                             
-                                            echo "<div class=\"\"><h5>The user ".$name." ".$surname." was registered;</h5></div>"; 
-                                            
+                                            if($result){
+
+                                                $user_id = (mysqli_fetch_assoc($result))['id'];
+
+                                                $add_user_role = "INSERT INTO roles (user_id, user_role) VALUES ('$user_id', ' $user_role')";
+
+                                                $result = mysqli_query($db_connection, $add_user_role); //passes the statement
+
+                                                if ($result){
+                                                    echo "<div class=\"\"><h5>The user ".$name." ".$surname." was registered as ".$user_role.";</h5></div>"; 
+                                                }
+                                                else {
+                                                    echo "Something went wrong;</br>Error adding user: ".mysqli_error($db_connection);
+                                                }
+
+                                            }
+
+                                            else {
+                                                echo "Something went wrong;</br>Error adding user: ".mysqli_error($db_connection);
+                                            }
+
+
+
                                         } else {
                                             echo "Error adding user: ".mysqli_error($db_connection);
                                         }
 
                                         // Free memory and close result object
-                                        //mysqli_free_result($result); 
+                                        mysqli_free_result($result); 
                                     }
                                     
                                     } else { //connection error
@@ -442,10 +480,26 @@
                             <div class=\"form-group\">
                                 <label>Confirm Password</label>
                                 <input type=\"password\" name=\"confirm_password\" class=\"form-control\" >
-                            </div>";
+                            </div>
+                            
+                            <div id=\"choose_role\" class=\"form-group\">
+
+                                I am a:</br>
+                                <input type=\"radio\" id=\"tenant\" class=\"\" name=\"tenant\" value=\"tenant\">
+                                <label for=\"html\">Tenant</label><br>
+                                <input type=\"radio\" id=\"landlord\" class=\"\" name=\"landlord\" value=\"landlord\">
+                                <label for=\"html\">Landlord</label><br>
+
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            ";
 
                             if (!empty($error_reg)) {
-                                echo '<div class=" ">' . $error_reg . '</div>';
+                                echo '<div class="error">' . $error_reg . '</div>';
                             } 
 
                             echo "

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 22 2024 г., 14:57
+-- Время создания: Апр 22 2024 г., 16:53
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -90,7 +90,9 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (4, 'admin'),
 (5, 'landlord'),
-(6, 'tenant');
+(6, 'tenant'),
+(15, ' tenant'),
+(16, ' landlord');
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,11 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (9, 'wrgerg', '$2y$10$HmNqPyfAJxe7MSgP.XfmP.KIghOfkso0Xros4HWX.lPN/0/3x7chS', 'test@test.ff', 'Test'),
 (10, 'KIRILL', '$2y$10$37ffJdQsssqsGrGXZFA1NOTQaevnZFZcQZ3KOXKIgBX8W8hcb.9SC', 'lamsquirrel75@gmail.com', ''),
 (11, 'KIRILL', '$2y$10$.P9Ui5NNKPTYmodUp.r3sejvPlyWBqRGUV.qH4Tl3WfMYiW.NOI6K', 'test@t.est', 'SMIRNOV'),
-(12, 'ad', '$2y$10$MHY4pNRJSuKJ0ilUAkp3F.KrsBiZvySjg.TWhtxiOIadCd10rhXCi', 'test@rr.tt', 'awd');
+(12, 'ad', '$2y$10$MHY4pNRJSuKJ0ilUAkp3F.KrsBiZvySjg.TWhtxiOIadCd10rhXCi', 'test@rr.tt', 'awd'),
+(13, 'test', '$2y$10$vF8gYbcfgXQZpvxUg82nsOPinYdbBvea78y3Yaf0RH8Li8h6JN.mW', 'testreg@reg.oo', 'reg'),
+(14, 'asdad', '$2y$10$1Uk6zjCEutpekLL2gO8JK.4rJBTR/gtUeQOKoDjqjDiTgFGUozLm6', 'testreg@rr.rr', 'addc'),
+(15, 'awd', '$2y$10$nDX2QpUkbz3BfGfO7Z8UouJjfftYkDFlLPOpw07Wfu64Bv0VUJLDi', 'testreg@gg.gg', 'awd'),
+(16, 'asf', '$2y$10$D1ux9xr4A5tsjz6geNiav.leHfUlBoQ63XIUqzFlsm4gK8LkLSmsa', 'test@ee.ee', 'WRF');
 
 --
 -- Индексы сохранённых таблиц
@@ -180,7 +186,7 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

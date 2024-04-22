@@ -86,6 +86,7 @@
 
                 $error = '';
                 $error_reg='';
+                $user_isreg ='';
 
                 //conditions for different access levels with corresponding suboptions
                 if (isset($_COOKIE['logged_in']) && $role=="admin"){
@@ -225,72 +226,137 @@
 
 
 
-
-                            // validate email 
-                            if (isset($_POST['email']) && !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', sanitized($_POST['email']))){
-                                $error.= '<p class="error">Incorrect email format;</p>';
+                            // validate name 
+                            if (isset($_POST['name']) && preg_match('/[a-zA-Z]+(?:[-\s][a-zA-Z]+)*/', ($_POST['name']))){
+                                $name = htmlentities(sanitized($_POST['name']));
                             }
-                            else if (empty(sanitized($_POST['email']))) {
-                                $error.= '<p class="error">Please enter email;</p>';
+                            else if (empty($_POST['name'])) {
+                                $error_reg.= '<p class="error">Enter your name;</p>';
                             }
                             else {
-                                $email = htmlentities(sanitized($_POST['email']));
+                                $error_reg.= '<p class="error">Incorrect name;</p>';
+                            } 
+
+                            // validate surname 
+                            if (isset($_POST['surname']) && preg_match('/[a-zA-Z]+(?:[-\s][a-zA-Z]+)*/', ($_POST['surname']))){
+                                $surname = htmlentities(sanitized($_POST['surname']));
+                            }
+                            else if (empty(($_POST['surname']))) {
+                                $error_reg.= '<p class="error">Enter your surname;</p>';
+                            }
+                            else {
+                                $error_reg.= '<p class="error">Incorrect surname;</p>';
                             } 
 
 
-
-
-
-
-                            
-
-                            $fullname = trim($_POST['name']);
-                            $email = trim($_POST['email']);
-                            $password = trim($_POST['password']);
-                            $confirm_password = trim($_POST["confirm_password"]);
-                            $password_hash = password_hash($password, PASSWORD_BCRYPT);
-                            $insertQuery = null;
-                            
-                            if($query = $db_connection->prepare("SELECT * FROM users WHERE email = ?")) {
-                                // Bind parameters (s = string, i = int), username is a string so use "s"
-                                $query->bind_param('s', $email);
-                                $query->execute();
-                                // Store the result so we can check if the account exists in the database.
-                                $query->store_result();
-                                if ($query->num_rows > 0) {
-                                    $error_reg .= '<p class="error">The email address is already registered!</p>';
-                                } else {
-                                    // Validate password
-                                    if (strlen($password ) < 6) {
-                                        $error_reg .= '<p class="error">Password must have at least 6 characters.</p>';
-                                    }
-                        
-                                    // Validate confirm password
-                                    if (empty($confirm_password)) {
-                                        $error_reg .= '<p class="error">Please enter confirm password.</p>';
-                                    } else {
-                                        if (empty($error_reg) && ($password != $confirm_password)) {
-                                            $error_reg .= '<p class="error">Password did not match.</p>';
-                                        }
-                                    }
-                                    if (empty($error_reg) ) {
-                                        $insertQuery = $db_connection->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?);");
-                                        $insertQuery->bind_param("sss", $fullname, $email, $password_hash);
-                                        $result = $insertQuery->execute();
-                                        var_dump($result); // for debugging
-                                        if ($result) {
-                                            $success = '<p class="success">Your registration was successful, please login to continue!</p>';
-                                        } else {
-                                            $error_reg .= '<p class="error">Something went wrong: '.$insertQuery->error_reg.'</p>';
-                                        }
-                                    }
-                                }
-                                $query->close();
+                            // validate email 
+                            if (isset($_POST['email']) && preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', ($_POST['email']))){
+                                $email = htmlentities(sanitized($_POST['email']));
                             }
-                            // Close DB connection
-                            mysqli_close($db_connection);
+                            else if (empty($_POST['email'])) {
+                                $error_reg.= '<p class="error">Enter email;</p>';
+                            }
+                            else {
+                                $error_reg.= '<p class="error">Incorrect email format;</p>';
+                            } 
 
-                        }
+
+                            // validate password 
+                            if (strlen(($_POST['password'])<8 && strlen(($_POST['password'])>0))){
+                                $error_reg.= '<p class="error">Password is too short;</p>';
+                            }
+                            else if (!empty($_POST['password']) && !preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[*.,!_\-()a-zA-Z\d]+$/', ($_POST['password']))){
+                                $error_reg.= '<p class="error">Incorrect password format;</p>';
+                            }
+                            else if (strlen(($_POST['password'])<8 && strlen(($_POST['password'])>0))){
+                                $error_reg.= '<p class="error">Password is too short;</p>';
+                            }
+                            else if (empty(($_POST['password']))) {
+                                $error_reg.= '<p class="error">Enter password;</p>';
+                            }
+                            else {
+                                
+                                $password = htmlentities(sanitized($_POST['password']));
+                                if($password==htmlentities(sanitized($_POST['confirm_password'])) && !empty($_POST['confirm_password'])){
+                                    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+                                    
+                                }
+                                else if (empty($_POST['confirm_password'])){
+                                    $error_reg.='<p class="error">Password does not match the confirmation;</p>';
+                                }
+                                else {
+                                    $error_reg.='<p class="error">Confirm the password;</p>';
+                                }
+                            } 
+
+                            
+
+                            if(empty($error_reg)){
+
+                                $userFound = false; //user found flag
+                                $userDBId = 0; //user id
+
+                                require_once '../mysql_connect.php';   //requires the connection script
+
+                                $query = "SELECT * FROM users"; //mysql statement to check the user data
+                                $result = mysqli_query($db_connection, $query);
+
+                                if($result){ //if there are results
+                                    while($row = mysqli_fetch_assoc($result)){ //loop through the data
+                                        
+                                        if(str_contains(implode($row), $email) ){ //if user exists in the db
+                                            //prints the messages 
+                                            
+                                            echo " <div class=\"\"><h5>User with ".$email." email is already registered</h5></div>"  ;  
+                                            //toggle the flag
+                                            $userFound = true;
+                                            $userDBId = $row['id'];  //sets user id to add the appliance
+                                            break; //exits the loop
+                                        }
+                                        
+                                    }
+                                    if (!$userFound){ //if user was not found
+
+                                        //prepares data for mysql statement
+                                        $name = mysqli_real_escape_string($db_connection, $name);
+                                        $surname = mysqli_real_escape_string($db_connection, $surname);
+                                        $email = mysqli_real_escape_string($db_connection, $email);
+                                        $password_hash = mysqli_real_escape_string($db_connection, $password_hash);
+                                        
+                                        //mysql statement
+                                        $add_user_statement = "INSERT INTO users (name, surname, email, password) VALUES ('$name', '$surname', '$email', '$password_hash')";
+
+                                        $result = mysqli_query($db_connection, $add_user_statement); //passes the statement
+
+                                        if ($result) { //if user was registered
+                                            
+                                            echo "<div class=\"\"><h5>The user ".$name." ".$surname." was registered;</h5></div>"; 
+                                            
+                                        } else {
+                                            echo "Error adding user: ".mysqli_error($db_connection);
+                                        }
+
+                                        // Free memory and close result object
+                                        //mysqli_free_result($result); 
+                                    }
+                                    
+                                    } else { //connection error
+                                        echo "<div class=\"\">";
+                                        echo "<h5>Something went wrong, try again;</h5>";
+                                        echo "</div>";
+                                    }
+
+
+                                    }
+                                
+                                    
+                                    
+                                    mysqli_close($db_connection);
+
+
+                            }
+                            
+                            
 
 
                         
@@ -301,8 +367,8 @@
 
                     <div id=\"login_suboptions\" class=\"suboptions\"   hidden>    
                     <div id=\"log_reg\">
-                        <a id=\"log\" href=\"\"><div id=\"\">  Log in   </div></a>
-                        <a id=\"reg\" href=\"\"><div id=\"\">    Register   </div></a>
+                        <a id=\"log\" onclick=\"show_log()\" href=\"#\"><div id=\"\">  Log in   </div></a>
+                        <a id=\"reg\" onclick=\"show_reg()\" href=\"#\"><div id=\"\">    Register   </div></a>
 
                     </div>
         
@@ -331,7 +397,7 @@
                         
                         echo"
                         <div class=\"form-group\">
-                        <input type=\"submit\" name=\"login\" class=\"btn btn-primary\" value=\"Log in\">
+                        <input type=\"submit\" name=\"login\"  class=\"btn btn-primary\" value=\"Log in\">
                         </div>
                     
                     </form>
@@ -591,15 +657,53 @@
         }
         else {
 
-
-        }
-
-
-        if (!empty($error)){
             echo "<script>
-            document.getElementById('login_suboptions').removeAttribute('hidden'); // Hide the suboptions
+            function show_login_suboptions() {
+                let login_suboptions = document.getElementById('login_suboptions');
+                
+                if (!login_suboptions.hasAttribute('hidden')) {                    
+                    login_suboptions.setAttribute('hidden', true); 
+                } else {                    
+                    login_suboptions.removeAttribute('hidden'); 
+                }
+            }
+
+
+            
+
             </script>";
+
+            
+            if (!empty($error)){
+                echo "<script>
+                document.getElementById('login_suboptions').removeAttribute('hidden'); 
+                </script>";
+            }
+            else if (!empty($error_reg)){
+                echo "
+                <script>
+                
+                    let login_suboptions = document.getElementById('login_suboptions');
+                    let login_form = document.getElementById('login_form');
+                    let reg_form = document.getElementById('registration_form');
+                                 
+                    login_suboptions.removeAttribute('hidden'); 
+                    login_form.setAttribute('hidden', true);
+                    reg_form.removeAttribute('hidden');
+
+
+                    
+    
+                </script>
+                
+                ";
+            }
+
+
         }
+
+
+        
     
     ?>
 
@@ -624,28 +728,7 @@
                 registration_form.removeAttribute('hidden');
             }
             
-            log_link.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                show_log(); 
-            });
             
-            reg_link.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                show_reg(); 
-            });
-
-
-            function show_login_suboptions() {
-                let login_suboptions = document.getElementById('login_suboptions');
-                
-                // Toggle visibility of login_suboptions
-                if (!login_suboptions.hasAttribute("hidden")) {                    
-                    login_suboptions.setAttribute('hidden', true); // Show the suboptions
-                } else {                    
-                    login_suboptions.removeAttribute('hidden'); // Hide the suboptions
-                }
-            }
-        
         </script>
 
 

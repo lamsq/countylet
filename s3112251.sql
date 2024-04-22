@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 22 2024 г., 13:38
+-- Время создания: Апр 22 2024 г., 14:57
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -118,7 +118,9 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (7, 'regtest', '$2y$10$Y.x07RJ.NCX2U73admvIP..V3NqvjDvCcK/YAYx01QcHXZ0T9Jd52', 'reg@test.com', 'Test'),
 (8, 'awefaefg', '$2y$10$.cEVvUl6cxNl0FOwwHpviO73I7MZTbrExGkErKSoKXQv4033Ff47q', 'asefse@rr', 'Test'),
 (9, 'wrgerg', '$2y$10$HmNqPyfAJxe7MSgP.XfmP.KIghOfkso0Xros4HWX.lPN/0/3x7chS', 'test@test.ff', 'Test'),
-(10, 'KIRILL', '$2y$10$37ffJdQsssqsGrGXZFA1NOTQaevnZFZcQZ3KOXKIgBX8W8hcb.9SC', 'lamsquirrel75@gmail.com', '');
+(10, 'KIRILL', '$2y$10$37ffJdQsssqsGrGXZFA1NOTQaevnZFZcQZ3KOXKIgBX8W8hcb.9SC', 'lamsquirrel75@gmail.com', ''),
+(11, 'KIRILL', '$2y$10$.P9Ui5NNKPTYmodUp.r3sejvPlyWBqRGUV.qH4Tl3WfMYiW.NOI6K', 'test@t.est', 'SMIRNOV'),
+(12, 'ad', '$2y$10$MHY4pNRJSuKJ0ilUAkp3F.KrsBiZvySjg.TWhtxiOIadCd10rhXCi', 'test@rr.tt', 'awd');
 
 --
 -- Индексы сохранённых таблиц
@@ -178,7 +180,7 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

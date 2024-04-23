@@ -16,7 +16,7 @@
 
             <?php
             
-
+                $msg_reg = "";
                $role;
                function sanitized($input) {  
                 $input = strip_tags($input); //strip tags
@@ -49,6 +49,8 @@
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option7\" class=\"option\">Log out</div></a>";
+                        
+
                     }
                     else if ($role=="landlord"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
@@ -81,6 +83,29 @@
 
             ?>
         </div>
+
+        <div id="msg" hidden>
+                <div >
+                    <?php
+                         
+                        if(isset($_COOKIE['loggedin_msg'])){
+                            echo $_COOKIE['loggedin_msg'];
+                        }
+                        else if(isset($_COOKIE['loggedout_msg'])){
+                            echo "Successfully logged out";
+                        }
+                        else if(isset($_COOKIE['registered'])){
+                            echo $_COOKIE['registered'];
+                        }
+                        else if(isset($_COOKIE['existed'])){
+                           
+                            echo $_COOKIE['existed'];
+                        }
+
+
+                    ?>
+                </div>
+                </div> 
 
                 <?php 
 
@@ -159,10 +184,10 @@
 
                             // validate email 
                             if (isset($_POST['email']) && !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', sanitized($_POST['email']))){
-                                $error.= '<p class="error">Incorrect email format;</p>';
+                                $error.= '<p class="">Incorrect email format;</p>';
                             }
                             else if (empty(sanitized($_POST['email']))) {
-                                $error.= '<p class="error">Please enter email;</p>';
+                                $error.= '<p class="">Please enter email;</p>';
                             }
                             else {
                                 $email = htmlentities(sanitized($_POST['email']));
@@ -170,10 +195,10 @@
                         
                             // validate password
                             if (isset($_POST['password']) && strlen($_POST['password'])<8){
-                                $error.= '<p class="error">Incorrect password format;</p>';
+                                $error.= '<p class="">Incorrect password format;</p>';
                             }
                             else if (empty(sanitized($_POST['password']))) {
-                                $error.= '<p class="error">Please enter your password;</p>';
+                                $error.= '<p class="">Please enter your password;</p>';
                             }
                             else {
                                 $password = htmlentities(sanitized($_POST['password']));
@@ -192,29 +217,28 @@
                         
                                     // verify the password
                                     if (password_verify($password, $row['password'])) {
-                                        $_SESSION["userid"] = $row['id'];
+                                        $_SESSION["user_id"] = $row['id'];
                                         $_SESSION["user"] = $row;
                                         $_SESSION["name"] = $row['name'];
-
-                                        //$_SESSION["surname"] = $row['surname'];
+                                        $_SESSION["surname"] = $row['surname'];
 
                                         setcookie('logged_in', true, time()+30*24*60*60, '/', '', true, true);
                                         setcookie('user_id', $row['id'], time()+30*24*60*60, '/', '', true, true);
+                                        setcookie('loggedin_msg', "Successfully logged in", time()+3, '/', '', true, true);
                         
                                         // Redirect the user to welcome page
                                         header("location: index.php");
 
                                         exit;
                                     } else {
-                                        $error.= '<p class="error">The password is not valid;</p>';
+                                        $error.= '<p class="">The password is not valid;</p>';
                                     }
                                 } else {
-                                    $error.= '<p class="error">User is not registered;</p>';
+                                    $error.= '<p class="">User is not registered;</p>';
                                 }
 
                                 $stmt->close();
                             }
-                            
                             
                             mysqli_close($db_connection);
                             
@@ -224,17 +248,15 @@
                         else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reg'])){
 
 
-
-
                             // validate name 
                             if (isset($_POST['name']) && preg_match('/[a-zA-Z]+(?:[-\s][a-zA-Z]+)*/', ($_POST['name']))){
                                 $name = htmlentities(sanitized($_POST['name']));
                             }
                             else if (empty($_POST['name'])) {
-                                $error_reg.= '<p class="error">Enter your name;</p>';
+                                $error_reg.= '<p class="">Enter your name;</p>';
                             }
                             else {
-                                $error_reg.= '<p class="error">Incorrect name;</p>';
+                                $error_reg.= '<p class="">Incorrect name;</p>';
                             } 
 
                             // validate surname 
@@ -242,10 +264,10 @@
                                 $surname = htmlentities(sanitized($_POST['surname']));
                             }
                             else if (empty(($_POST['surname']))) {
-                                $error_reg.= '<p class="error">Enter your surname;</p>';
+                                $error_reg.= '<p class="">Enter your surname;</p>';
                             }
                             else {
-                                $error_reg.= '<p class="error">Incorrect surname;</p>';
+                                $error_reg.= '<p class="">Incorrect surname;</p>';
                             } 
 
 
@@ -254,25 +276,25 @@
                                 $email = htmlentities(sanitized($_POST['email']));
                             }
                             else if (empty($_POST['email'])) {
-                                $error_reg.= '<p class="error">Enter email;</p>';
+                                $error_reg.= '<p class="">Enter email;</p>';
                             }
                             else {
-                                $error_reg.= '<p class="error">Incorrect email format;</p>';
+                                $error_reg.= '<p class="">Incorrect email format;</p>';
                             } 
 
 
                             // validate password 
                             if (strlen(($_POST['password'])<8 && strlen(($_POST['password'])>0))){
-                                $error_reg.= '<p class="error">Password is too short;</p>';
+                                $error_reg.= '<p class="">Password is too short;</p>';
                             }
                             else if (!empty($_POST['password']) && !preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[*.,!_\-()a-zA-Z\d]+$/', ($_POST['password']))){
-                                $error_reg.= '<p class="error">Incorrect password format;</p>';
+                                $error_reg.= '<p class="">Incorrect password format;</p>';
                             }
                             else if (strlen(($_POST['password'])<8 && strlen(($_POST['password'])>0))){
-                                $error_reg.= '<p class="error">Password is too short;</p>';
+                                $error_reg.= '<p class="">Password is too short;</p>';
                             }
                             else if (empty(($_POST['password']))) {
-                                $error_reg.= '<p class="error">Enter password;</p>';
+                                $error_reg.= '<p class="">Enter password;</p>';
                             }
                             else {
                                 
@@ -282,10 +304,10 @@
                                     
                                 }
                                 else if (empty($_POST['confirm_password'])){
-                                    $error_reg.='<p class="error">Password does not match the confirmation;</p>';
+                                    $error_reg.='<p class="">Password does not match the confirmation;</p>';
                                 }
                                 else {
-                                    $error_reg.='<p class="error">Confirm the password;</p>';
+                                    $error_reg.='<p class="">Confirm the password;</p>';
                                 }
                             } 
 
@@ -297,7 +319,7 @@
                                 $user_role = "landlord";
                             }
                             else {
-                                $error_reg.='<p class="error">Choose user type;</p>';
+                                $error_reg.='<p class="">Choose user type;</p>';
                             }
 
                             
@@ -318,7 +340,10 @@
                                         if(str_contains(implode($row), $email) ){ //if user exists in the db
                                             //prints the messages 
                                             
-                                            echo " <div class=\"\"><h5>User with ".$email." email is already registered</h5></div>"  ;  
+                                            
+                                            setcookie('existed', "User with ".$email." email is alredy registered", time()+5, '/', '', true, true);                             //FIX
+                                            
+                                            //echo " <div class=\"\"><h5>User with ".$email." email is already registered</h5></div>"  ;  
                                             //toggle the flag
                                             $userFound = true;
                                             $userDBId = $row['id'];  //sets user id to add the appliance
@@ -326,6 +351,7 @@
                                         }
                                         
                                     }
+                                    
                                     if (!$userFound){ //if user was not found
 
                                         //prepares data for mysql statement
@@ -356,27 +382,27 @@
                                                 $result = mysqli_query($db_connection, $add_user_role); //passes the statement
 
                                                 if ($result){
-                                                    echo "<div class=\"\"><h5>The user ".$name." ".$surname." was registered as ".$user_role.";</h5></div>"; 
+                                                    $msg = $name." was registered with email ".$email;
+                                                    setcookie('registered', $msg, time()+5, '/', '', true, true);                                                           //FIX                                                   
                                                 }
-                                                else {
-                                                    echo "Something went wrong;</br>Error adding user: ".mysqli_error($db_connection);
-                                                }
+                                                else{
+                                                    echo "Something went wrong;</br>".mysqli_error($db_connection);
+                                                }                                               
 
                                             }
 
                                             else {
-                                                echo "Something went wrong;</br>Error adding user: ".mysqli_error($db_connection);
+                                                echo "Something went wrong;</br>".mysqli_error($db_connection);
                                             }
 
 
 
                                         } else {
-                                            echo "Error adding user: ".mysqli_error($db_connection);
+                                            echo "Error adding user;</br> ".mysqli_error($db_connection);
                                         }
 
-                                        // Free memory and close result object
-                                        mysqli_free_result($result); 
                                     }
+                                    
                                     
                                     } else { //connection error
                                         echo "<div class=\"\">";
@@ -386,8 +412,6 @@
 
 
                                     }
-                                
-                                    
                                     
                                     mysqli_close($db_connection);
 
@@ -395,23 +419,16 @@
                             }
                             
                             
-
-
-                        
                         
                     
                     echo "
-
-
                     <div id=\"login_suboptions\" class=\"suboptions\"   hidden>    
                     <div id=\"log_reg\">
                         <a id=\"log\" onclick=\"show_log()\" href=\"#\"><div id=\"\">  Log in   </div></a>
                         <a id=\"reg\" onclick=\"show_reg()\" href=\"#\"><div id=\"\">    Register   </div></a>
-
                     </div>
         
                     <div id=\"login_form\" >
-
                         <form method=\"post\" novalidate action=\""; 
 
                         echo htmlspecialchars($_SERVER["PHP_SELF"]);
@@ -431,7 +448,7 @@
                             <input type=\"password\" id=\"password_input\" name=\"password\" class=\"form-control\" >
                         </div>";
                     
-                        if (!empty($error)) { echo '<div class=" ">' . $error . '</div>'; } 
+                        if (!empty($error)) { echo '<div class="error">' . $error . '</div>'; } 
                         
                         echo"
                         <div class=\"form-group\">
@@ -462,20 +479,17 @@
                             echo "\">
                             </div> 
                             
-                            
                             <div class=\"form-group\">
                                 <label>Email Address</label>
                                 <input type=\"email\" name=\"email\" class=\"form-control\" value=\"";                                
                                 if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']);                                
-                            echo "    \" >
+                            echo "\" >
                             </div>    
-
 
                             <div class=\"form-group\">
                                 <label>Password</label>
                                 <input type=\"password\" name=\"password\" class=\"form-control\" >
                             </div>
-
 
                             <div class=\"form-group\">
                                 <label>Confirm Password</label>
@@ -483,20 +497,12 @@
                             </div>
                             
                             <div id=\"choose_role\" class=\"form-group\">
-
                                 I am a:</br>
                                 <input type=\"radio\" id=\"tenant\" class=\"\" name=\"tenant\" value=\"tenant\">
-                                <label for=\"html\">Tenant</label><br>
-                                <input type=\"radio\" id=\"landlord\" class=\"\" name=\"landlord\" value=\"landlord\">
-                                <label for=\"html\">Landlord</label><br>
-
-                            </div>
-                            
-                            
-                            
-                            
-                            
-                            ";
+                                <label for=\"html\">Tenant</label><br>
+                               <input type=\"radio\" id=\"landlord\" class=\"\" name=\"landlord\" value=\"landlord\">
+                               <label for=\"html\">Landlord</label><br>
+                            </div>";
 
                             if (!empty($error_reg)) {
                                 echo '<div class="error">' . $error_reg . '</div>';
@@ -506,46 +512,188 @@
                             <div class=\"form-group\">
                                 <input type=\"submit\" name=\"reg\" class=\"btn btn-primary\" value=\"Register\">
                             </div>
-                            
                         </form>
-
-                    </div>
-                    
+                    </div>  
                     ";
 
                 }
-                
-                ?>
 
-        
+                ?>
+                
     </header>
 
     <main>
 
         <!-- Title and description -->
-        <div class="">
+        <div class="title_description">
             <!-- bootstrap form-group -->
-            <div class="form-group mx-auto col-md-6 pt-4 text-center">
+            <div class="">
                 <!-- form title -->
-                <h1>CountyLet</h1>
-                <h5 class="text-secondary">Your trusted agency for renting and managing quality residential and commercial properties in Dublin. We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h2>
+                <div><h1>CountyLet</h1></div>
+                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
             </div>
         </div>
 
         <!-- content -->
         <div class="boxes">
+
+                <?php
+
+                    $property0=array();
+                    $property1=array();
+                    $property2=array();
+                    $boxes_data=array($property2,$property1,$property0);
+
+                    require_once '../mysql_connect.php';   // Require database connection script
+                            
+                    $query = "SELECT * FROM property ORDER BY property_id DESC;"; // MySQL statement
+                    $result = mysqli_query($db_connection, $query);
+                    
+                    if ($result){ // Check if query was successful
+                        
+                        $ads_counter=3;
+
+                        while($row = mysqli_fetch_assoc($result)){ // Loop through the data
+                            $ads_counter--;
+                            $boxes_data[$ads_counter] = array(
+                                "type"=>$row['type'],
+                                "bedrooms"=>$row['bedrooms'],
+                                "description"=>$row['description'],
+                                "photos"=>$row['photos'],
+                                "property_id"=>$row['property_id'],
+                                "owner_id"=>$row['owner_id'],
+                                "mon_rent"=>$row['mon_rent'],
+                                "eircode"=>$row['eircode'],
+                                "address"=>$row['address']
+                            );
+
+                            if($ads_counter==0){
+                                break;
+                            }   
+                            
+                            
+                                
+                                
+                             
+                        }
+
+                        if($ads_counter!=0){
+
+                            if($ads_counter>1){
+
+                                echo "
+                                <script>
+                                let box0 = document.getElementById('box0');
+                                
+                                box.setAttribute('hidden', true); 
+                                
+                                </script>";
+
+
+                                if($ads_counter>2){
+
+                                    echo "
+                                    <script>
+                                    let box1 = document.getElementById('box1');
+                                    
+                                    box.setAttribute('hidden', true); 
+                                    
+                                    </script>";
+
+
+                                    if($ads_counter==3){
+
+                                        echo "
+                                        <script>
+                                        let box2 = document.getElementById('box2');
+                                        
+                                        box.setAttribute('hidden', true); 
+                                        
+                                        </script>";
+    
+                                    }
+
+                                }
+                                
+
+                            }
+                            
+                            
+                        }
+
+                        
+
+                        mysqli_free_result($result); // free the result set
+                        
+                    } else { // connection error
+                        echo "<h3>Something went wrong, try again;</h3>";
+                    }
+                    
+
+
+
+
+
+                ?>
+
+                <div class="box" id="box2">
+                    <div class="img">
+                        <img <?php 
+                        echo "src='".$boxes_data[count($boxes_data)-1]['photos']."0.jpg'";   
+                        ?> alt="">
+                    </div>
+
+                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?>
+                    </div>
+
+                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>
+                    </div>
+
+                    <div class="text"> <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?>
+                    </div>
                 
-                <div class="box">
-                test
+                </div>
+
+
+                <div class="box" id="box1">
+                    <div class="img"> <img <?php 
+                        echo "src='".$boxes_data[count($boxes_data)-2]['photos']."0.jpg'";   
+                        ?> alt="">
+                    </div>
+
+                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?>
+                    </div>
+
+                    <div class="type"><?php echo $boxes_data[count($boxes_data)-2]["type"]; ?>
+                    </div>
+
+                    <div class="text"><?php echo $boxes_data[count($boxes_data)-2]["description"]; ?>
+                    </div>
+                
+                </div>
+
+                
+                <div class="box" id="box0">
+                    <div class="img"> <img <?php 
+                        echo "src='".$boxes_data[count($boxes_data)-3]['photos']."0.jpg'";   
+                        ?> alt="">
+                    </div>  
+
+                    <div class="price"><?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?>
+                    </div>
+                    
+                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?>
+                    </div>
+
+                    <div class="text"><?php echo $boxes_data[count($boxes_data)-3]["description"]; ?>
+                    </div>
+                
                 </div>
                 
-                <div class="box">
-                test
-                </div>
                 
-                <div class="box">
-                test
-                </div>
+                
+                
+                
                 
             </div>
 
@@ -722,9 +870,6 @@
                 }
             }
 
-
-            
-
             </script>";
 
             
@@ -734,8 +879,7 @@
                 </script>";
             }
             else if (!empty($error_reg)){
-                echo "
-                <script>
+                echo "<script>
                 
                     let login_suboptions = document.getElementById('login_suboptions');
                     let login_form = document.getElementById('login_form');
@@ -745,9 +889,6 @@
                     login_form.setAttribute('hidden', true);
                     reg_form.removeAttribute('hidden');
 
-
-                    
-    
                 </script>
                 
                 ";
@@ -756,13 +897,7 @@
 
         }
 
-
-        
-    
     ?>
-
-            
-
 
         <script>
         
@@ -781,13 +916,25 @@
                 login_form.setAttribute('hidden', true);
                 registration_form.removeAttribute('hidden');
             }
-            
-            
+
         </script>
 
 
 
+        <?php 
 
+        if(isset($_COOKIE['loggedin_msg']) || isset($_COOKIE['loggedout_msg']) || isset($_COOKIE['registered']) || isset($_COOKIE['existed'])){
+            echo "
+            <script>    
+            let msg = document.getElementById('msg');
+            msg.removeAttribute('hidden');
+            setTimeout(function() {
+                msg.setAttribute('hidden', true);
+            }, 5000); 
+            </script> ";
+        }
+        
+        ?>
     
             
 

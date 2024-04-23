@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 22 2024 г., 16:53
+-- Время создания: Апр 23 2024 г., 03:29
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -72,6 +72,15 @@ CREATE TABLE `property` (
   `address` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Дамп данных таблицы `property`
+--
+
+INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_id`, `owner_id`, `mon_rent`, `eircode`, `address`) VALUES
+('apartment', 2, 'two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text ', 'property/1/', 1, 5, 800, 'D07XT61', '43-53 Montpelier Hill, D110b, Stoneybatter'),
+('house', 4, 'four-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text', 'property/2/', 2, 16, 600, 'D08TY89', 'Dublin, Center'),
+('apartment', 3, 'THREE-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text two-bedroom apartment just for test long text', 'property/3/', 3, 16, 1200, 'D08TY45', 'Dublin, 15');
+
 -- --------------------------------------------------------
 
 --
@@ -92,7 +101,12 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (5, 'landlord'),
 (6, 'tenant'),
 (15, ' tenant'),
-(16, ' landlord');
+(16, ' landlord'),
+(17, ' tenant'),
+(18, ' tenant'),
+(19, ' tenant'),
+(20, ' tenant'),
+(21, ' tenant');
 
 -- --------------------------------------------------------
 
@@ -126,7 +140,12 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (13, 'test', '$2y$10$vF8gYbcfgXQZpvxUg82nsOPinYdbBvea78y3Yaf0RH8Li8h6JN.mW', 'testreg@reg.oo', 'reg'),
 (14, 'asdad', '$2y$10$1Uk6zjCEutpekLL2gO8JK.4rJBTR/gtUeQOKoDjqjDiTgFGUozLm6', 'testreg@rr.rr', 'addc'),
 (15, 'awd', '$2y$10$nDX2QpUkbz3BfGfO7Z8UouJjfftYkDFlLPOpw07Wfu64Bv0VUJLDi', 'testreg@gg.gg', 'awd'),
-(16, 'asf', '$2y$10$D1ux9xr4A5tsjz6geNiav.leHfUlBoQ63XIUqzFlsm4gK8LkLSmsa', 'test@ee.ee', 'WRF');
+(16, 'asf', '$2y$10$D1ux9xr4A5tsjz6geNiav.leHfUlBoQ63XIUqzFlsm4gK8LkLSmsa', 'test@ee.ee', 'WRF'),
+(17, 'fif', '$2y$10$vDwh8FF63C502cOGlSVI7.CA4LHWl8HHHczZXraLKpA3NFiSotSHO', 'fif@teen.rr', 'teen'),
+(18, 'newTen', '$2y$10$/LAHJemOI/MONUfNnufAL.nxd5siJBw1a7/4LFGISsFPJQbSg0xoO', 'ten@ant.tr', 'tennant'),
+(19, 'adwd', '$2y$10$co4dCvuQyC6706p1W.VYvuPfKHEA/6636UqSbL1Sl6OeJFOuAq.QG', 'adn@a.com', 'awefefg'),
+(20, 'sef', '$2y$10$FIc7LIJQirLt8boEDIzAnOrtBy/9vpgd7pUjGsSVDInc6oWCh/AsS', 'anawd@a.com', 'srfgertgh'),
+(21, 'wefgwerg', '$2y$10$YG6OH0hYbX9XpHEpEZ0l9OFnRc2CRREON5evS3oSNKB7D0IL8AuGq', 'aawdawd@aawd.com', 'ergegherg');
 
 --
 -- Индексы сохранённых таблиц
@@ -180,13 +199,13 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT для таблицы `property`
 --
 ALTER TABLE `property`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

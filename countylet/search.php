@@ -45,7 +45,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\" \"><div id=\"option1\" class=\"option\">Landlord options</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Tenant options</div></a>";
-                        echo "<a href=\" \"><div id=\"option3\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option3\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
@@ -55,7 +55,7 @@
                     }
                     else if ($role=="landlord"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                        echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -64,7 +64,7 @@
                     }
                     else if ($role=="tenant"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                        echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -75,7 +75,7 @@
                 //options for public level
                 else {
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                    echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                    echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                     echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                     echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                     echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -525,342 +525,289 @@
 
     <main>
 
-        <!-- Title and description -->
-        <div class="title_description">
-            <!-- bootstrap form-group -->
-            <div class="">
-                <!-- form title -->
-                <div><h1>CountyLet</h1></div>
-                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
-            </div>
-        </div>
+        
+        <div class="search">
+            <div class="search_subtitle"><h2 >Search your property:</h2></div>
+            <form id="form_id" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="GET" novalidate>
 
-        <div class="">
-            <h2>Search your house:</h2>
-            <form action="search_results.php" method="post" novalidate>
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" required><br>
+                <div class="search_dates">
+                    <div id="start_date_div">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" value=" <?php if(isset($_POST['start_date'])) echo htmlspecialchars($_POST['start_date'])?> ">
+                    </div>
 
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" required><br>
+                    <div id="end_date_div">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" value=" <?php if(isset($_POST['end_date'])) echo htmlspecialchars($_POST['end_date'])?> ">
+                    </div>
+                </div>
 
+                <div id="bed_dropdown_div">
                 <label for="bedrooms">Number of Bedrooms:</label>
-                <select class="form-control" id="bed_dropdown" name="bed_dropdown">
-                        <option value="1">1 Bedroom</option>
-                        <option value="2">2 Bedrooms</option>
-                        <option value="3">3 Bedrooms</option>
-                        <option value="4">4 Bedrooms</option>
+                <select id="bed_dropdown" name="bed_dropdown">
+                        <option value=""></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                 </select>
-        </div>
-        <div class="price-input-container"> 
-                <div class="price-input"> 
-                    <div class="price-field"> 
-                        <span>Minimum Price</span> 
-                        <input type="number" 
-                               class="min-input" 
-                               value="1250"> 
-                    </div> 
-                    <div class="price-field"> 
-                        <span>Maximum Price</span> 
-                        <input type="number" 
-                               class="max-input" 
-                               value="4250"> 
-                    </div> 
-                </div> 
-                <div class="slider-container"> 
-                    <div class="price-slider"> 
-                    </div> 
-                </div> 
-            </div> 
-  
-            <!-- Slider -->
-            <div class="range-input"> 
-                <input type="range" 
-                       class="min-range" 
-                       min="0" 
-                       max="5000" 
-                       value="1250" 
-                       step="1"> 
-                <input type="range" 
-                       class="max-range" 
-                       min="0" 
-                       max="5000" 
-                       value="4250" 
-                       step="1"> 
-            </div> 
-        <input type="submit" value="Search">
-        </form>
-    <script> //script for pricee slider 
-        //  Script.js 
-        const rangevalue =  
-            document.querySelector(".slider-container .price-slider"); 
-        const rangeInputvalue =  
-            document.querySelectorAll(".range-input input"); 
+                </div>
         
-        // Set the price gap 
-        let priceGap = 200; 
         
-        // Adding event listners to price input elements 
-        const priceInputvalue =  
-            document.querySelectorAll(".price-input input"); 
-        for (let i = 0; i < priceInputvalue.length; i++) { 
-            priceInputvalue[i].addEventListener("input", e => { 
-        
-                // Parse min and max values of the range input 
-                let minp = parseInt(priceInputvalue[0].value); 
-                let maxp = parseInt(priceInputvalue[1].value); 
-                let diff = maxp - minp 
-        
-                if (minp < 0) { 
-                    alert("minimum price cannot be less than 0"); 
-                    priceInputvalue[0].value = 0; 
-                    minp = 0; 
-                } 
-        
-                // Validate the input values 
-                if (maxp > 10000) { 
-                    alert("maximum price cannot be greater than 5000"); 
-                    priceInputvalue[1].value = 5000; 
-                    maxp = 5000; 
-                } 
-        
-                if (minp > maxp - priceGap) { 
-                    priceInputvalue[0].value = maxp - priceGap; 
-                    minp = maxp - priceGap; 
-        
-                    if (minp < 0) { 
-                        priceInputvalue[0].value = 0; 
-                        minp = 0; 
-                    } 
-                } 
-        
-                // Check if the price gap is met  
-                // and max price is within the range 
-                if (diff >= priceGap && maxp <= rangeInputvalue[1].max) { 
-                    if (e.target.className === "min-input") { 
-                        rangeInputvalue[0].value = minp; 
-                        let value1 = rangeInputvalue[0].max; 
-                        rangevalue.style.left = `${(minp / value1) * 100}%`; 
-                    } 
-                    else { 
-                        rangeInputvalue[1].value = maxp; 
-                        let value2 = rangeInputvalue[1].max; 
-                        rangevalue.style.right =  
-                            `${100 - (maxp / value2) * 100}%`; 
-                    } 
-                } 
-            }); 
-        
-            // Add event listeners to range input elements 
-            for (let i = 0; i < rangeInputvalue.length; i++) { 
-                rangeInputvalue[i].addEventListener("input", e => { 
-                    let minVal =  
-                        parseInt(rangeInputvalue[0].value); 
-                    let maxVal =  
-                        parseInt(rangeInputvalue[1].value); 
-        
-                    let diff = maxVal - minVal 
-                    
-                    // Check if the price gap is exceeded 
-                    if (diff < priceGap) { 
-                    
-                        // Check if the input is the min range input 
-                        if (e.target.className === "min-range") { 
-                            rangeInputvalue[0].value = maxVal - priceGap; 
-                        } 
-                        else { 
-                            rangeInputvalue[1].value = minVal + priceGap; 
-                        } 
-                    } 
-                    else { 
-                    
-                        // Update price inputs and range progress 
-                        priceInputvalue[0].value = minVal; 
-                        priceInputvalue[1].value = maxVal; 
-                        rangevalue.style.left = 
-                            `${(minVal / rangeInputvalue[0].max) * 100}%`; 
-                        rangevalue.style.right = 
-                            `${100 - (maxVal / rangeInputvalue[1].max) * 100}%`; 
-                    } 
-                }); 
-            } 
-        }
-    </script>
-
-        <!-- content -->
-        <div class="boxes">
-
-                <?php 
-                    require_once '../mysql_connect.php';   // Require database connection script
-                    $query = "SELECT";
-                    // Retrieve and sanitize the input
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
-
-                    }
-
                 
-                ?>
-
+                    <div class="price-input"> 
+                        <div id="min_price_div" class="price-field"> 
+                            <span>Price range: From</span> 
+                            <input type="number" class="min-input" name="min_price" value="0"> 
+                        </div> 
+                        <div class="price-field" id="max_price_div"> 
+                            <span>To</span> 
+                            <input type="number" class="max-input" name="max_price" value="5000"> 
+                        </div> 
+                    </div> 
+                    
+                <input class="search_button" type="submit" name="search" value="Search">
+        </form>
+        </div>
+    
 
                 <?php
 
-                    $property0=array();
-                    $property1=array();
-                    $property2=array();
-                    $boxes_data=array($property2,$property1,$property0);
-
-                    require_once '../mysql_connect.php';   // Require database connection script
-                            
-                    $query = "SELECT * FROM property ORDER BY property_id DESC;"; // MySQL statement
-                    $result = mysqli_query($db_connection, $query);
                     
-                    if ($result){ // Check if query was successful
+                    $boxes_search_results = array();
+                    $search_errors = [];
+
+                        $start_date='';
+                        $end_date='';
+                        $beds='';
+                        $min_price='';
+                        $max_price='';
+
+                    // Retrieve and sanitize the input
+                    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
+
                         
-                        $ads_counter=3;
+                        // Ensure $_POST['purchaseDate'] and $_POST['warrantyExpDate'] are set
+                        $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
+                        $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
-                        while($row = mysqli_fetch_assoc($result)){ // Loop through the data
-                            $ads_counter--;
-                            $boxes_data[$ads_counter] = array(
-                                "type"=>$row['type'],
-                                "bedrooms"=>$row['bedrooms'],
-                                "description"=>$row['description'],
-                                "photos"=>$row['photos'],
-                                "property_id"=>$row['property_id'],
-                                "owner_id"=>$row['owner_id'],
-                                "mon_rent"=>$row['mon_rent'],
-                                "eircode"=>$row['eircode'],
-                                "address"=>$row['address']
-                            );
+                        // Get today's date string in 'Y-m-d' format to compare with input dates
+                        $today_str = date('Y-m-d');
+                        
 
-                            if($ads_counter==0){
-                                break;
-                            }   
-                            
-                            
-                                
-                                
-                             
+                        // Convert dates to Unix timestamps for comparison
+                        $startDateTimestamp = strtotime($start_date);
+                        $endDateTimestamp = strtotime($end_date);
+                        $todayTimestamp = strtotime($today_str);
+
+                        // Validate Purchase Date
+
+                        if($start_date != null && $end_date!=null){
+                            $startDateTimestamp = strtotime($start_date);
+                            $endDateTimestamp = strtotime($end_date);
+                            $todayTimestamp = strtotime($today_str);
+                            if($todayTimestamp>$startDateTimestamp || $todayTimestamp>$endDateTimestamp ){
+                                $search_errors[]="Incorrect start/end date, can not be in the past;";
+                            }
+                            else if($endDateTimestamp-$startDateTimestamp<=0){
+                                $search_errors[]="Start date must be before end date;";
+                            }
+
+                        }else if (($start_date == null || $end_date==null) && ( $start_date != null || $end_date!=null)  ){
+                            $search_errors[]="Set up both start and end dates;";
                         }
 
-                        if($ads_counter!=0){
+                        if (isset($_GET['bed_dropdown']) && preg_match('/^[1-4]$/', $_GET['bed_dropdown']) ){
+                            $beds = htmlentities(sanitized($_GET['bed_dropdown']));                           
+                        }else {
+                            $beds=null;
+                        }
 
-                            if($ads_counter>1){
+                        // if(isset($_GET['min_price']) && isset($_GET['max_price']) && (isset($_GET['max_price'])<isset($_GET['min_price']))){
+                        //     $search_errors[] = "Incorrect price range;";
+                        // }
 
-                                echo "
-                                <script>
-                                let box0 = document.getElementById('box0');
+                        if (isset($_GET['min_price']) && preg_match('/^\d*\.?\d+$/', $_GET['min_price']) ){
+                            $min_price=htmlentities(sanitized($_GET['min_price']));
+                        } else if (!preg_match('/^\d*\.?\d+$/', $_GET['min_price'])) {
+                            $search_errors[] = "Incorrect min price format;";
+                        } else {
+                            $min_price=null;
+                        }
+
+                        if (isset($_GET['max_price']) && preg_match('/^\d*\.?\d+$/', $_GET['max_price'])){
+                            $max_price=htmlentities(sanitized($_GET['max_price']));
+                        } else if (!preg_match('/^\d*\.?\d+$/', $_GET['max_price'])){
+                            $search_errors[] = "Incorrect max price format;";
+                        } else {
+                            $max_price=null;
+                        }
+                        
+                        if(empty($search_errors)){
+
+                            require_once '../mysql_connect.php';   
+                            
+                            $query = "SELECT * FROM property WHERE available=1 "; 
+                           
+                            if(($start_date!=null && $end_date!=null) || $beds!=null || $min_price!=null || $max_price!=null){
                                 
-                                box.setAttribute('hidden', true); 
-                                
-                                </script>";
+                                if($start_date!=null && $end_date!=null){
 
-
-                                if($ads_counter>2){
-
-                                    echo "
-                                    <script>
-                                    let box1 = document.getElementById('box1');
-                                    
-                                    box.setAttribute('hidden', true); 
-                                    
-                                    </script>";
-
-
-                                    if($ads_counter==3){
-
-                                        echo "
-                                        <script>
-                                        let box2 = document.getElementById('box2');
-                                        
-                                        box.setAttribute('hidden', true); 
-                                        
-                                        </script>";
-    
-                                    }
-
+                                    $start_date = strtotime($start_date);
+                                    $end_date = strtotime($end_date);
+                                    $months = ceil(abs($end_date - $start_date) / (30 * 24 * 60 * 60));
+                                    $query.="AND length>=".$months." ";
                                 }
-                                
+
+                                if($beds!=null){
+                                    $query.="AND bedrooms=".$beds." ";
+                                }
+
+                                if ($min_price!=null){
+                                    $query.="AND mon_rent>=".$min_price." ";
+                                }
+
+                                if( $max_price!=null){
+                                    $query.="AND mon_rent<=".$max_price.";";
+                                }
 
                             }
+
+                            $result = mysqli_query($db_connection, $query);
                             
-                            
+                            if ($result){ 
+                                
+                                while($row = mysqli_fetch_assoc($result)){ 
+                                    $boxes_search_results[]=$row;
+                                }
+                                
+                                $search_done = true;
+                                
+                                mysqli_free_result($result); 
+                                
+                            } else { 
+                                echo "<h3>Something went wrong, try again;</h3>";
+                            }
+
                         }
-
                         
 
-                        mysqli_free_result($result); // free the result set
-                        
-                    } else { // connection error
-                        echo "<h3>Something went wrong, try again;</h3>";
                     }
-                    
-
-
-
-
 
                 ?>
 
-                <div class="box" id="box2">
-                    <div class="img">
-                        <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-1]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
 
-                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?>
-                    </div>
+        <!-- content -->
+        <div class="errors_search" id="errors_search_id">
+            <?php 
+                foreach ($search_errors as $search_err){
+                    echo "<div >";
+                    echo $search_err;
+                    echo "</div>";
+                }
+            ?>
+        </div>
 
-                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>
-                    </div>
 
-                    <div class="text"> <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?>
-                    </div>
+            <?php 
+
+
+                if(isset($search_done))
+                echo "<div id='search_results'>Results found: ".count($boxes_search_results)."</div>";
+
+                if(count($boxes_search_results)>0){
+
+
+                    for ($t=0; $t<count($boxes_search_results); $t++){
+
+                        echo"
+    
+                        <div class='boxes_search' id='boxes_search_id'>
+    
+                            <div class='search_results_row'>
+
+                                    <div class='main_photo_search'>
+    
+                                        
+                                            <img src='".$boxes_search_results[$t]['photos']."0.jpg"."
+                                            
+                                            ' alt=''>
+                                        
+    
+                                    </div>
+    
+                                <div class='box_search' id='box_search_id'>
+    
+                                    <div class='price_search'> 
+        
+                                    ".$boxes_search_results[$t]['mon_rent']." EUR/mon
+
+                                    </div>
+    
+                                    <div class='type_search'> 
+    
+                                        <b>Property type:</b> ".$boxes_search_results[$t]['type']."
+    
+                                    </div>
+    
+                                    
+    
+                                    <div class='bedrooms_search'>
+    
+                                    <b>Number of bedrooms:</b> ".$boxes_search_results[$t]['bedrooms']."
+    
+                                    </div>
+    
+                                    <div class='address_search'>
+    
+                                    <b>Address: </b>".strtoupper($boxes_search_results[$t]['eircode']).", ".$boxes_search_results[$t]['address']."
+    
+                                    </div>
+    
+                                    <div class='length_search'>
+                                    <b>Available for:</b> ".$boxes_search_results[$t]['length']." months
+                                    </div>
+    
+                                    <div class='text_search'>
+                                        ".$boxes_search_results[$t]['description']."
+                                    </div>
+                                
+                                </div>
+    
+                            </div>
+     
+                        </div> ";
+    
+                    }
+
+
+
+                }
+
                 
-                </div>
-
-
-                <div class="box" id="box1">
-                    <div class="img"> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-2]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
-
-                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?>
-                    </div>
-
-                    <div class="type"><?php echo $boxes_data[count($boxes_data)-2]["type"]; ?>
-                    </div>
-
-                    <div class="text"><?php echo $boxes_data[count($boxes_data)-2]["description"]; ?>
-                    </div>
-                
-                </div>
 
                 
-                <div class="box" id="box0">
-                    <div class="img"> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-3]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>  
 
-                    <div class="price"><?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?>
-                    </div>
+
+
+
+
+
+
+
+
+                
+            
+            
+            
+            
+            
+            
+            ?>
+        
+
+
                     
-                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?>
-                    </div>
-
-                    <div class="text"><?php echo $boxes_data[count($boxes_data)-3]["description"]; ?>
-                    </div>
-                
-                </div>
-                
-                
-                
-                
-                
-                
-            </div>
 
     </main>
 
@@ -1106,95 +1053,6 @@
 
 
 </body>
-<style>
-/* Styles for the price input container */
-.price-input-container { 
-	width: 100%; 
-} 
 
-.price-input .price-field { 
-	display: flex; 
-	margin-bottom: 22px; 
-} 
-
-.price-field span { 
-	margin-right: 10px; 
-	margin-top: 6px; 
-	font-size: 17px; 
-} 
-
-.price-field input { 
-	flex: 1; 
-	height: 35px; 
-	font-size: 15px; 
-	font-family: "DM Sans", sans-serif; 
-	border-radius: 9px; 
-	text-align: center; 
-	border: 0px; 
-	background: #e4e4e4; 
-} 
-
-
-.price-input { 
-	width: 100%; 
-	font-size: 19px; 
-/*if want to change color of Minimum Price Maximum Price*/
-	color: #555; 
-} 
-
-/* Remove Arrows/Spinners */
-input::-webkit-outer-spin-button, 
-input::-webkit-inner-spin-button { 
-	-webkit-appearance: none; 
-	margin: 0; 
-} 
-
-.slider-container { 
-	width: 100%; 
-} 
-
-.slider-container { 
-	height: 6px; 
-	position: relative; 
-	background: #e4e4e4; 
-	border-radius: 5px; 
-} 
-
-.slider-container .price-slider { 
-	height: 100%; 
-	left: 25%; 
-	right: 15%; 
-	position: absolute; 
-	border-radius: 5px; 
-    /*to change color of slider */
-	background: #01940b; 
-} 
-
-.range-input { 
-	position: relative; 
-} 
-
-.range-input input { 
-	position: absolute; 
-	width: 100%; 
-	height: 5px; 
-	background: none; 
-	top: -5px; 
-	pointer-events: none; 
-	cursor: pointer; 
-	-webkit-appearance: none; 
-} 
-
-/* Styles for the range thumb in WebKit browsers */
-input[type="range"]::-webkit-slider-thumb { 
-	height: 18px; 
-	width: 18px; 
-	border-radius: 70%; 
-    /*if want to change color of slider heads*/
-	background: #555; 
-	pointer-events: auto; 
-	-webkit-appearance: none; 
-} 
-</style>
 </html>
 

@@ -1,5 +1,6 @@
 
 
+/* INDEX */
 
 :root {
     --charcoal: #364652;
@@ -14,7 +15,7 @@
   }
 
 html {
-    width: 80%;
+    width: 70%;
     
 }
 
@@ -30,7 +31,7 @@ html {
 body, html {
     margin:  0 auto;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     
 }
 
@@ -53,13 +54,13 @@ body, html {
 .box {
     width: 30%; 
     height: auto; 
-    max-height: 40rem;
+    
+    max-height: 200px;
     background-color: #ffffff; 
     
     margin: 1.5rem 1rem ; 
     justify-content: center;
 
-    
 }
 
 
@@ -79,7 +80,7 @@ body, html {
 }
 
 main {
-    width: 95%;
+    width: 100%;
     margin: auto;
 }
 
@@ -138,29 +139,165 @@ main {
 
 .img img {
     width: 100%; 
-    height: 100%; 
+    height: 15rem; 
     object-fit: cover; 
     object-position: center; 
+    
 }
 
 .box .price {
     font-weight: bold;
     font-size: 1.5rem;
-    margin:  0.1rem 0.5rem;
+    margin:  0.1rem 0rem;
 }
 
 .box .text {
-    text-align: center;
-    margin: 0.1rem 0.5rem  ;
+    text-align: justify;
+    margin: 0.1rem 0rem  ;
 }
 
 .box .type {
     background-color: rgb(253, 255, 193);
-    margin: 0.1rem 0.5rem  ;
+    
     padding: 0rem 1rem;
     font-size: 110%;
     width: fit-content;
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SEARCH */
+
+/* Styles for the price input container */
+
+.search_subtitle {
+    margin: 0.5rem 0rem;
+}
+
+.search form div {
+    margin: 1rem 0rem;
+}
+
+
+.price-input .price-field { 
+	display: flex; 
+	margin-bottom: 1rem; 
+    width: 50%;
+} 
+
+.price-field span { 
+	margin-right: 1rem; 
+	margin-top: 0.5rem; 
+	
+} 
+
+.price-field input { 
+    appearance:unset;
+	width: 6rem;
+	height: 2rem; 
+	border-radius: 1rem; 
+	text-align: center; 
+	border: 0px; 
+	background: #e4e4e4; 
+} 
+
+#bed_dropdown_div, .price-input {
+ width: 50%;
+}
+
+#bed_dropdown {
+    width: 4rem;
+}
+
+
+
+.price-input { 
+	 
+    display: flex;
+} 
+
+/* Remove Arrows/Spinners */
+input::-webkit-outer-spin-button, 
+input::-webkit-inner-spin-button { 
+	-webkit-appearance: none; 
+	margin: 0; 
+} 
+
+.search_dates {
+    display: flex;
+   
+}
+#start_date_div, #min_price_div {
+    padding-right: 1rem;
+    
+}
+
+#start_date_div, #end_date_div, #min_price_div, #max_price_div {
+    margin: 0rem;
+}
+
+.search_dates {
+    width: 50%;
+}
+
+.boxes_search {
+    border-bottom: 5px solid rgb(230, 230, 230);
+    margin: 1rem auto;
+}
+
+.search_results_row {
+    margin-bottom: 1rem;;
+}
+
+.search_results_row {
+    display: flex;
+}
+
+.main_photo_search{
+    width: 30%;
+}
+
+.main_photo_search img {
+    width: 20rem; 
+    height: 13rem; 
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.box_search {
+    margin: 0rem 0.5rem ;
+}
+
+.price_search {
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: #e6fae4;
+    width: fit-content;
+    padding: 0rem 0.5rem;
+}
+
+#search_results{
+    margin: 1rem 0rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+
+
+
+
 
 
 

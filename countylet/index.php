@@ -44,7 +44,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\" \"><div id=\"option1\" class=\"option\">Landlord options</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Tenant options</div></a>";
-                        echo "<a href=\" \"><div id=\"option3\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option3\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
@@ -54,7 +54,7 @@
                     }
                     else if ($role=="landlord"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                        echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -63,7 +63,7 @@
                     }
                     else if ($role=="tenant"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                        echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                        echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -74,7 +74,7 @@
                 //options for public level
                 else {
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
-                    echo "<a href=\" \"><div id=\"option1\" class=\"option\">Search</div></a>";
+                    echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                     echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                     echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                     echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
@@ -643,10 +643,10 @@
                         ?> alt="">
                     </div>
 
-                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?>
+                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>
                     </div>
 
-                    <div class="type"> <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>
+                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?> €
                     </div>
 
                     <div class="text"> <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?>
@@ -661,10 +661,10 @@
                         ?> alt="">
                     </div>
 
-                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?>
+                    <div class="type"><?php echo $boxes_data[count($boxes_data)-2]["type"]; ?>
                     </div>
 
-                    <div class="type"><?php echo $boxes_data[count($boxes_data)-2]["type"]; ?>
+                    <div class="price"> <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?> €
                     </div>
 
                     <div class="text"><?php echo $boxes_data[count($boxes_data)-2]["description"]; ?>
@@ -679,10 +679,10 @@
                         ?> alt="">
                     </div>  
 
-                    <div class="price"><?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?>
-                    </div>
-                    
                     <div class="type"> <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?>
+                    </div> 
+
+                    <div class="price"><?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?> €
                     </div>
 
                     <div class="text"><?php echo $boxes_data[count($boxes_data)-3]["description"]; ?>

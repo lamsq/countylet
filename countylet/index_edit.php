@@ -522,144 +522,61 @@
                 
     </header>
 
-    <main>
+    <main>     
+        
+    
 
-        <!-- Title and description -->
-        <div class="title_description">
-            <!-- bootstrap form-group -->
-            <div class="">
-                <!-- form title -->
-                <div><h1>CountyLet</h1></div>
-                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
-            </div>
-        </div>
+        <?php if (isset($_COOKIE['logged_in']) && $role=="admin"){
 
-        <!-- content -->
-        <div class="boxes">
+                echo "
+                <form id='index_edit' action='". htmlspecialchars($_SERVER["PHP_SELF"])."' method='POST' novalidate>
 
-                <?php
-                    $property0=array();
-                    $property1=array();
-                    $property2=array();
-                    $boxes_data=array($property2,$property1,$property0);
+                    <div id='index_edit_photo'>
+                        <label for='edit_photo'>Show photo:</label>
+                        <input type='checkbox' id='edit_photo_box' name='edit_photo_box'"; 
+                        if(isset($_POST['edit_photo_box']) || (isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==1)) echo " checked";
+                        echo "> </div> 
 
-                    require_once  '../mysql_connect.php';   // Require database connection script                            
-                    $query = "SELECT * FROM property ORDER BY property_id DESC;"; // MySQL statement
-                    $result = mysqli_query($db_connection, $query);
-                    
-                    if ($result){ // Check if query was successful
+                    <div id='index_edit_type'>
+                        <label for='edit_type'>Show type:</label>
+                        <input type='checkbox' id='edit_type_box' name='edit_type_box'"; 
+                        if(isset($_POST['edit_type_box']) || (isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==1)) echo " checked";
+                        echo "> </div> 
+
+                    <div id='index_edit_price'>
+                        <label for='edit_price'>Show price:</label>
+                        <input type='checkbox' id='edit_price_box' name='edit_price_box'"; 
+                        if(isset($_POST['edit_price_box']) || (isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==1)) echo " checked";
+                        echo "> </div> 
+
+                    <div id='index_edit_text'>
+                        <label for='edit_text'>Show description:</label>
+                        <input type='checkbox' id='edit_text_box' name='edit_text_box' "; 
+                        if(isset($_POST['edit_text_box']) || (isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==1)) echo " checked";
+                        echo "></div> 
                         
-                        $ads_counter=3;
+                    <input class='save_index' type='submit' id='save_index' name='save_index' value='Save'>
 
-                        while($row = mysqli_fetch_assoc($result)){ // Loop through the data
-                            $ads_counter--;
-                            $boxes_data[$ads_counter] = array(
-                                "type"=>$row['type'],
-                                "bedrooms"=>$row['bedrooms'],
-                                "description"=>$row['description'],
-                                "photos"=>$row['photos'],
-                                "property_id"=>$row['property_id'],
-                                "owner_id"=>$row['owner_id'],
-                                "mon_rent"=>$row['mon_rent'],
-                                "eircode"=>$row['eircode'],
-                                "address"=>$row['address']
-                            );
-                            if($ads_counter==0){
-                                break;
-                            }                             
-                        }
+                </form>";
 
-                        if($ads_counter!=0){
-                            if($ads_counter>1){
-                                echo "  <script>
-                                let box0 = document.getElementById('box0');                                
-                                box.setAttribute('hidden', true);                                
-                                </script>";
-                                if($ads_counter>2){
-                                    echo " <script>
-                                    let box1 = document.getElementById('box1');                                    
-                                    box.setAttribute('hidden', true);                                     
-                                    </script>";
-                                    if($ads_counter==3){
-                                        echo "  <script>
-                                        let box2 = document.getElementById('box2');
-                                        box.setAttribute('hidden', true);                             
-                                        </script>";    
-                                    }
-                                }                                
-                            }                             
-                        }
-                        //mysqli_free_result($result); // free the result set                        
-                    } else { // connection error
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_index'])){
+
+                    setcookie('index_photo', isset($_POST['edit_photo_box']) ? 1 : 0, time()+(10*365*24*60*60), '/', '', true, true);
+                    setcookie('index_type', isset($_POST['edit_type_box']) ? 1 : 0, time()+(10*365*24*60*60), '/', '', true, true);
+                    setcookie('index_price', isset($_POST['edit_price_box']) ? 1 : 0, time()+(10*365*24*60*60), '/', '', true, true);
+                    setcookie('index_text', isset($_POST['edit_text_box']) ? 1 : 0, time()+(10*365*24*60*60), '/', '', true, true);
+
+                    echo "<div class='changed_msg'>Settings successfully changed;</div>";
                     
+                }
+        }
 
-                ?>
+        ?>
 
-                <div class="box" >
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>>
-                        <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-1]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
-
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>  </div>
-
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?> € </div>
-
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>  
-                    <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?> </div>
-                
-                </div>
-
-
-                <div class="box" id="box1">
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-2]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
-
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["type"]; ?> </div>
-
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?> €</div>
-
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["description"]; ?> </div>
-                
-                </div>
-
-                
-                <div class="box" id="box0">
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-3]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>  
-
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?></div> 
-
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?> € </div>
-
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["description"]; ?></div>
-                
-                </div>
-                
-                
-                
-                
-                
-                
-            </div>
-
+    
+       
     </main>
-
 
     <?php //scripts to show/hide suboptions when user hovers header options
 
@@ -728,8 +645,7 @@
             tenant.addEventListener('mouseout', () => { hide(tenant_sub);  });
             tenant_sub.addEventListener('mouseover', () => {show(tenant_sub);});
             tenant_sub.addEventListener('mouseout', () => { hide(tenant_sub); });
-            </script>
-            ";
+            </script>";
 
         }
         else if (isset($_COOKIE['logged_in']) && $role=="landlord"){
@@ -894,8 +810,6 @@
             }, 5000); 
             </script> ";
         }
-
-
         
         ?>
     

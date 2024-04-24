@@ -13,7 +13,9 @@ if (session_destroy()) {
     
     // redirect to the login page
     
-    
+    if(isset($_COOKIE["current_page"]) ){
+        
+    }
     header("Location: index.php");
     exit;
 }

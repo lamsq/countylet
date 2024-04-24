@@ -12,7 +12,7 @@
 
 <body>
     
-<header>
+    <header>
         <div class="options">
 
             <?php
@@ -28,7 +28,7 @@
                 }
 
                 if (isset($_COOKIE['logged_in']) && ($_COOKIE['logged_in'])==true){
-                    require ("../mysql_connect.php");
+                    require_once ("../mysql_connect.php");
                     $query = "SELECT * FROM roles"; // MySQL statement
                     $result = mysqli_query($db_connection, $query);
                     if ($result){
@@ -85,7 +85,7 @@
             ?>
         </div>
 
-        <div id="msg" hidden>
+            <div id="msg" hidden>
                 <div >
                     <?php
                          
@@ -106,7 +106,7 @@
 
                     ?>
                 </div>
-                </div> 
+            </div> 
 
                 <?php 
 
@@ -118,7 +118,7 @@
                 if (isset($_COOKIE['logged_in']) && $role=="admin"){
 
                     echo "<div id=\"home_suboptions\" class=\"suboptions\" hidden>";
-                    echo "<a href=\" \"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
+                    echo "<a href=\"index_edit.php\"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
                     echo "</div>";
 
                     echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
@@ -241,7 +241,7 @@
                                 $stmt->close();
                             }
                             
-                            mysqli_close($db_connection);
+                            //mysqli_close($db_connection);
                             
                         }
 
@@ -414,7 +414,7 @@
 
                                     }
                                     
-                                    mysqli_close($db_connection);
+                                    //mysqli_close($db_connection);
 
 
                             }
@@ -521,7 +521,7 @@
 
                 ?>
                 
-</header>
+    </header>
 
     <main>
 
@@ -567,7 +567,7 @@
                     </div> 
                     
                 <input class="search_button" type="submit" name="search" value="Search">
-        </form>
+            </form>
         </div>
     
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 24 2024 г., 04:41
+-- Время создания: Апр 25 2024 г., 00:51
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- База данных: `s3112251`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `advert`
+--
+
+CREATE TABLE `advert` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(50) NOT NULL,
+  `service_name` varchar(50) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `phone` int(20) NOT NULL,
+  `text` varchar(550) NOT NULL,
+  `picture` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -89,8 +105,7 @@ INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_i
 ('house', 4, 'Discover the joys of lakeside living at this inviting lakefront haven. Situated on the shores of a picturesque lake, this modern cabin offers stunning water views and direct access to water activities. Enjoy fishing off the private dock, kayaking on the lake, or simply relaxing on the waterfront deck. The interior boasts a bright and airy living space with large windows, a fully equipped kitchen, and comfortable sleeping quarters. Whether you\'re seeking a romantic getaway or a family vacation, this property provides a perfect blend of relaxation and adventure. Unwind with serene sunsets reflected on the water and create lasting memories at this charming lakefront retreat.', 'property/6/', 6, 5, 990, 'D08TY89', 'Dublin, Center, Rathmines', 11, 0, NULL, NULL),
 ('apartment', 3, 'Live in luxury at this sophisticated city skyline penthouse. Perched atop a high-rise building, this spacious penthouse offers panoramic views of the city skyline through floor-to-ceiling windows. Step onto the expansive terrace to enjoy al fresco dining with breathtaking urban vistas. Inside, the penthouse features a designer kitchen, an elegant living area, and luxurious bedrooms with plush furnishings. Perfect for discerning travelers and those seeking a lavish city experience, this property is conveniently located near upscale restaurants, galleries, and nightlife. Treat yourself to the ultimate urban retreat with unparalleled views and upscale amenities.', 'property/7/', 7, 18, 1900, 'D08TY45', 'Dublin 17, Abbey road', 7, 1, NULL, NULL),
 ('house', 3, ' Indulge in wine country living at this charming vineyard cottage surrounded by rolling vineyards. Located on a picturesque winery estate, this cottage offers a unique blend of rustic charm and modern comfort. Sip local wines on the private patio overlooking the vineyards, take leisurely walks through the estate\'s gardens, or tour nearby wineries. The interior features a cozy living area with a fireplace, a fully equipped kitchen, and a comfortable bedroom with vineyard views. Whether you\'re a wine enthusiast or simply seeking a peaceful getaway, this vineyard cottage promises a relaxing retreat immersed in wine country ambiance.', 'property/8/', 8, 5, 660, 'D08RY89', 'Dublin, Center, Rockwell street', 2, 1, NULL, NULL),
-('house', 1, 'Embrace winter wonderland at this inviting ski chalet nestled in the mountains. Located near ski slopes and winter trails, this cozy chalet is perfect for snow enthusiasts. After a day on the slopes, return to this warm retreat featuring a stone fireplace, a spacious lounge area, and a hot tub with mountain views. The chalet offers a fully equipped kitchen for apres-ski meals and comfortable bedrooms designed for restful nights. Whether it\'s a family ski vacation or a romantic winter escape, this property combines alpine charm with modern amenities. Experience the magic of snow-covered landscapes and cozy evenings by the fire at this ski chalet paradise.', 'property/9/', 9, 4, 1450, 'D09TY60', 'Dublin, Circular road', 90, 1, NULL, NULL),
-('apartment', 3, 'Tee off from your doorstep at this elegant golf course villa set within a prestigious golf community. Enjoy the convenience of direct access to the fairways and greens, with views of manicured landscapes from every angle. The villa features upscale amenities including a gourmet kitchen, a spacious living area, and a private patio ideal for enjoying sunset views over the golf course. Perfect for golf enthusiasts and those seeking a refined retreat, this property offers tranquility and leisure. Explore nearby club facilities, unwind in the villa\'s luxurious surroundings, and experience the lifestyle of golf course living at this exclusive villa.', 'property/10/', 10, 14, 1300, 'D08TY45', 'Dublin, North wall', 12, 0, NULL, NULL);
+('house', 1, 'Embrace winter wonderland at this inviting ski chalet nestled in the mountains. Located near ski slopes and winter trails, this cozy chalet is perfect for snow enthusiasts. After a day on the slopes, return to this warm retreat featuring a stone fireplace, a spacious lounge area, and a hot tub with mountain views. The chalet offers a fully equipped kitchen for apres-ski meals and comfortable bedrooms designed for restful nights. Whether it\'s a family ski vacation or a romantic winter escape, this property combines alpine charm with modern amenities. Experience the magic of snow-covered landscapes and cozy evenings by the fire at this ski chalet paradise.', 'property/9/', 9, 4, 1450, 'D09TY60', 'Dublin, Circular road', 90, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -117,7 +132,10 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (18, ' tenant'),
 (19, ' tenant'),
 (20, ' tenant'),
-(21, ' tenant');
+(21, ' tenant'),
+(22, ' landlord'),
+(23, ' tenant'),
+(24, ' tenant');
 
 -- --------------------------------------------------------
 
@@ -138,29 +156,29 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
-(2, 'Kirill', '$2y$10$QvoMtotder8cEcLg0tyNteAWaihK2N2u4F6drEUSXT.tmQw/zsaZu', 'zumw@ro.ru', 'Test'),
 (4, 'admin', '$2y$10$roAtRIi792TWUP9cpuB/1u/Iws5WhxJbzvcLK1Nb3o5v9XScEC.1S', 'admin@a.com', 'Test'),
 (5, 'landlord', '$2y$10$uidOpBf4T/zt3/WYLYlzBuDcOMGAzOcj3ZuRJ7/PhlN1JllE62Q5C', 'landlord@a.com', 'Test'),
 (6, 'tenant', '$2y$10$jY1kIm/30CtlfDVTRAI3uOkyKp1CmJPjfALnbVUoFUt4W5ic4d77C', 'tenant@a.com', 'Test'),
-(7, 'regtest', '$2y$10$Y.x07RJ.NCX2U73admvIP..V3NqvjDvCcK/YAYx01QcHXZ0T9Jd52', 'reg@test.com', 'Test'),
-(8, 'awefaefg', '$2y$10$.cEVvUl6cxNl0FOwwHpviO73I7MZTbrExGkErKSoKXQv4033Ff47q', 'asefse@rr', 'Test'),
-(9, 'wrgerg', '$2y$10$HmNqPyfAJxe7MSgP.XfmP.KIghOfkso0Xros4HWX.lPN/0/3x7chS', 'test@test.ff', 'Test'),
-(10, 'KIRILL', '$2y$10$37ffJdQsssqsGrGXZFA1NOTQaevnZFZcQZ3KOXKIgBX8W8hcb.9SC', 'lamsquirrel75@gmail.com', ''),
-(11, 'KIRILL', '$2y$10$.P9Ui5NNKPTYmodUp.r3sejvPlyWBqRGUV.qH4Tl3WfMYiW.NOI6K', 'test@t.est', 'SMIRNOV'),
-(12, 'ad', '$2y$10$MHY4pNRJSuKJ0ilUAkp3F.KrsBiZvySjg.TWhtxiOIadCd10rhXCi', 'test@rr.tt', 'awd'),
-(13, 'test', '$2y$10$vF8gYbcfgXQZpvxUg82nsOPinYdbBvea78y3Yaf0RH8Li8h6JN.mW', 'testreg@reg.oo', 'reg'),
-(14, 'asdad', '$2y$10$1Uk6zjCEutpekLL2gO8JK.4rJBTR/gtUeQOKoDjqjDiTgFGUozLm6', 'testreg@rr.rr', 'addc'),
 (15, 'awd', '$2y$10$nDX2QpUkbz3BfGfO7Z8UouJjfftYkDFlLPOpw07Wfu64Bv0VUJLDi', 'testreg@gg.gg', 'awd'),
 (16, 'asf', '$2y$10$D1ux9xr4A5tsjz6geNiav.leHfUlBoQ63XIUqzFlsm4gK8LkLSmsa', 'test@ee.ee', 'WRF'),
 (17, 'fif', '$2y$10$vDwh8FF63C502cOGlSVI7.CA4LHWl8HHHczZXraLKpA3NFiSotSHO', 'fif@teen.rr', 'teen'),
 (18, 'newTen', '$2y$10$/LAHJemOI/MONUfNnufAL.nxd5siJBw1a7/4LFGISsFPJQbSg0xoO', 'ten@ant.tr', 'tennant'),
 (19, 'adwd', '$2y$10$co4dCvuQyC6706p1W.VYvuPfKHEA/6636UqSbL1Sl6OeJFOuAq.QG', 'adn@a.com', 'awefefg'),
 (20, 'sef', '$2y$10$FIc7LIJQirLt8boEDIzAnOrtBy/9vpgd7pUjGsSVDInc6oWCh/AsS', 'anawd@a.com', 'srfgertgh'),
-(21, 'wefgwerg', '$2y$10$YG6OH0hYbX9XpHEpEZ0l9OFnRc2CRREON5evS3oSNKB7D0IL8AuGq', 'aawdawd@aawd.com', 'ergegherg');
+(21, 'wefgwerg', '$2y$10$YG6OH0hYbX9XpHEpEZ0l9OFnRc2CRREON5evS3oSNKB7D0IL8AuGq', 'aawdawd@aawd.com', 'ergegherg'),
+(22, 'newlandlord', '$2y$10$oPk5oBISTBq8eAHBBLYg6e3jQTZ2KowEWanw8OMT1P7ao3WnmZktG', 'newlord@a.com', 'lord'),
+(23, 'newtenant', '$2y$10$vtIbdoChCKxRUpxo5ROape5klGI3Uo/6s0cVxY9Qu4245r.OlzIw6', 'newnant@tt.tu', 'tenten'),
+(24, 'newtest', '$2y$10$5.2Sd4dOHthbEiAxJLcCKuJKS9gvEcxpqlTit1eevHVT5CxT2jxuy', 'newTest@tt.est', 'tetete');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `advert`
+--
+ALTER TABLE `advert`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `contracts`
@@ -201,6 +219,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `advert`
+--
+ALTER TABLE `advert`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
@@ -216,7 +240,7 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

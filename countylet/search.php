@@ -533,12 +533,12 @@
                 <div class="search_dates">
                     <div id="start_date_div">
                         <label for="start_date">Start Date:</label>
-                        <input type="date" id="start_date" name="start_date" value=" <?php if(isset($_POST['start_date'])) echo htmlspecialchars($_POST['start_date'])?> ">
+                        <input type="date" id="start_date" name="start_date" value=" <?php if(isset($_GET['start_date'])) echo htmlspecialchars($_GET['start_date'])?> ">
                     </div>
 
                     <div id="end_date_div">
                         <label for="end_date">End Date:</label>
-                        <input type="date" id="end_date" name="end_date" value=" <?php if(isset($_POST['end_date'])) echo htmlspecialchars($_POST['end_date'])?> ">
+                        <input type="date" id="end_date" name="end_date" value=" <?php if(isset($_GET['end_date'])) echo htmlspecialchars($_GET['end_date'])?> ">
                     </div>
                 </div>
 

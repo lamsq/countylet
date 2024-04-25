@@ -122,7 +122,7 @@
                     echo "</div>";
 
                     echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
-                    echo "<a href=\" \"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
+                    echo "<a href=\"\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
                     echo "<a href=\" \"><div id=\"suboption51\" class=\"suboption\">Testimonial add</div></a>";      
                     echo "</div>";
 
@@ -139,8 +139,8 @@
                     echo "</div>";
 
                     echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
-                    echo "<a href=\" \"><div id=\"suboption20\" class=\"suboption\">Edit tenant account </div></a>";
-                    echo "<a href=\" \"><div id=\"suboption21\" class=\"suboption\">Inventory details </div></a>";
+                    echo "<a href=\"tenant_acc_edit.php\"><div id=\"suboption20\" class=\"suboption\">Edit tenant account </div></a>";
+                    echo "<a href=\"inventory_details.php\"><div id=\"suboption21\" class=\"suboption\">Inventory details </div></a>";
                     echo "</div>";
                 }
 

@@ -532,14 +532,20 @@ $user_id = $_COOKIE["user_id"];
 $query = "SELECT * FROM contracts JOIN property ON contracts.property_id = property.property_id WHERE tenant_id = '" . $user_id . "'";
 
 $result = mysqli_query($db_connection, $query);
-
+// $property_id  = array();
+// $inventory_result = array(); // Initialize the array
 // var_dump($result);
 
 if ($result){ 
                                 
     while($row = mysqli_fetch_assoc($result)){ 
-        $boxes_search_results[]=$row;
+        //var_dump($row); // Add this line for debugging
+        $boxes_search_results[] = $row;
+        $property_id = $row['property_id']; // Move the assignment inside the loop
     }
+    //echo '<p>' . $property_id . '</p>';
+
+
 
     if(count($boxes_search_results) == 1){
         
@@ -551,7 +557,7 @@ if ($result){
     
     }
     
-    mysqli_free_result($result); 
+     mysqli_free_result($result); 
 
 
 
@@ -612,9 +618,52 @@ if ($result){
 
                     </div>
 
-                </div>
+                </div>";
+                $property_id =$boxes_search_results[$t]['property_id'];
+                $query_inventory = "SELECT * FROM inventory WHERE property_id = '" . $property_id . "'";
+                $result = mysqli_query($db_connection, $query_inventory);
+                if ($result){ 
+            // Display search results
+            echo '<div class="">';
+            echo '<h4>Inventory Results:</h4>';
+            echo '<table class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th scope="col">WIFI</th>';
+            echo '<th scope="col">Television</th>';
+            echo '<th scope="col">Parking</th>';
+            echo '<th scope="col">Air_conditioned</th>';
+            echo '<th scope="col">Refrigerator</th>';
+            echo '<th scope="col">Oven</th>';
+            echo '<th scope="col">Stove</th>';
+            echo '<th scope="col">Microwave</th>';
+            echo '<th scope="col">Dishwasher</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+            while ($rows = $result->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $rows['WIFI'] . '</td>';
+                echo '<td>' . $rows['Television'] . '</td>';
+                echo '<td>' . $rows['Parking'] . '</td>';
+                echo '<td>' . $rows['Air_conditioned'] . '</td>';
+                echo '<td>' . $rows['Refrigerator'] . '</td>';
+                echo '<td>' . $rows['Oven'] . '</td>';
+                echo '<td>' . $rows['Stove'] . '</td>';
+                echo '<td>' . $rows['Microwave'] . '</td>';
+                echo '<td>' . $rows['Dishwasher'] . '</td>';
+                echo '</tr>';
+            }
+            echo '</tbody>';
+            echo '</table>';
+            echo '</div>';
+        }else{
+            echo '<div class="alert alert-warning">No inventory found with the provided details.</div>';
+        }
 
-            </div> ";
+
+
+            echo "</div> ";
 
         }
 
@@ -879,9 +928,9 @@ if ($result){
 
 </body>
 
-<?php 
-    // Generate a random number between 1 and 3
-    $random_number = rand(1, 2);
+<?php //ad block 
+    $random_number = rand(1, 2);    // Generate a random number between 1 and 3
+
     $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
 
     $result = mysqli_query($db_connection, $query);

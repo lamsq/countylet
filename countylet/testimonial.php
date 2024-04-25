@@ -12,7 +12,7 @@
 
 <body>
     
-    <header>
+<header>
         <div class="options">
 
             <?php
@@ -134,7 +134,7 @@
                     echo "<a href=\" \"><div id=\"suboption10\" class=\"suboption\">Edit landlord account </div></a>";
                     echo "<a href=\" \"><div id=\"suboption11\" class=\"suboption\">Property listing </div></a>";
                     echo "<a href=\" \"><div id=\"suboption12\" class=\"suboption\">Edit property </div></a>";
-                    echo "<a href=\" \"><div id=\"suboption13\" class=\"suboption\">Inventory details  </div></a>";
+                    echo "<a href=\"inventory_details.php\"><div id=\"suboption13\" class=\"suboption\">Inventory details  </div></a>";
                     echo "<a href=\" \"><div id=\"suboption14\" class=\"suboption\">Edit inventory details  </div></a>";
                     echo "</div>";
 
@@ -155,7 +155,7 @@
                     echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
                     echo "<a href=\" \"><div id=\"suboption50\" class=\"suboption\">Property listing </div></a>";
                     echo "<a href=\" \"><div id=\"suboption51\" class=\"suboption\">Edit property </div></a>";
-                    echo "<a href=\" \"><div id=\"suboption52\" class=\"suboption\">Inventory details  </div></a>";
+                    echo "<a href=\"inventory_details.php\"><div id=\"suboption52\" class=\"suboption\">Inventory details  </div></a>";
                     echo "<a href=\" \"><div id=\"suboption53\" class=\"suboption\">Edit inventory details  </div></a>";
                     echo "</div>";
 
@@ -169,7 +169,7 @@
                     echo "</div>";
 
                     echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
-                    echo "<a href=\" \"><div id=\"suboption50\" class=\"suboption\">Inventory details </div></a>";
+                    echo "<a href=\"inventory_details.php\"><div id=\"suboption50\" class=\"suboption\">Inventory details </div></a>";
                     echo "</div>";
 
                 }
@@ -522,6 +522,7 @@
                 ?>
                 
     </header>
+
 
     <main>
 

@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Апр 25 2024 г., 02:51
--- Версия сервера: 10.4.32-MariaDB
--- Версия PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Apr 25, 2024 at 06:47 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `s3112251`
+-- Database: `s3112251`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `advert`
+-- Table structure for table `advert`
 --
 
 CREATE TABLE `advert` (
@@ -37,10 +37,18 @@ CREATE TABLE `advert` (
   `picture` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `advert`
+--
+
+INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `text`, `picture`) VALUES
+(1, 'trash disposal', 'trash disposal company', 'trash@take.away', 1234567890, 'trash disposal', 'advertisement/1/'),
+(2, 'soda', 'soda', 'love@soda.com', 880025553, 'the ultimate  product for everything', 'advertisement/2/');
+
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `contracts`
+-- Table structure for table `contracts`
 --
 
 CREATE TABLE `contracts` (
@@ -55,32 +63,47 @@ CREATE TABLE `contracts` (
   `contract` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `contracts`
+--
+
+INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
+(6, 1, 1200, 4, '2026-04-30', '2028-05-30', 0, 1200, 'contract text: lorem'),
+(6, 2, 3000, 5, '2024-04-24', '2028-09-24', 300, 2700, 'Terms and Conditions:  Term of Tenancy: This agree');
+
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `inventory`
+-- Table structure for table `inventory`
 --
 
-CREATE TABLE `Inventory` (
-    `id` INT(11) NOT NULL,
-    `property_id` INT(11) NOT NULL,
-    `WIFI` boolean,
-    `Television` boolean,
-    `Parking` boolean,
-    `Air_conditioned` boolean,
-    `Refrigerator` boolean,
-    `Oven` boolean,
-    `Stove` boolean,
-    `Microwave` boolean,
-    `Dishwasher` boolean,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`property_id`) REFERENCES `Property`(`property_id`)
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL,
+  `property_id` int(11) NOT NULL,
+  `WIFI` tinyint(1) DEFAULT NULL,
+  `Television` tinyint(1) DEFAULT NULL,
+  `Parking` tinyint(1) DEFAULT NULL,
+  `Air_conditioned` tinyint(1) DEFAULT NULL,
+  `Refrigerator` tinyint(1) DEFAULT NULL,
+  `Oven` tinyint(1) DEFAULT NULL,
+  `Stove` tinyint(1) DEFAULT NULL,
+  `Microwave` tinyint(1) DEFAULT NULL,
+  `Dishwasher` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `property_id`, `WIFI`, `Television`, `Parking`, `Air_conditioned`, `Refrigerator`, `Oven`, `Stove`, `Microwave`, `Dishwasher`) VALUES
+(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0),
+(2, 2, 1, 0, 1, 0, 1, 0, 1, 1, 1),
+(3, 3, 1, 1, 0, 1, 1, 0, 0, 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `property`
+-- Table structure for table `property`
 --
 
 CREATE TABLE `property` (
@@ -100,14 +123,14 @@ CREATE TABLE `property` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `property`
+-- Dumping data for table `property`
 --
 
 INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_id`, `owner_id`, `mon_rent`, `eircode`, `address`, `length`, `available`, `taken_start`, `taken_end`) VALUES
 ('apartment', 2, 'This charming beachfront property boasts breathtaking ocean views and direct access to a pristine sandy shore. Nestled within a quiet coastal community, this two-bedroom cottage is ideal for those seeking relaxation and seaside adventures. ', 'property/1/', 1, 5, 800, 'D07XT61', '43-53 Montpelier Hill, D110b, Stoneybatter', 5, 1, NULL, NULL),
 ('house', 4, 'Situated in the heart of a vibrant city, this sleek urban retreat offers modern comfort and convenience. Step into a stylish one-bedroom apartment with floor-to-ceiling windows showcasing city skyline views. ', 'property/2/', 2, 16, 600, 'D08TY89', 'Dublin, Center', 7, 1, NULL, NULL),
 ('apartment', 3, 'Escape to this secluded mountain hideaway nestled among towering pine trees. Located in a serene wilderness setting, this rustic cabin offers a true retreat from the hustle and bustle of everyday life. ', 'property/3/', 3, 16, 1200, 'D08TY45', 'Dublin, 15', 12, 1, NULL, NULL),
-('house', 4, 'Step back in time at this beautifully restored historic home exuding timeless elegance. Located in a historic district, this grand property features exquisite architectural details, antique furnishings, and period décor. Wander through spacious rooms with high ceilings, ornate moldings, and original hardwood floors. The property includes multiple bedrooms, a formal dining room, and a charming garden for outdoor gatherings. Perfect for history enthusiasts and architecture aficionados, this historic residence offers a glimpse into the past while providing modern comforts. Enjoy the ambiance of a bygone era combined with the convenience of being close to local landmarks, museums, and fine dining establishments.', 'property/4/', 4, 16, 600, 'D08TY89', 'Dublin, Center', 3, 0, NULL, NULL),
+('house', 4, 'Step back in time at this beautifully restored historic home exuding timeless elegance. Located in a historic district, this grand property features exquisite architectural details, antique furnishings, and period decor. Wander through spacious rooms with high ceilings, ornate moldings, and original hardwood floors. The property includes multiple bedrooms, a formal dining room, and a charming garden for outdoor gatherings. Perfect for history enthusiasts and architecture aficionados, this historic residence offers a glimpse into the past while providing modern comforts. Enjoy the ambiance of a bygone era combined with the convenience of being close to local landmarks, museums, and fine dining establishments.', 'property/4/', 4, 16, 600, 'D08TY89', 'Dublin, Center', 3, 0, NULL, NULL),
 ('apartment', 3, 'Experience the tranquility of the countryside at this inviting country retreat. Surrounded by rolling hills and pastoral landscapes, this quaint farmhouse offers a peaceful escape from city life. Relax on the wraparound porch with panoramic views or explore the expansive gardens and orchards. Inside, the farmhouse features a cozy living room with a fireplace, a farmhouse kitchen with modern amenities, and comfortable bedrooms decorated in a charming country style. Ideal for families and nature lovers, this property invites you to unwind, savor farm-fresh produce, and enjoy outdoor activities like hiking, birdwatching, and stargazing. Immerse yourself in rural beauty and hospitality at this delightful country retreat.', 'property/5/', 5, 18, 1500, 'D08TY45', 'Dublin, 15, Smithfield', 5, 0, NULL, NULL),
 ('house', 4, 'Discover the joys of lakeside living at this inviting lakefront haven. Situated on the shores of a picturesque lake, this modern cabin offers stunning water views and direct access to water activities. Enjoy fishing off the private dock, kayaking on the lake, or simply relaxing on the waterfront deck. The interior boasts a bright and airy living space with large windows, a fully equipped kitchen, and comfortable sleeping quarters. Whether you\'re seeking a romantic getaway or a family vacation, this property provides a perfect blend of relaxation and adventure. Unwind with serene sunsets reflected on the water and create lasting memories at this charming lakefront retreat.', 'property/6/', 6, 5, 990, 'D08TY89', 'Dublin, Center, Rathmines', 11, 0, NULL, NULL),
 ('apartment', 3, 'Live in luxury at this sophisticated city skyline penthouse. Perched atop a high-rise building, this spacious penthouse offers panoramic views of the city skyline through floor-to-ceiling windows. Step onto the expansive terrace to enjoy al fresco dining with breathtaking urban vistas. Inside, the penthouse features a designer kitchen, an elegant living area, and luxurious bedrooms with plush furnishings. Perfect for discerning travelers and those seeking a lavish city experience, this property is conveniently located near upscale restaurants, galleries, and nightlife. Treat yourself to the ultimate urban retreat with unparalleled views and upscale amenities.', 'property/7/', 7, 18, 1900, 'D08TY45', 'Dublin 17, Abbey road', 7, 1, NULL, NULL),
@@ -117,7 +140,7 @@ INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_i
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -126,16 +149,8 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `roles`
+-- Dumping data for table `roles`
 --
-
-INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
-(6, 1, 1200, 4, '2026-04-30', '2028-05-30', 0, 1200, 'contract text: lorem'),
-(6, 2, 3000, 5, '2024-04-24', '2028-09-24', 300, 2700, 'Terms and Conditions:  Term of Tenancy: This agree');
-
-INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `text`, `picture`) VALUES
-(1, 'trash disposal', 'trash disposal company', 'trash@take.away', 1234567890, 'trash disposal', 'advertisement/1/'),
-(2, 'soda', 'soda', 'love@soda.com', 880025553, 'the ultimate  product for everything', 'advertisement/2/');
 
 INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (4, 'admin'),
@@ -152,28 +167,22 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (23, ' tenant'),
 (24, ' tenant');
 
-INSERT INTO `inventory` (`id`, `property_id`, `WIFI`, `Television`, `Parking`, `Air_conditioned`, `Refrigerator`, `Oven`, `Stove`, `Microwave`, `Dishwasher`) VALUES
-(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0),
-(2, 2, 1, 0, 1, 0, 1, 0, 1, 1, 1),
-(3, 3, 1, 1, 0, 1, 1, 0, 0, 1, 1);
-
-
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `testimonial`
+-- Table structure for table `testimonial`
 --
 
-  CREATE TABLE `testimonial` (
-    `user_id` int(11) UNSIGNED NOT NULL,
-    `text` varchar(600) NOT NULL,
-    `id` int(11) NOT NULL,
-    `date` date NOT NULL DEFAULT current_timestamp(),
-    `approved` tinyint(1) NOT NULL DEFAULT 0
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `testimonial` (
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `text` varchar(600) NOT NULL,
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `approved` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `testimonial`
+-- Dumping data for table `testimonial`
 --
 
 INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
@@ -189,7 +198,7 @@ INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -201,7 +210,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
@@ -220,121 +229,115 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (24, 'newtest', '$2y$10$5.2Sd4dOHthbEiAxJLcCKuJKS9gvEcxpqlTit1eevHVT5CxT2jxuy', 'newTest@tt.est', 'tetete');
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `advert`
+-- Indexes for table `advert`
 --
 ALTER TABLE `advert`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `contracts`
+-- Indexes for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD KEY `property_id` (`property_id`),
   ADD KEY `tenant_id` (`tenant_id`);
 
 --
--- Индексы таблицы `inventory`
+-- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`),
   ADD KEY `property_id` (`property_id`);
 
 --
--- Индексы таблицы `property`
+-- Indexes for table `property`
 --
 ALTER TABLE `property`
   ADD PRIMARY KEY (`property_id`),
   ADD KEY `owner_id` (`owner_id`);
 
 --
--- Индексы таблицы `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Индексы таблицы `testimonial`
+-- Indexes for table `testimonial`
 --
 ALTER TABLE `testimonial`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `advert`
+-- AUTO_INCREMENT for table `advert`
 --
 ALTER TABLE `advert`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `inventory`
---
-ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `property`
+-- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
   MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `testimonial`
+-- AUTO_INCREMENT for table `testimonial`
 --
 ALTER TABLE `testimonial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT для таблицы `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `contracts`
+-- Constraints for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `inventory`
+-- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`);
 
 --
--- Ограничения внешнего ключа таблицы `property`
+-- Constraints for table `property`
 --
 ALTER TABLE `property`
   ADD CONSTRAINT `property_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `roles`
+-- Constraints for table `roles`
 --
 ALTER TABLE `roles`
   ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `testimonial`
+-- Constraints for table `testimonial`
 --
 ALTER TABLE `testimonial`
   ADD CONSTRAINT `testimonial_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;

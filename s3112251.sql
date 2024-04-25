@@ -198,11 +198,6 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (23, 'newtenant', '$2y$10$vtIbdoChCKxRUpxo5ROape5klGI3Uo/6s0cVxY9Qu4245r.OlzIw6', 'newnant@tt.tu', 'tenten'),
 (24, 'newtest', '$2y$10$5.2Sd4dOHthbEiAxJLcCKuJKS9gvEcxpqlTit1eevHVT5CxT2jxuy', 'newTest@tt.est', 'tetete');
 
-
-INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
-(6, 1, 1200, 4, '2026-04-30', '2028-05-30', 0, 1200, 'contract text: lorem'),
-(6, 2, 3000, 5, '2024-04-24', '2028-09-24', 300, 2700, 'Terms and Conditions:  Term of Tenancy: This agree');
-
 --
 -- Индексы сохранённых таблиц
 --

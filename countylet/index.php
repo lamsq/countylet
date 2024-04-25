@@ -67,7 +67,7 @@
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
                         echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
-                        echo "<a href=\" \"><div id=\"option5\" class=\"option\">Tenant account</div></a>";
+                        echo "<a href=\"tenant_account.php\"><div id=\"option5\" class=\"option\">Tenant account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
                 }

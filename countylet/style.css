@@ -313,6 +313,53 @@ input::-webkit-inner-spin-button {
 
 
 
+/* TESTIMONIALS */
+#reviews .review {
+    margin: 1rem auto;
+    
+    background-color: #f5ffee;
+}
+
+.review .name_date_review {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.name, .date {
+    width: 50%;
+}
+
+.date {
+    text-align: right;
+    font-weight: bold;
+    margin-top: auto;
+    
+}
+
+.name {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.text {
+    text-align: justify;
+    padding: 1rem;
+}
+
+#reviews_subtitle {
+    margin: 1rem 0rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: rgb(160, 160, 160);
+}
+
+
+
+
+
+
+
 
 
 

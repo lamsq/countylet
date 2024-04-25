@@ -525,288 +525,84 @@
 
     <main>
 
-        
-        <div class="search">
-            <div class="search_subtitle"><h2 >Search your property:</h2></div>
-            <form id="form_id" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="GET" novalidate>
+        <div id="reviews">
 
-                <div class="search_dates">
-                    <div id="start_date_div">
-                        <label for="start_date">Start Date:</label>
-                        <input type="date" id="start_date" name="start_date" value=" <?php if(isset($_GET['start_date'])) echo htmlspecialchars($_GET['start_date'])?> ">
-                    </div>
-
-                    <div id="end_date_div">
-                        <label for="end_date">End Date:</label>
-                        <input type="date" id="end_date" name="end_date" value=" <?php if(isset($_GET['end_date'])) echo htmlspecialchars($_GET['end_date'])?> ">
-                    </div>
+                <div id='reviews_subtitle'>Reviews:
                 </div>
 
-                <div id="bed_dropdown_div">
-                <label for="bedrooms">Number of Bedrooms:</label>
-                <select id="bed_dropdown" name="bed_dropdown">
-                        <option value=""></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                </select>
-                </div>
-        
-                    <div class="price-input"> 
-                        <div id="min_price_div" class="price-field"> 
-                            <span>Price range: From</span> 
-                            <input type="number" class="min-input" name="min_price" value="0"> 
-                        </div> 
-                        <div class="price-field" id="max_price_div"> 
-                            <span>To</span> 
-                            <input type="number" class="max-input" name="max_price" value="5000"> 
-                        </div> 
-                    </div> 
+                <?php                     
+
+                    $reviews = array();
+                    $authors = array();
+                    require_once '../mysql_connect.php';   
+                                                
+                    $query = "SELECT * FROM testimonial WHERE approved=1 ORDER BY date DESC;"; 
+                    $result = mysqli_query($db_connection, $query);
+
+                    if ($result){                         
+                        while($row = mysqli_fetch_assoc($result)){ 
+                            $reviews[]=$row;
+                        }
                     
-                <input class="search_button" type="submit" name="search" value="Search">
-            </form>
-        </div>
-    
+                        //mysqli_free_result($result);                         
+                    } else { 
+                        echo "<h3>Something went wrong, try again;</h3>";
+                    }
 
-                <?php
 
-                    $boxes_search_results = array();
-                    $search_errors = [];
+                    $query = "SELECT name, surname, id FROM users;"; 
+                    $result = mysqli_query($db_connection, $query);
 
-                        $start_date='';
-                        $end_date='';
-                        $beds='';
-                        $min_price='';
-                        $max_price='';
-
-                    // Retrieve and sanitize the input
-                    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
-
-                        
-                        // Ensure $_POST['purchaseDate'] and $_POST['warrantyExpDate'] are set
-                        $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
-                        $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
-
-                        // Get today's date string in 'Y-m-d' format to compare with input dates
-                        $today_str = date('Y-m-d');
-                        
-
-                        // Convert dates to Unix timestamps for comparison
-                        $startDateTimestamp = strtotime($start_date);
-                        $endDateTimestamp = strtotime($end_date);
-                        $todayTimestamp = strtotime($today_str);
-
-                        // Validate Purchase Date
-
-                        if($start_date != null && $end_date!=null){
-                            $startDateTimestamp = strtotime($start_date);
-                            $endDateTimestamp = strtotime($end_date);
-                            $todayTimestamp = strtotime($today_str);
-                            if($todayTimestamp>$startDateTimestamp || $todayTimestamp>$endDateTimestamp ){
-                                $search_errors[]="Incorrect start/end date, can not be in the past;";
-                            }
-                            else if($endDateTimestamp-$startDateTimestamp<=0){
-                                $search_errors[]="Start date must be before end date;";
-                            }
-
-                        }else if (($start_date == null || $end_date==null) && ( $start_date != null || $end_date!=null)  ){
-                            $search_errors[]="Set up both start and end dates;";
+                    if ($result){                         
+                        while($row = mysqli_fetch_assoc($result)){ 
+                            $authors[]=$row;
                         }
+                    
+                        //mysqli_free_result($result);                         
+                    } else { 
+                        echo "<h3>Something went wrong, try again;</h3>";
+                    }
 
-                        if (isset($_GET['bed_dropdown']) && preg_match('/^[1-4]$/', $_GET['bed_dropdown']) ){
-                            $beds = htmlentities(sanitized($_GET['bed_dropdown']));                           
-                        }else {
-                            $beds=null;
-                        }
 
-                        // if(isset($_GET['min_price']) && isset($_GET['max_price']) && (isset($_GET['max_price'])<isset($_GET['min_price']))){
-                        //     $search_errors[] = "Incorrect price range;";
-                        // }
+                    if (count($reviews)==0) {
+                        echo "<div id='no_results'>No testimonials found;</div>";
+                    }
 
-                        if (isset($_GET['min_price']) && preg_match('/^\d*\.?\d+$/', $_GET['min_price']) ){
-                            $min_price=htmlentities(sanitized($_GET['min_price']));
-                        } else if (!preg_match('/^\d*\.?\d+$/', $_GET['min_price'])) {
-                            $search_errors[] = "Incorrect min price format;";
-                        } else {
-                            $min_price=null;
-                        }
+                    
+                    for($c=0; $c<count($reviews); $c++){
 
-                        if (isset($_GET['max_price']) && preg_match('/^\d*\.?\d+$/', $_GET['max_price'])){
-                            $max_price=htmlentities(sanitized($_GET['max_price']));
-                        } else if (!preg_match('/^\d*\.?\d+$/', $_GET['max_price'])){
-                            $search_errors[] = "Incorrect max price format;";
-                        } else {
-                            $max_price=null;
-                        }
-                        
-                        if(empty($search_errors)){
 
-                            require_once '../mysql_connect.php';   
-                            
-                            $query = "SELECT * FROM property WHERE available=1 "; 
-                           
-                            if(($start_date!=null && $end_date!=null) || $beds!=null || $min_price!=null || $max_price!=null){
-                                
-                                if($start_date!=null && $end_date!=null){
+                        echo "
 
-                                    $start_date = strtotime($start_date);
-                                    $end_date = strtotime($end_date);
-                                    $months = ceil(abs($end_date - $start_date) / (30 * 24 * 60 * 60));
-                                    $query.="AND length>=".$months." ";
-                                }
+                        <div class='review'>
+                            <div class='name_date_review'>
+                                <div class='name'>"; 
+                                    for($a=0; $a<count($authors); $a++){
+                                        if($reviews[$c]['user_id']==$authors[$a]['id']){
+                                            echo $authors[$a]['name']." ".$authors[$a]['surname'];
+                                            break;
+                                        }
+                                    }
+                                echo "</div>
 
-                                if($beds!=null){
-                                    $query.="AND bedrooms=".$beds." ";
-                                }
+                                <div class='date'>";
+                                    echo $reviews[$c]['date'];
+                                echo "</div>
+                            </div>
 
-                                if ($min_price!=null){
-                                    $query.="AND mon_rent>=".$min_price." ";
-                                }
+                            <div class='text'>";
+                                echo $reviews[$c]['text'];
+                            echo "</div>
 
-                                if( $max_price!=null){
-                                    $query.="AND mon_rent<=".$max_price.";";
-                                }
+                        </div>";
 
-                            }
-
-                            $result = mysqli_query($db_connection, $query);
-                            
-                            if ($result){ 
-                                
-                                while($row = mysqli_fetch_assoc($result)){ 
-                                    $boxes_search_results[]=$row;
-                                }
-                                
-                                $search_done = true;
-                                
-                                mysqli_free_result($result); 
-                                
-                            } else { 
-                                echo "<h3>Something went wrong, try again;</h3>";
-                            }
-
-                        }
-                        
                     }
 
                 ?>
 
-
-        <!-- content -->
-        <div class="errors_search" id="errors_search_id">
-            <?php 
-                foreach ($search_errors as $search_err){
-                    echo "<div >";
-                    echo $search_err;
-                    echo "</div>";
-                }
-            ?>
         </div>
-
-
-            <?php 
-
-
-                if(isset($search_done))
-                echo "<div id='search_results'>Results found: ".count($boxes_search_results)."</div>";
-
-                if(count($boxes_search_results)>0){
-
-
-                    for ($t=0; $t<count($boxes_search_results); $t++){
-
-                        echo"
-    
-                        <div class='boxes_search' id='boxes_search_id'>
-    
-                            <div class='search_results_row'>
-
-                                    <div class='main_photo_search'>
-    
-                                        
-                                            <img src='".$boxes_search_results[$t]['photos']."0.jpg"."
-                                            
-                                            ' alt=''>
-                                        
-    
-                                    </div>
-    
-                                <div class='box_search' id='box_search_id'>
-    
-                                    <div class='price_search'> 
         
-                                    ".$boxes_search_results[$t]['mon_rent']." EUR/mon
-
-                                    </div>
-    
-                                    <div class='type_search'> 
-    
-                                        <b>Property type:</b> ".$boxes_search_results[$t]['type']."
-    
-                                    </div>
-    
-                                    
-    
-                                    <div class='bedrooms_search'>
-    
-                                    <b>Number of bedrooms:</b> ".$boxes_search_results[$t]['bedrooms']."
-    
-                                    </div>
-    
-                                    <div class='address_search'>
-    
-                                    <b>Address: </b>".strtoupper($boxes_search_results[$t]['eircode']).", ".$boxes_search_results[$t]['address']."
-    
-                                    </div>
-    
-                                    <div class='length_search'>
-                                    <b>Available for:</b> ".$boxes_search_results[$t]['length']." months
-                                    </div>
-    
-                                    <div class='text_search'>
-                                        ".$boxes_search_results[$t]['description']."
-                                    </div>
-                                
-                                </div>
-    
-                            </div>
-     
-                        </div> ";
-    
-                    }
-
-
-
-                }
-
-                
-
-                
-
-
-
-
-
-
-
-
-
-                
-            
-            
-            
-            
-            
-            
-            ?>
-        
-
-
-                    
-
     </main>
-
 
 
     <?php //scripts to show/hide suboptions when user hovers header options

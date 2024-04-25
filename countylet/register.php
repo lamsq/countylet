@@ -7,7 +7,7 @@ require_once ("../mysql_connect.php");
 
 
             
-            mysqli_close($db_connection);
+mysqli_close($db_connection);
 
 ?>
 

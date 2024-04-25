@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 25 2024 г., 00:51
+-- Время создания: Апр 25 2024 г., 02:51
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -140,6 +140,34 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `testimonial`
+--
+
+CREATE TABLE `testimonial` (
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `text` varchar(600) NOT NULL,
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `approved` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `testimonial`
+--
+
+INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
+(4, 'Exceptional service from this letting agency! From the moment I contacted them about finding a rental property, they were professional and efficient. They understood my requirements perfectly and showed me several properties that matched my needs. The whole renting process was smooth, and their team was responsive to all my queries. I highly recommend them to anyone looking for a stress-free renting experience.', 4, '2024-04-25', 1),
+(5, 'I had a fantastic experience with this letting agency. They helped me find the perfect apartment within my budget and in a great location. The staff was friendly and knowledgeable, guiding me through every step of the rental process. They were prompt in addressing any concerns I had and made the paperwork easy to understand. I am grateful for their support and would definitely use their services again.', 5, '2024-04-25', 0),
+(6, 'Highly impressed with the professionalism of this letting agency. They made the process of finding a new rental property incredibly easy. The agents were attentive to my requirements and showed genuine interest in finding me the right home. Communication was excellent throughout, and they were always quick to respond to emails and calls. I would not hesitate to recommend them to anyone searching for a rental property.', 6, '2024-04-25', 0),
+(15, 'This letting agency is outstanding! They assisted me in finding a wonderful home for my family. The team was knowledgeable about the local area and provided valuable insights during property viewings. They negotiated on my behalf and ensured I secured a rental agreement that suited my needs. I appreciate their dedication and would use their services again in the future.', 7, '2024-04-25', 1),
+(16, 'I had a great experience with this letting agency. The staff was friendly, professional, and helpful from start to finish. They listened to what I was looking for and provided options that matched my criteria. The whole process was efficient, and they were transparent about fees and terms. I would definitely recommend this agency to anyone seeking a rental property.', 8, '2024-04-24', 0),
+(17, 'Five-star service from this letting agency! They were proactive in helping me find a suitable rental property within my budget. The agents were attentive, courteous, and knowledgeable about the local rental market. They addressed all my concerns promptly and made sure the entire renting process went smoothly. I\'m delighted with their service and grateful for their assistance.', 9, '2024-04-24', 1),
+(18, 'Excellent experience with this letting agency. The team was highly professional and went above and beyond to assist me in finding the right rental property. They were patient and understanding of my needs, ensuring that I was satisfied with my choice. Communication was clear throughout, and they provided valuable advice during the negotiation process. I would recommend them without hesitation.', 10, '2024-04-23', 1),
+(19, 'This letting agency is top-notch! They made my search for a rental property stress-free and enjoyable. The agents were knowledgeable about the market and showed me properties that matched my preferences perfectly. They guided me through the paperwork and kept me informed at every stage. Overall, a fantastic experience working with them.', 11, '2024-04-23', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -208,6 +236,13 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Индексы таблицы `testimonial`
+--
+ALTER TABLE `testimonial`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -235,6 +270,12 @@ ALTER TABLE `inventory`
 --
 ALTER TABLE `property`
   MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT для таблицы `testimonial`
+--
+ALTER TABLE `testimonial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -270,6 +311,12 @@ ALTER TABLE `property`
 --
 ALTER TABLE `roles`
   ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `testimonial`
+--
+ALTER TABLE `testimonial`
+  ADD CONSTRAINT `testimonial_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

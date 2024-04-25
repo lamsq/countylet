@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <header>
+    
+<header>
         <div class="options">
 
             <?php
@@ -27,7 +28,7 @@
                 }
 
                 if (isset($_COOKIE['logged_in']) && ($_COOKIE['logged_in'])==true){
-                    require_once ("../mysql_connect.php");
+                    require ("../mysql_connect.php");
                     $query = "SELECT * FROM roles"; // MySQL statement
                     $result = mysqli_query($db_connection, $query);
                     if ($result){
@@ -46,7 +47,7 @@
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Tenant options</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option3\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Adverts</div></a>";
-                        echo "<a href=\"testimonial.php\"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
+                        echo "<a href=\" \"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option7\" class=\"option\">Log out</div></a>";
                         
@@ -56,7 +57,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
-                        echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
+                        echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Landlord account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
@@ -65,7 +66,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
-                        echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
+                        echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                         echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"tenant_account.php\"><div id=\"option5\" class=\"option\">Tenant account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
@@ -76,7 +77,7 @@
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                     echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";
                     echo "<a href=\" \"><div id=\"option2\" class=\"option\">Adverts</div></a>";
-                    echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
+                    echo "<a href=\" \"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
                     echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                     echo "<a href=\"#\" onclick=\"show_login_suboptions()\"><div id=\"option5\" class=\"option\">Login/Register</div></a>";
                 }
@@ -84,7 +85,7 @@
             ?>
         </div>
 
-            <div id="msg" hidden>
+        <div id="msg" hidden>
                 <div >
                     <?php
                          
@@ -105,7 +106,7 @@
 
                     ?>
                 </div>
-            </div> 
+                </div> 
 
                 <?php 
 
@@ -117,7 +118,7 @@
                 if (isset($_COOKIE['logged_in']) && $role=="admin"){
 
                     echo "<div id=\"home_suboptions\" class=\"suboptions\" hidden>";
-                    echo "<a href=\"index_edit.php\"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
+                    echo "<a href=\" \"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
                     echo "</div>";
 
                     echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
@@ -217,6 +218,7 @@
                         
                                     // verify the password
                                     if (password_verify($password, $row['password'])) {
+                                        echo $_SESSION["user_id"];
                                         $_SESSION["user_id"] = $row['id'];
                                         $_SESSION["user"] = $row;
                                         $_SESSION["name"] = $row['name'];
@@ -227,7 +229,7 @@
                                         setcookie('loggedin_msg', "Successfully logged in", time()+3, '/', '', true, true);
                         
                                         // Redirect the user to welcome page
-                                        header("location: index.php");
+                                        header("location: tenant_account.php");
 
                                         exit;
                                     } else {
@@ -240,7 +242,7 @@
                                 $stmt->close();
                             }
                             
-                            //mysqli_close($db_connection);
+                            mysqli_close($db_connection);
                             
                         }
 
@@ -413,7 +415,7 @@
 
                                     }
                                     
-                                    //mysqli_close($db_connection);
+                                    mysqli_close($db_connection);
 
 
                             }
@@ -518,147 +520,128 @@
 
                 }
 
-                ?>
-                
-    </header>
 
-    <main>
 
-        <!-- Title and description -->
-        <div class="title_description">
-            <!-- bootstrap form-group -->
-            <div class="">
-                <!-- form title -->
-                <div><h1>CountyLet</h1></div>
-                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
-            </div>
-        </div>
-
-        <!-- content -->
-        <div class="boxes">
-
-                <?php
-                    $property0=array();
-                    $property1=array();
-                    $property2=array();
-                    $boxes_data=array($property2,$property1,$property0);
-
-                    require_once  '../mysql_connect.php';   // Require database connection script                            
-                    $query = "SELECT * FROM property ORDER BY property_id DESC;"; // MySQL statement
-                    $result = mysqli_query($db_connection, $query);
-                    
-                    if ($result){ // Check if query was successful
                         
-                        $ads_counter=3;
-
-                        while($row = mysqli_fetch_assoc($result)){ // Loop through the data
-                            $ads_counter--;
-                            $boxes_data[$ads_counter] = array(
-                                "type"=>$row['type'],
-                                "bedrooms"=>$row['bedrooms'],
-                                "description"=>$row['description'],
-                                "photos"=>$row['photos'],
-                                "property_id"=>$row['property_id'],
-                                "owner_id"=>$row['owner_id'],
-                                "mon_rent"=>$row['mon_rent'],
-                                "eircode"=>$row['eircode'],
-                                "address"=>$row['address']
-                            );
-                            if($ads_counter==0){
-                                break;
-                            }                             
-                        }
-
-                        if($ads_counter!=0){
-                            if($ads_counter>1){
-                                echo "  <script>
-                                let box0 = document.getElementById('box0');                                
-                                box.setAttribute('hidden', true);                                
-                                </script>";
-                                if($ads_counter>2){
-                                    echo " <script>
-                                    let box1 = document.getElementById('box1');                                    
-                                    box.setAttribute('hidden', true);                                     
-                                    </script>";
-                                    if($ads_counter==3){
-                                        echo "  <script>
-                                        let box2 = document.getElementById('box2');
-                                        box.setAttribute('hidden', true);                             
-                                        </script>";    
-                                    }
-                                }                                
-                            }                             
-                        }
-                        //mysqli_free_result($result); // free the result set                        
-                    } else { // connection error
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
-                    
 
                 ?>
+                
+</header>
 
-                <div class="box" >
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>>
-                        <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-1]['photos']."0.jpg'";   
-                        ?> alt="">
+<main>
+
+<?php 
+$user_id = $_COOKIE["user_id"];
+
+$query = "SELECT * FROM contracts JOIN property ON contracts.property_id = property.property_id WHERE tenant_id = '" . $user_id . "'";
+
+$result = mysqli_query($db_connection, $query);
+
+// var_dump($result);
+
+if ($result){ 
+                                
+    while($row = mysqli_fetch_assoc($result)){ 
+        $boxes_search_results[]=$row;
+    }
+
+    if(count($boxes_search_results) == 1){
+        
+        echo "<div id='search_results'>You has ".count($boxes_search_results)." Tenancy</div>";
+    
+    }else if (count($boxes_search_results) >1){
+    
+        echo "<div id='search_results'>You has ".count($boxes_search_results)." Tenancies</div>";
+    
+    }
+    
+    mysqli_free_result($result); 
+
+
+
+    if(count($boxes_search_results)>0){
+
+
+        for ($t=0; $t<count($boxes_search_results); $t++){
+
+            echo"
+
+            <div class='boxes_search' id='boxes_search_id'>
+
+                <div class='search_results_row'>
+
+                        <div class='main_photo_search'>
+
+                            
+                                <img src='".$boxes_search_results[$t]['photos']."0.jpg"."
+                                
+                                ' alt=''>
+                            
+
+                        </div>
+
+                        
+                    <div class='box_search' id='box_search_id'>
+
+                        <div class='price_search'> 
+
+                        ".$boxes_search_results[$t]['mon_rent']." EUR/mon
+
+                        </div>
+
+                        <div class='owed'> 
+                        
+                        <b>Amount owed:</b> ".$boxes_search_results[$t]['owed']." EUR
+                        
+                        </div>
+                        <div class='paid'> 
+                        
+                        <b>Amount paid:</b> ".$boxes_search_results[$t]['paid']." EUR
+                        
+                        </div>
+
+                        <div class='start_end_dates'>
+
+                        <b>Start Date: </b>".strtoupper($boxes_search_results[$t]['start']).", <b>End Date: </b> ".$boxes_search_results[$t]['end']."
+
+                        </div>
+
+                        <div class='tenancy_length'>
+                        <b>Tenancy lenght:</b> ".$boxes_search_results[$t]['tenancy_length']." months
+                        </div>
+
+                        <div class='tenancy_agreement'>
+                        <b>Tenancy Agreement:</b> ".$boxes_search_results[$t]['contract']."
+                        </div>
+
                     </div>
 
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>  </div>
-
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?> € </div>
-
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>  
-                    <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?> </div>
-                
                 </div>
 
+            </div> ";
 
-                <div class="box" id="box1">
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-2]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
+        }
 
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["type"]; ?> </div>
 
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?> €</div>
 
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["description"]; ?> </div>
-                
-                </div>
+    }
 
-                
-                <div class="box" id="box0">
-                    <div class="img" <?php if(isset($_COOKIE["index_photo"]) && $_COOKIE["index_photo"]==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-3]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>  
 
-                    <div class="type" <?php if(isset($_COOKIE["index_type"]) && $_COOKIE["index_type"]==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?></div> 
 
-                    <div class="price" <?php if(isset($_COOKIE["index_price"]) && $_COOKIE["index_price"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?> € </div>
 
-                    <div class="text" <?php if(isset($_COOKIE["index_text"]) && $_COOKIE["index_text"]==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["description"]; ?></div>
-                
-                </div>
-                
-                
-                
-                
-                
-                
-            </div>
 
-    </main>
+
+
+
+
+    
+} else { 
+    echo "<h3>This user has no tenancies;</h3>";
+}
+
+?>
+</main>
+
 
 
     <?php //scripts to show/hide suboptions when user hovers header options
@@ -845,7 +828,7 @@
                     let login_suboptions = document.getElementById('login_suboptions');
                     let login_form = document.getElementById('login_form');
                     let reg_form = document.getElementById('registration_form');
-                                 
+                                
                     login_suboptions.removeAttribute('hidden'); 
                     login_form.setAttribute('hidden', true);
                     reg_form.removeAttribute('hidden');
@@ -860,29 +843,27 @@
 
     ?>
 
-        <script>
+    <script>  
+        let login_form = document.getElementById('login_form');
+        let registration_form = document.getElementById('registration_form');
         
-            let login_form = document.getElementById('login_form');
-            let registration_form = document.getElementById('registration_form');
-            
-            let log_link = document.getElementById('log');
-            let reg_link = document.getElementById('reg');
-            
-            function show_log() {
-                login_form.removeAttribute('hidden');
-                registration_form.setAttribute('hidden', true);
-            }
-            
-            function show_reg() {
-                login_form.setAttribute('hidden', true);
-                registration_form.removeAttribute('hidden');
-            }
+        let log_link = document.getElementById('log');
+        let reg_link = document.getElementById('reg');
+        
+        function show_log() {
+            login_form.removeAttribute('hidden');
+            registration_form.setAttribute('hidden', true);
+        }
+        
+        function show_reg() {
+            login_form.setAttribute('hidden', true);
+            registration_form.removeAttribute('hidden');
+        }
 
-        </script>
+    </script>
 
 
-
-        <?php 
+    <?php 
 
         if(isset($_COOKIE['loggedin_msg']) || isset($_COOKIE['loggedout_msg']) || isset($_COOKIE['registered']) || isset($_COOKIE['existed'])){
             echo "
@@ -895,13 +876,12 @@
             </script> ";
         }
 
+    ?>
 
-        
-        ?>
     
-            
 
 
 </body>
+
 </html>
 

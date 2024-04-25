@@ -61,13 +61,20 @@ CREATE TABLE `contracts` (
 -- Структура таблицы `inventory`
 --
 
-CREATE TABLE `inventory` (
-  `inventory_type` varchar(25) NOT NULL,
-  `id` int(11) NOT NULL,
-  `model_num` varchar(25) NOT NULL,
-  `serial_num` varchar(25) NOT NULL,
-  `warranty_due` date NOT NULL,
-  `property_id` int(11) NOT NULL
+CREATE TABLE `Inventory` (
+    `id` INT(11) NOT NULL,
+    `property_id` INT(11) NOT NULL,
+    `WIFI` boolean,
+    `Television` boolean,
+    `Parking` boolean,
+    `Air_conditioned` boolean,
+    `Refrigerator` boolean,
+    `Oven` boolean,
+    `Stove` boolean,
+    `Microwave` boolean,
+    `Dishwasher` boolean,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`property_id`) REFERENCES `Property`(`property_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -122,6 +129,14 @@ CREATE TABLE `roles` (
 -- Дамп данных таблицы `roles`
 --
 
+INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
+(6, 1, 1200, 4, '2026-04-30', '2028-05-30', 0, 1200, 'contract text: lorem'),
+(6, 2, 3000, 5, '2024-04-24', '2028-09-24', 300, 2700, 'Terms and Conditions:  Term of Tenancy: This agree');
+
+INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `text`, `picture`) VALUES
+(1, 'trash disposal', 'trash disposal company', 'trash@take.away', 1234567890, 'trash disposal', 'advertisement/1/'),
+(2, 'soda', 'soda', 'love@soda.com', 880025553, 'the ultimate  product for everything', 'advertisement/2/');
+
 INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (4, 'admin'),
 (5, 'landlord'),
@@ -137,19 +152,25 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (23, ' tenant'),
 (24, ' tenant');
 
+INSERT INTO `inventory` (`id`, `property_id`, `WIFI`, `Television`, `Parking`, `Air_conditioned`, `Refrigerator`, `Oven`, `Stove`, `Microwave`, `Dishwasher`) VALUES
+(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0),
+(2, 2, 1, 0, 1, 0, 1, 0, 1, 1, 1),
+(3, 3, 1, 1, 0, 1, 1, 0, 0, 1, 1);
+
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `testimonial`
 --
 
-CREATE TABLE `testimonial` (
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `text` varchar(600) NOT NULL,
-  `id` int(11) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp(),
-  `approved` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `testimonial` (
+    `user_id` int(11) UNSIGNED NOT NULL,
+    `text` varchar(600) NOT NULL,
+    `id` int(11) NOT NULL,
+    `date` date NOT NULL DEFAULT current_timestamp(),
+    `approved` tinyint(1) NOT NULL DEFAULT 0
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `testimonial`
@@ -161,7 +182,7 @@ INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
 (6, 'Highly impressed with the professionalism of this letting agency. They made the process of finding a new rental property incredibly easy. The agents were attentive to my requirements and showed genuine interest in finding me the right home. Communication was excellent throughout, and they were always quick to respond to emails and calls. I would not hesitate to recommend them to anyone searching for a rental property.', 6, '2024-04-25', 0),
 (15, 'This letting agency is outstanding! They assisted me in finding a wonderful home for my family. The team was knowledgeable about the local area and provided valuable insights during property viewings. They negotiated on my behalf and ensured I secured a rental agreement that suited my needs. I appreciate their dedication and would use their services again in the future.', 7, '2024-04-25', 1),
 (16, 'I had a great experience with this letting agency. The staff was friendly, professional, and helpful from start to finish. They listened to what I was looking for and provided options that matched my criteria. The whole process was efficient, and they were transparent about fees and terms. I would definitely recommend this agency to anyone seeking a rental property.', 8, '2024-04-24', 0),
-(17, 'Five-star service from this letting agency! They were proactive in helping me find a suitable rental property within my budget. The agents were attentive, courteous, and knowledgeable about the local rental market. They addressed all my concerns promptly and made sure the entire renting process went smoothly. I\'m delighted with their service and grateful for their assistance.', 9, '2024-04-24', 1),
+(17, 'Five-star service from this letting agency! They were proactive in helping me find a suitable rental property within my budget. The agents were attentive, courteous, and knowledgeable about the local rental market. They addressed all my concerns promptly and made sure the entire renting process went smoothly. Im delighted with their service and grateful for their assistance.', 9, '2024-04-24', 1),
 (18, 'Excellent experience with this letting agency. The team was highly professional and went above and beyond to assist me in finding the right rental property. They were patient and understanding of my needs, ensuring that I was satisfied with my choice. Communication was clear throughout, and they provided valuable advice during the negotiation process. I would recommend them without hesitation.', 10, '2024-04-23', 1),
 (19, 'This letting agency is top-notch! They made my search for a rental property stress-free and enjoyable. The agents were knowledgeable about the market and showed me properties that matched my preferences perfectly. They guided me through the paperwork and kept me informed at every stage. Overall, a fantastic experience working with them.', 11, '2024-04-23', 1);
 

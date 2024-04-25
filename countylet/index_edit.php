@@ -817,5 +817,30 @@
 
 
 </body>
+
+<?php 
+    // Generate a random number between 1 and 3
+    $random_number = rand(1, 2);
+    $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
+
+    $result = mysqli_query($db_connection, $query);
+
+    if ($result) { 
+        while($row = mysqli_fetch_assoc($result)) { 
+            echo "
+            <div class='ad-container'>
+            <div class='main_ad'>
+                <img src='" . $row['picture'] . "0.jpg' alt=''>
+                <b>Contact Details:</b>
+                <b>". $row['service_name']. "</b>
+                <b>". $row['email']. "</b>
+                <b>". $row['phone']. "</b>
+                <b>". $row['text']. "</b>
+                </div>
+            </div>";
+        }
+    }
+?>
+
 </html>
 

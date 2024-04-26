@@ -181,6 +181,11 @@ main {
 
 /* Styles for the price input container */
 
+.search{
+    padding: 1rem;
+    background-color: #fdfdd8;
+}
+
 .search_subtitle {
     margin: 0.5rem 0rem;
 }

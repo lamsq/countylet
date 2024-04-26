@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 25, 2024 at 06:47 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Хост: 127.0.0.1
+-- Время создания: Апр 26 2024 г., 03:48
+-- Версия сервера: 10.4.32-MariaDB
+-- Версия PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `s3112251`
+-- База данных: `s3112251`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `advert`
+-- Структура таблицы `advert`
 --
 
 CREATE TABLE `advert` (
@@ -38,7 +38,7 @@ CREATE TABLE `advert` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `advert`
+-- Дамп данных таблицы `advert`
 --
 
 INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `text`, `picture`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `t
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contracts`
+-- Структура таблицы `contracts`
 --
 
 CREATE TABLE `contracts` (
@@ -64,7 +64,7 @@ CREATE TABLE `contracts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `contracts`
+-- Дамп данных таблицы `contracts`
 --
 
 INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventory`
+-- Структура таблицы `inventory`
 --
 
 CREATE TABLE `inventory` (
@@ -92,7 +92,7 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `inventory`
+-- Дамп данных таблицы `inventory`
 --
 
 INSERT INTO `inventory` (`id`, `property_id`, `WIFI`, `Television`, `Parking`, `Air_conditioned`, `Refrigerator`, `Oven`, `Stove`, `Microwave`, `Dishwasher`) VALUES
@@ -103,7 +103,7 @@ INSERT INTO `inventory` (`id`, `property_id`, `WIFI`, `Television`, `Parking`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `property`
+-- Структура таблицы `property`
 --
 
 CREATE TABLE `property` (
@@ -123,7 +123,7 @@ CREATE TABLE `property` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `property`
+-- Дамп данных таблицы `property`
 --
 
 INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_id`, `owner_id`, `mon_rent`, `eircode`, `address`, `length`, `available`, `taken_start`, `taken_end`) VALUES
@@ -140,7 +140,7 @@ INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Структура таблицы `roles`
 --
 
 CREATE TABLE `roles` (
@@ -149,28 +149,35 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `roles`
+-- Дамп данных таблицы `roles`
 --
 
 INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (4, 'admin'),
 (5, 'landlord'),
 (6, 'tenant'),
-(15, ' tenant'),
-(16, ' landlord'),
-(17, ' tenant'),
-(18, ' tenant'),
-(19, ' tenant'),
-(20, ' tenant'),
-(21, ' tenant'),
-(22, ' landlord'),
-(23, ' tenant'),
-(24, ' tenant');
+(15, 'tenant'),
+(16, 'landlord'),
+(17, 'tenant'),
+(18, 'tenant'),
+(19, 'tenant'),
+(20, 'tenant'),
+(21, 'tenant'),
+(22, 'landlord'),
+(23, 'tenant'),
+(24, 'tenant'),
+(25, 'tenant'),
+(26, 'tenant'),
+(27, 'landlord'),
+(28, 'tenant'),
+(29, 'tenant'),
+(30, 'tenant'),
+(31, 'tenant');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `testimonial`
+-- Структура таблицы `testimonial`
 --
 
 CREATE TABLE `testimonial` (
@@ -182,7 +189,7 @@ CREATE TABLE `testimonial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `testimonial`
+-- Дамп данных таблицы `testimonial`
 --
 
 INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
@@ -198,7 +205,7 @@ INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Структура таблицы `users`
 --
 
 CREATE TABLE `users` (
@@ -210,7 +217,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
@@ -226,118 +233,125 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (21, 'wefgwerg', '$2y$10$YG6OH0hYbX9XpHEpEZ0l9OFnRc2CRREON5evS3oSNKB7D0IL8AuGq', 'aawdawd@aawd.com', 'ergegherg'),
 (22, 'newlandlord', '$2y$10$oPk5oBISTBq8eAHBBLYg6e3jQTZ2KowEWanw8OMT1P7ao3WnmZktG', 'newlord@a.com', 'lord'),
 (23, 'newtenant', '$2y$10$vtIbdoChCKxRUpxo5ROape5klGI3Uo/6s0cVxY9Qu4245r.OlzIw6', 'newnant@tt.tu', 'tenten'),
-(24, 'newtest', '$2y$10$5.2Sd4dOHthbEiAxJLcCKuJKS9gvEcxpqlTit1eevHVT5CxT2jxuy', 'newTest@tt.est', 'tetete');
+(24, 'newtest', '$2y$10$5.2Sd4dOHthbEiAxJLcCKuJKS9gvEcxpqlTit1eevHVT5CxT2jxuy', 'newTest@tt.est', 'tetete'),
+(25, 'update', '$2y$10$yh329O1W4uZZdZGu3qpwFOUuUD3rhfYbhpyeOPCXFc.pfH2oRTB12', 'update@mail.com', 'surname'),
+(26, 'testtenant', '$2y$10$phM40zVuAy9txxAC/pOmSO2Sf3rz7ju41zPVW130Ma47/.2Nk6k5u', 'testTenant@ttt.tt', 'Tenant'),
+(27, 'testlandlord', '$2y$10$P43kbioyCrPIoqQV8dhcKOmaJVI6rPe5kmLtcXB07o75zOqckpme6', 'testLand@lo.rd', 'landlord'),
+(28, 'finaltest', '$2y$10$3/X4g3TLPQbPpiK4ceACzOhH9On/lAKIXexUyoTjLu1oNYQuSIfJa', 'finaltest@test.ru', 'testtest'),
+(29, 'aefwefw', '$2y$10$xi38PIGl1hGJrGKp3oGPreOMvEdD2JNhEbS2LQBvGQsoA4GufrgIS', 'eyhedh@aedwef.serf', 'werfwerg'),
+(30, 'aefwefw', '$2y$10$W40tksN2NDDwA7wjodfncezTYziGMN3uDKTZFc09p6chDx1r9R1q6', 'eyhfgb@aedwef.serf', 'werfwerg'),
+(31, 'adwd', '$2y$10$TUtZu9ToY0IP7VWCfewe8.8JQoK5MhWWaBpf2RGAN1ewXTw8gCJPG', 'awd@eee.rrt', 'rthtu');
 
 --
--- Indexes for dumped tables
+-- Индексы сохранённых таблиц
 --
 
 --
--- Indexes for table `advert`
+-- Индексы таблицы `advert`
 --
 ALTER TABLE `advert`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `contracts`
+-- Индексы таблицы `contracts`
 --
 ALTER TABLE `contracts`
   ADD KEY `property_id` (`property_id`),
   ADD KEY `tenant_id` (`tenant_id`);
 
 --
--- Indexes for table `inventory`
+-- Индексы таблицы `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`),
   ADD KEY `property_id` (`property_id`);
 
 --
--- Indexes for table `property`
+-- Индексы таблицы `property`
 --
 ALTER TABLE `property`
   ADD PRIMARY KEY (`property_id`),
   ADD KEY `owner_id` (`owner_id`);
 
 --
--- Indexes for table `roles`
+-- Индексы таблицы `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `testimonial`
+-- Индексы таблицы `testimonial`
 --
 ALTER TABLE `testimonial`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT for table `advert`
+-- AUTO_INCREMENT для таблицы `advert`
 --
 ALTER TABLE `advert`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `property`
+-- AUTO_INCREMENT для таблицы `property`
 --
 ALTER TABLE `property`
   MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `testimonial`
+-- AUTO_INCREMENT для таблицы `testimonial`
 --
 ALTER TABLE `testimonial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- Constraints for dumped tables
+-- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Constraints for table `contracts`
+-- Ограничения внешнего ключа таблицы `contracts`
 --
 ALTER TABLE `contracts`
   ADD CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `inventory`
+-- Ограничения внешнего ключа таблицы `inventory`
 --
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`);
 
 --
--- Constraints for table `property`
+-- Ограничения внешнего ключа таблицы `property`
 --
 ALTER TABLE `property`
   ADD CONSTRAINT `property_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `roles`
+-- Ограничения внешнего ключа таблицы `roles`
 --
 ALTER TABLE `roles`
   ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `testimonial`
+-- Ограничения внешнего ключа таблицы `testimonial`
 --
 ALTER TABLE `testimonial`
   ADD CONSTRAINT `testimonial_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;

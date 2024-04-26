@@ -315,8 +315,7 @@ input::-webkit-inner-spin-button {
 
 /* TESTIMONIALS */
 #reviews .review {
-    margin: 1rem auto;
-    
+    margin: 1rem auto;    
     background-color: #f5ffee;
 }
 
@@ -342,11 +341,6 @@ input::-webkit-inner-spin-button {
     font-size: 1.5rem;
 }
 
-.text {
-    text-align: justify;
-    padding: 1rem;
-}
-
 #reviews_subtitle {
     margin: 1rem 0rem;
     font-weight: bold;
@@ -354,8 +348,17 @@ input::-webkit-inner-spin-button {
     color: rgb(160, 160, 160);
 }
 
+.text_review {
+    padding: 1rem;
+}
 
 
+
+
+
+
+
+/* ADVERTS */ 
 
 .ad-container {
     position: fixed;

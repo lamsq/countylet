@@ -21,9 +21,6 @@ $type = $description = $mon_rent = $eircode = $address = '';
     <header>
 
 
-
-
-
     <div class="container">
      <h2 class="mt-5 text-center">Add Property</h2>
 

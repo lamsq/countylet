@@ -143,10 +143,8 @@
                 }
             } 
 
-            if(isset($_POST['tenant']) && !empty($_POST['tenant'])){    
-                $user_role = htmlentities(sanitized($_POST['tenant']));
-            } else if (isset($_POST['landlord']) && !empty($_POST['landlord'])){
-                $user_role = htmlentities(sanitized($_POST['landlord']));
+            if(isset($_POST['role']) && !empty($_POST['role'])){    
+                $user_role = htmlentities(sanitized($_POST['role']));
             } else {
                 $error_reg.='<p class="">Choose user type;</p>';
             }

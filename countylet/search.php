@@ -89,8 +89,8 @@
                         echo "</div>";
 
                         echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\"\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
-                        echo "<a href=\" \"><div id=\"suboption51\" class=\"suboption\">Testimonial add</div></a>";      
+                        echo "<a href=\"testimonial_manage.php\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
+                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption51\" class=\"suboption\">Testimonial add</div></a>";      
                         echo "</div>";
 
                         echo "<div id=\"contact_suboptions\" class=\"suboptions\" hidden>";
@@ -114,7 +114,7 @@
                     else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
 
                         echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
-                        echo "<a href=\" \"><div id=\"suboption30\" class=\"suboption\">Add testimonial </div></a>";      
+                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption30\" class=\"suboption\">Add testimonial </div></a>";      
                         echo "</div>";
 
                         echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
@@ -128,7 +128,7 @@
                     else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
 
                         echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
-                        echo "<a href=\" \"><div id=\"suboption60\" class=\"suboption\">Add testimonial </div></a>";      
+                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption60\" class=\"suboption\">Add testimonial </div></a>";      
                         echo "</div>";
 
                         echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";

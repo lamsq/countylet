@@ -314,6 +314,11 @@ input::-webkit-inner-spin-button {
 
 }
 
+#index_edit{
+    padding: 1rem;
+    background-color: #faffb9;
+}
+
 
 
 
@@ -347,14 +352,21 @@ input::-webkit-inner-spin-button {
 }
 
 #reviews_subtitle {
-    margin: 1rem 0rem;
-    font-weight: bold;
     font-size: 1.5rem;
-    color: rgb(160, 160, 160);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color: darkkhaki;
 }
 
 .text_review {
     padding: 1rem;
+}
+
+.service_review {
+    font-size: 1rem;
+    color:#777777;
+    padding: 1rem;
+    border-top: 1px solid rgb(230, 230, 230);
 }
 
 
@@ -388,8 +400,106 @@ input::-webkit-inner-spin-button {
 
 
 
+/* TESTIMONIAL ADD */
+.testimonial_add{
+    background-color: lemonchiffon;
+    padding: 0.5rem 1rem;
+}
+
+.testimonial_add_title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color: darkkhaki;
+}
+
+.testimonial_add div {
+    margin: 1rem 0;
+    font-weight: 600;
+}
+
+.review_field{
+    width: 50%;
+    
+}
+
+.error_review {
+    margin: 1rem;
+    color: darkred;
+    font-weight: bold;
+    font-size: 1rem;
+}
 
 
+
+
+
+
+
+
+
+/* TESTIMONIAL MANAGE */
+
+.testimonial_manage_title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color: darkkhaki;
+}
+
+
+#reviews .review, .manage_testimonials {
+    margin: 1rem auto;    
+    background-color: #f5ffee;
+}
+
+.manage_testimonials .name_date_manage {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.name_manage, .date_manage {
+    width: 50%;
+}
+
+.date_manage {
+    text-align: right;
+    font-weight: bold;
+    margin-top: auto;
+    
+}
+
+.name_manage {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.role_approve_manage {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+.text_manage {
+    padding: 1rem;
+}
+
+.role_manage, .approve_manage {
+    width:50%;
+}
+
+.approve_manage {
+    text-align: right;
+    font-weight: 700;
+    color: #477e47;
+    
+}
+
+.role_manage {
+    font-size: 1rem;
+    color:#777777;
+}
 
 
 

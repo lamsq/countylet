@@ -87,7 +87,7 @@
 
                             echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
                             echo "<a href=\"testimonial_manage.php\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
-                            echo "<a href=\"testimonial_add.php\"><div id=\"suboption51\" class=\"suboption\">Add testimonial</div></a>";      
+                            echo "<a href=\"testimonial_add.php\"><div id=\"suboption51\" class=\"suboption\">Testimonial add</div></a>";      
                             echo "</div>";
 
                             echo "<div id=\"contact_suboptions\" class=\"suboptions\" hidden>";
@@ -139,143 +139,157 @@
                 
     </header>
 
-    <main>
+    <?php 
 
-        <!-- Title and description -->
-        <div class="title_description">
-            <!-- bootstrap form-group -->
-            <div class="">
-                <!-- form title -->
-                <div><h1>CountyLet</h1></div>
-                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
-            </div>
+        if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
+            $reviews_array = array();
+            $authors_array = array();
+            $roles_array = array();
+            require_once '../mysql_connect.php';   
+                                        
+            $query = "SELECT * FROM testimonial WHERE approved=0 ORDER BY date ASC;"; 
+            $result = mysqli_query($db_connection, $query);
+
+            if ($result){                         
+                while($row = mysqli_fetch_assoc($result)){ 
+                    $reviews_array[]=$row;
+                }                    
+                //mysqli_free_result($result);                         
+            } else { 
+                echo "<h3>Something went wrong, try again;</h3>";
+            }
+
+            $query = "SELECT name, surname, id FROM users;"; 
+            $result = mysqli_query($db_connection, $query);
+
+            if ($result){                         
+                while($row = mysqli_fetch_assoc($result)){ 
+                    $authors_array[]=$row;
+                }                    
+                //mysqli_free_result($result);                         
+            } else { 
+                echo "<h3>Something went wrong, try again;</h3>";
+            }
+
+            $query = "SELECT user_id, user_role FROM roles;"; 
+            $result = mysqli_query($db_connection, $query);
+
+            if ($result){                         
+                while($row = mysqli_fetch_assoc($result)){ 
+                    $roles_array[]=$row;
+                }                    
+                //mysqli_free_result($result);                         
+            } else { 
+                echo "<h3>Something went wrong, try again;</h3>";
+            }
+
+        }
+
+
+        function sanitized($input) {  
+        $input = strip_tags($input); //strip tags
+        $input = htmlspecialchars($input); //converting special characters
+        $input = stripslashes($input);  //strip quotemarks
+        $input = trim($input);  //sctrip whitespaces
+        return $input; //returns edited value
+        }
+
+    ?>
+
+    <main> 
+
+        <div class="testimonial_manage_title">
+            <?php 
+                if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
+                    echo "Testimonial manage";
+                } else {
+                    echo "Access denied;";
+                }            
+            ?>                    
         </div>
+        
+        <div class="testimonial_manage" <?php if(!isset($_SESSION['role']) || $_SESSION['role']!='admin' || empty($reviews_array)) echo "hidden" ?>>
 
-        <!-- content -->
-        <div class="boxes">
+            <form id="manage_box" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="POST" novalidate>
 
-                <?php
+                <?php 
 
-                    require_once '../mysql_connect.php';                           
-                    $query = "SELECT * FROM index_show;";
-                    $result = mysqli_query($db_connection, $query);
+                    for($r=0; $r<count($reviews_array); $r++){
 
-                    if (!isset($index_show)){
-                        $index_show = array();
-                    }
-                    if ($result){                         
-                        while($row = mysqli_fetch_assoc($result)){ 
-                            $index_show[]=$row;
-                        }                                                    
-                        mysqli_free_result($result);                         
-                    } else { 
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
-
-                    $property0=array();
-                    $property1=array();
-                    $property2=array();
-                    $boxes_data=array($property2,$property1,$property0);
-
-                    require_once  '../mysql_connect.php';   // Require database connection script                            
-                    $query = "SELECT * FROM property ORDER BY property_id DESC;"; // MySQL statement
-                    $result = mysqli_query($db_connection, $query);
-                    
-                    if ($result){ // Check if query was successful
-                        
-                        $ads_counter=3;
-
-                        while($row = mysqli_fetch_assoc($result)){ // Loop through the data
-                            $ads_counter--;
-                            $boxes_data[$ads_counter] = array(
-                                "type"=>$row['type'],
-                                "bedrooms"=>$row['bedrooms'],
-                                "description"=>$row['description'],
-                                "photos"=>$row['photos'],
-                                "property_id"=>$row['property_id'],
-                                "owner_id"=>$row['owner_id'],
-                                "mon_rent"=>$row['mon_rent'],
-                                "eircode"=>$row['eircode'],
-                                "address"=>$row['address']
-                            );
-                            if($ads_counter==0){
-                                break;
-                            }                             
-                        }
-
-                        if($ads_counter!=0){
-
-                            if($ads_counter>1){
-                                echo "  
-                                <script>
-                                let box0 = document.getElementById('box0');                                
-                                box.setAttribute('hidden', true);                                
-                                </script>";
-
-                                if($ads_counter>2){
-                                    echo " 
-                                    <script>
-                                    let box1 = document.getElementById('box1');                                    
-                                    box.setAttribute('hidden', true);                                     
-                                    </script>";
-
-                                    if($ads_counter==3){
-                                        echo "  <script>
-                                        let box2 = document.getElementById('box2');
-                                        box.setAttribute('hidden', true);                             
-                                        </script>";    
+                        echo "
+                        <div class='manage_testimonials'>
+                            <div class='name_date_manage'>
+                                <div class='name_manage'>"; 
+                                    for($a=0; $a<count($authors_array); $a++){
+                                        if($reviews_array[$r]['user_id']==$authors_array[$a]['id']){
+                                            echo $authors_array[$a]['name']." ".$authors_array[$a]['surname'];
+                                            break;
+                                        }
                                     }
-                                }                                
-                            }                             
-                        }
-                        //mysqli_free_result($result); // free the result set                        
-                    } else { // connection error
-                        echo "<h3>Something went wrong, try again;</h3>";
+                                echo "</div>
+
+                                <div class='date_manage'>";
+                                    echo $reviews_array[$r]['date'];
+                                echo "</div>
+                            </div>
+
+                            <div class='text_manage'>";
+                                echo $reviews_array[$r]['text'];
+                            echo "</div>
+
+                            <div class='role_approve_manage'>
+
+                                <div class='role_manage'>";
+                                    echo $reviews_array[$r]['service'];
+                                echo "</div>
+
+                                <div class='approve_manage'>";
+                                
+                                if ( isset($_POST['review'.$r]) ) echo "Successfully approved &nbsp;   ";
+                                    
+                                echo "<input class='review_submit' form='manage_box' type='submit' name='review".$r."' value='Approve'";
+                                
+                                if ( isset($_POST['review'.$r]) ) echo "disabled";
+                                
+                                echo ">      
+                                                                
+                                </div>
+
+                            </div>
+
+                        </div>";
+
                     }
-                    
+
                 ?>
 
-                <div class="box" id="box2">
-                    <div class="img" <?php if($index_show[0]['display']==0) echo " hidden " ?>>
-                        <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-1]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
-                    <div class="type" <?php if($index_show[1]['display']==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["type"]; ?>  </div>
-                    <div class="price" <?php if($index_show[2]['display']==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-1]["mon_rent"]; ?> € </div>
-                    <div class="text" <?php if($index_show[3]['display']==0) echo " hidden " ?>>  
-                    <?php echo $boxes_data[count($boxes_data)-1]["description"]; ?> </div>                
-                </div>
-
-                <div class="box" id="box1">
-                    <div class="img" <?php if($index_show[0]['display']==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-2]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>
-                    <div class="type" <?php if($index_show[1]['display']==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["type"]; ?> </div>
-                    <div class="price" <?php if($index_show[2]['display']==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-2]["mon_rent"]; ?> €</div>
-                    <div class="text" <?php if($index_show[3]['display']==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-2]["description"]; ?> </div>                
-                </div>
-                
-                <div class="box" id="box0">
-                    <div class="img" <?php if($index_show[0]['display']==0) echo " hidden " ?>> <img <?php 
-                        echo "src='".$boxes_data[count($boxes_data)-3]['photos']."0.jpg'";   
-                        ?> alt="">
-                    </div>  
-                    <div class="type" <?php if($index_show[1]['display']==0) echo " hidden " ?>> 
-                    <?php echo $boxes_data[count($boxes_data)-3]["type"]; ?></div> 
-                    <div class="price" <?php if($index_show[2]['display']==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["mon_rent"]; ?> € </div>
-                    <div class="text" <?php if($index_show[3]['display']==0) echo " hidden " ?>>
-                    <?php echo $boxes_data[count($boxes_data)-3]["description"]; ?></div>                
-                </div>
-                
+            </form>
+            
         </div>
+
+        <?php
+
+            for($r=0; $r<count($reviews_array); $r++){
+
+                $button = "review".$r;
+
+                if($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST[$button])){
+
+                    require_once '../mysql_connect.php';
+                    $query= "UPDATE testimonial SET approved=1 WHERE id=".$reviews_array[$r]['id'].";";
+                    $result = mysqli_query($db_connection, $query);
+                                
+                    if (!$result){ 
+                        echo "<h3>Something went wrong, try again;</h3>";
+                        
+                    }
+
+                    break;
+                }
+
+            }
+
+        ?>
 
     </main>
 
@@ -449,6 +463,7 @@
 
         }
 
+        require_once '../mysql_connect.php';  
         // Generate a random number between 1 and 3
         $random_number = rand(1, 2);
         $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";

@@ -28,14 +28,14 @@
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Tenant options</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option3\" class=\"option\">Search</div></a>";                
                         echo "<a href=\"testimonial.php\"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option6\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option7\" class=\"option\">Log out</div></a>";                        
                     }
                     else if ($_SESSION["role"]=="landlord"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                        
                         echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Landlord account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
@@ -43,7 +43,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                  
                         echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"tenant_account.php\"><div id=\"option5\" class=\"option\">Tenant account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
@@ -53,7 +53,7 @@
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                     echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                    
                     echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                    echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                    echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                     echo "<a href=\"login_register.php\" ><div id=\"option5\" class=\"option\">Login/Register</div></a>";   
                 }
 
@@ -91,7 +91,7 @@
                             echo "</div>";
 
                             echo "<div id=\"contact_suboptions\" class=\"suboptions\" hidden>";
-                            echo "<a href=\" \"><div id=\"suboption60\" class=\"suboption\">Manage contuct us</div></a>";
+                            echo "<a href=\"contact_us_manage.php\"><div id=\"suboption60\" class=\"suboption\">Manage contact us</div></a>";
                             echo "</div>";
 
                             echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";

@@ -503,3 +503,57 @@ input::-webkit-inner-spin-button {
 
 
 
+
+
+
+
+/* CONTACT US */
+
+.contact_photo_info {
+    display: flex;
+    background-color: #ddffce;
+    padding: 1rem;
+    margin: 1rem auto;
+    font-size: 1.2rem;
+}
+
+.contact_photo{
+    width: fit-content;
+}
+
+.contact_photo img {
+    width: 15rem; 
+    height: 20rem; 
+    object-fit: cover; 
+    object-position: center; 
+
+}
+
+.contact_info {
+    padding: 0rem 1rem;
+}
+
+.contact_name_surname{
+    display: flex;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    background-color: #ddbcad;
+}
+
+.contact_name_surname {
+
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.contact_role, .contact_department, .contact_email, .contact_phone {
+    font-weight: 600;
+    color: #777777;
+}
+
+.contact_email, .contact_phone {
+    font-weight: 700;
+    color: #1F2C2D;
+}
+
+

@@ -28,14 +28,14 @@
                         echo "<a href=\" \"><div id=\"option2\" class=\"option\">Tenant options</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option3\" class=\"option\">Search</div></a>";                
                         echo "<a href=\"testimonial.php\"><div id=\"option5\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option6\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option6\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option7\" class=\"option\">Log out</div></a>";                        
                     }
                     else if ($_SESSION["role"]=="landlord"){
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                        
                         echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\" \"><div id=\"option5\" class=\"option\">Landlord account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
@@ -43,7 +43,7 @@
                         echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                         echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                  
                         echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                        echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                        echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                         echo "<a href=\"tenant_account.php\"><div id=\"option5\" class=\"option\">Tenant account</div></a>";
                         echo "<a href=\"logout.php\"><div id=\"option6\" class=\"option\">Log out</div></a>";
                     }
@@ -53,7 +53,7 @@
                     echo "<a href=\"index.php\"><div id=\"option0\" class=\"option\">Home</div></a>";
                     echo "<a href=\"search.php\"><div id=\"option1\" class=\"option\">Search</div></a>";                    
                     echo "<a href=\"testimonial.php\"><div id=\"option3\" class=\"option\">Testimonial</div></a>";
-                    echo "<a href=\" \"><div id=\"option4\" class=\"option\">Contact us</div></a>";
+                    echo "<a href=\"contact_us.php\"><div id=\"option4\" class=\"option\">Contact us</div></a>";
                     echo "<a href=\"login_register.php\" ><div id=\"option5\" class=\"option\">Login/Register</div></a>";   
                 }
 
@@ -76,68 +76,65 @@
 
                 <?php 
 
-                $error = '';
-                $error_reg='';
+                    if (isset($_SESSION["role"])){
 
-                if (isset($_SESSION["role"])){
+                        //conditions for different access levels with corresponding suboptions
+                        if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
 
-                    //conditions for different access levels with corresponding suboptions
-                    if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
+                            echo "<div id=\"home_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\"index_edit.php\"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
+                            echo "</div>";
 
-                        echo "<div id=\"home_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\"index_edit.php\"><div id=\"suboption01\" class=\"suboption\">Edit home page </div></a>";                    
-                        echo "</div>";
+                            echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\"testimonial_manage.php\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
+                            echo "<a href=\"testimonial_add.php\"><div id=\"suboption51\" class=\"suboption\">Add testimonial</div></a>";      
+                            echo "</div>";
 
-                        echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\"testimonial_manage.php\"><div id=\"suboption50\" class=\"suboption\">Manage testimonial</div></a>";       
-                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption51\" class=\"suboption\">Testimonial add</div></a>";      
-                        echo "</div>";
+                            echo "<div id=\"contact_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\"contact_us_manage.php\"><div id=\"suboption60\" class=\"suboption\">Manage contact us</div></a>";
+                            echo "</div>";
 
-                        echo "<div id=\"contact_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\" \"><div id=\"suboption60\" class=\"suboption\">Manage contuct us</div></a>";
-                        echo "</div>";
+                            echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\" \"><div id=\"suboption10\" class=\"suboption\">Edit landlord account </div></a>";
+                            echo "<a href=\" \"><div id=\"suboption11\" class=\"suboption\">Property listing </div></a>";
+                            echo "<a href=\" \"><div id=\"suboption12\" class=\"suboption\">Edit property </div></a>";
+                            echo "<a href=\"inventory_details.php\"><div id=\"suboption13\" class=\"suboption\">Inventory details  </div></a>";
+                            echo "<a href=\" \"><div id=\"suboption14\" class=\"suboption\">Edit inventory details  </div></a>";
+                            echo "</div>";
 
-                        echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\" \"><div id=\"suboption10\" class=\"suboption\">Edit landlord account </div></a>";
-                        echo "<a href=\" \"><div id=\"suboption11\" class=\"suboption\">Property listing </div></a>";
-                        echo "<a href=\" \"><div id=\"suboption12\" class=\"suboption\">Edit property </div></a>";
-                        echo "<a href=\"inventory_details.php\"><div id=\"suboption13\" class=\"suboption\">Inventory details  </div></a>";
-                        echo "<a href=\" \"><div id=\"suboption14\" class=\"suboption\">Edit inventory details  </div></a>";
-                        echo "</div>";
+                            echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\"tenant_acc_edit.php\"><div id=\"suboption20\" class=\"suboption\">Edit tenant account </div></a>";
+                            echo "<a href=\"inventory_details.php\"><div id=\"suboption21\" class=\"suboption\">Inventory details </div></a>";
+                            echo "</div>";
+                        }
 
-                        echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\"tenant_acc_edit.php\"><div id=\"suboption20\" class=\"suboption\">Edit tenant account </div></a>";
-                        echo "<a href=\"inventory_details.php\"><div id=\"suboption21\" class=\"suboption\">Inventory details </div></a>";
-                        echo "</div>";
+                        else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
+
+                            echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
+                            echo "<a href=\"testimonial_add.php\"><div id=\"suboption30\" class=\"suboption\">Add testimonial </div></a>";      
+                            echo "</div>";
+
+                            echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\" \"><div id=\"suboption50\" class=\"suboption\">Property listing </div></a>";
+                            echo "<a href=\" \"><div id=\"suboption51\" class=\"suboption\">Edit property </div></a>";
+                            echo "<a href=\"inventory_details.php\"><div id=\"suboption52\" class=\"suboption\">Inventory details  </div></a>";
+                            echo "<a href=\" \"><div id=\"suboption53\" class=\"suboption\">Edit inventory details  </div></a>";
+                            echo "</div>";
+                        }
+
+                        else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
+
+                            echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
+                            echo "<a href=\"testimonial_add.php\"><div id=\"suboption60\" class=\"suboption\">Add testimonial </div></a>";      
+                            echo "</div>";
+
+                            echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
+                            echo "<a href=\"inventory_details.php\"><div id=\"suboption50\" class=\"suboption\">Inventory details </div></a>";
+                            echo "</div>";
+                        }
+
                     }
 
-                    else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
-
-                        echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
-                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption30\" class=\"suboption\">Add testimonial </div></a>";      
-                        echo "</div>";
-
-                        echo "<div id=\"landlord_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\" \"><div id=\"suboption50\" class=\"suboption\">Property listing </div></a>";
-                        echo "<a href=\" \"><div id=\"suboption51\" class=\"suboption\">Edit property </div></a>";
-                        echo "<a href=\"inventory_details.php\"><div id=\"suboption52\" class=\"suboption\">Inventory details  </div></a>";
-                        echo "<a href=\" \"><div id=\"suboption53\" class=\"suboption\">Edit inventory details  </div></a>";
-                        echo "</div>";
-                    }
-
-                    else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
-
-                        echo "<div id=\"testimonial_suboptions\" class=\"suboptions\" hidden>";    
-                        echo "<a href=\"testimonial_add.php\"><div id=\"suboption60\" class=\"suboption\">Add testimonial </div></a>";      
-                        echo "</div>";
-
-                        echo "<div id=\"tenant_suboptions\" class=\"suboptions\" hidden>";
-                        echo "<a href=\"inventory_details.php\"><div id=\"suboption50\" class=\"suboption\">Inventory details </div></a>";
-                        echo "</div>";
-                    }
-
-                }
-                
                 ?>
                 
     </header>

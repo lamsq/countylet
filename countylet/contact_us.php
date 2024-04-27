@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <header>
         <div class="options">
 
@@ -138,87 +139,109 @@
                 
     </header>
 
-
     <main>
 
-        <div id="reviews">
+    <div id="reviews">
 
-                <div id='reviews_subtitle'>Reviews: </div>
+    <div id='reviews_subtitle'>Contact us </div>
 
-                <?php                     
+    <?php                     
 
-                    $reviews = array();
-                    $authors = array();
-                    require_once '../mysql_connect.php';   
-                                                
-                    $query = "SELECT * FROM testimonial WHERE approved=1 ORDER BY date DESC;"; 
-                    $result = mysqli_query($db_connection, $query);
+        $contact_us = array();
+        
+        require_once '../mysql_connect.php';   
+                                    
+        $query = "SELECT * FROM contact_us;"; 
+        $result = mysqli_query($db_connection, $query);
 
-                    if ($result){                         
-                        while($row = mysqli_fetch_assoc($result)){ 
-                            $reviews[]=$row;
-                        }                    
-                        //mysqli_free_result($result);                         
-                    } else { 
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
+        if ($result){                         
+            while($row = mysqli_fetch_assoc($result)){ 
+                $contact_us[]=$row;
+            }                    
+            //mysqli_free_result($result);                         
+        } else { 
+            echo "<h3>Something went wrong, try again;</h3>";
+        }
 
-                    $query = "SELECT name, surname, id FROM users;"; 
-                    $result = mysqli_query($db_connection, $query);
 
-                    if ($result){                         
-                        while($row = mysqli_fetch_assoc($result)){ 
-                            $authors[]=$row;
-                        }                    
-                        //mysqli_free_result($result);                         
-                    } else { 
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
+        if (count($contact_us)==0) {
+            echo "<div id='no_results'>Everyone is fired;</div>";
+        }
 
-                    if (count($reviews)==0) {
-                        echo "<div id='no_results'>No testimonials found;</div>";
-                    }
+        
+        for($c=0; $c<count($contact_us); $c++){
 
-                    
-                    for($c=0; $c<count($reviews); $c++){
+            echo "<div class='contact_us'>
+                <div class='contact_photo_info'>
+                    <div class='contact_photo'>"; 
+                        echo "<img  ";
+                        echo "src='".$contact_us[$c]['photo']."0.jpg'";   
+                        echo "alt=''>";
+                    echo "</div>
 
-                        echo "<div class='review'>
-                            <div class='name_date_review'>
-                                <div class='name'>"; 
-                                    for($a=0; $a<count($authors); $a++){
-                                        if($reviews[$c]['user_id']==$authors[$a]['id']){
-                                            echo $authors[$a]['name']." ".$authors[$a]['surname'];
-                                            break;
-                                        }
-                                    }
-                                echo "</div>
+                    <div class='contact_info'>";
 
-                                <div class='date'>";
-                                    echo $reviews[$c]['date'];
-                                echo "</div>
-                            </div>
-                            
+                        echo "<div class='contact_role'>";
+                        echo $contact_us[$c]['role'];
+                        echo "</div>
 
-                            <div class='text_review'>";
-                                echo $reviews[$c]['text'];
+                        <div class='contact_name_surname'>";
+
+                            echo "<div class='contact_name'>";
+                            echo $contact_us[$c]['name']."&nbsp;";
                             echo "</div>
 
-                            <div class='service_review'>";
-                                echo $reviews[$c]['service'];
+                            <div class='contact_surname'>";
+                            echo $contact_us[$c]['surname'];
                             echo "</div>
 
 
-                        </div>";
+                        </div>
 
-                    }
-                ?>
-        </div>        
+                        <div class='contact_department'>";
+                            echo $contact_us[$c]['department'];
+                        echo "</div>
+
+                        <div class='contact_email'>";
+                            echo $contact_us[$c]['email'];
+                        echo "</div>
+
+                        <div class='contact_phone'>";
+                            echo $contact_us[$c]['phone'];
+                        echo "</div>
+
+                    </div>
+                </div>
+                
+
+                
+
+
+            </div>";
+
+        }
+    ?>
+    </div>  
+
     </main>
+
+</body>
+                
+
 
     <?php //scripts to show/hide suboptions when user hovers header options
 
+        if(isset($_COOKIE['loggedin_msg']) || isset($_COOKIE['loggedout_msg']) || isset($_COOKIE['registered'])){
+            echo "
+            <script>              
+            document.getElementById('msg').removeAttribute('hidden');
+            setTimeout(function() { document.getElementById('msg').setAttribute('hidden', true); }, 2000); 
+            </script> ";
+        }
+
         if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
-            echo "<script>
+            echo "
+            <script>
             let home = document.getElementById('option0');
             let home_sub = document.getElementById('home_suboptions');
 
@@ -281,11 +304,13 @@
             tenant.addEventListener('mouseout', () => { hide(tenant_sub);  });
             tenant_sub.addEventListener('mouseover', () => {show(tenant_sub);});
             tenant_sub.addEventListener('mouseout', () => { hide(tenant_sub); });
-            </script>";
+            </script>
+            ";
 
         }
         else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
-            echo " <script>
+            echo "
+            <script>
             let testimonial = document.getElementById('option3');
             let testimonial_sub = document.getElementById('testimonial_suboptions');
 
@@ -322,11 +347,13 @@
             landlord.addEventListener('mouseout', () => { hide(landlord_sub);  });
             landlord_sub.addEventListener('mouseover', () => {show(landlord_sub);});
             landlord_sub.addEventListener('mouseout', () => { hide(landlord_sub); });
-            </script> ";
+            </script>
+            ";
 
         }
         else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
-            echo " <script>
+            echo "
+            <script>
             let testimonial = document.getElementById('option3');
             let testimonial_sub = document.getElementById('testimonial_suboptions');
 
@@ -363,200 +390,34 @@
             tenant.addEventListener('mouseout', () => { hide(tenant_sub);  });
             tenant_sub.addEventListener('mouseover', () => {show(tenant_sub);});
             tenant_sub.addEventListener('mouseout', () => { hide(tenant_sub); });
-            </script>";
+            </script>
+            ";
+
         }
-        
+
+        // Generate a random number between 1 and 3
+        $random_number = rand(1, 2);
+        $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
+        $result = mysqli_query($db_connection, $query);
+
+        if ($result) { 
+            while($row = mysqli_fetch_assoc($result)) { 
+                echo "
+                <div class='ad-container'>
+                <div class='main_ad'>
+                    <img src='" . $row['picture'] . "0.jpg' alt=''>
+                    <b>Contact Details:</b>
+                    <b>". $row['service_name']. "</b>
+                    <b>". $row['email']. "</b>
+                    <b>". $row['phone']. "</b>
+                    <b>". $row['text']. "</b>
+                    </div>
+                </div>";
+            }
+        }
     ?>
 
-</body>
 
-    <?php //scripts to show/hide suboptions when user hovers header options
-
-    if(isset($_COOKIE['loggedin_msg']) || isset($_COOKIE['loggedout_msg']) || isset($_COOKIE['registered'])){
-        echo "
-        <script>              
-        document.getElementById('msg').removeAttribute('hidden');
-        setTimeout(function() { document.getElementById('msg').setAttribute('hidden', true); }, 2000); 
-        </script> ";
-    }
-
-    if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
-        echo "
-        <script>
-        let home = document.getElementById('option0');
-        let home_sub = document.getElementById('home_suboptions');
-
-        let testimonial = document.getElementById('option5');
-        let testimonial_sub = document.getElementById('testimonial_suboptions');
-
-        let contact = document.getElementById('option6');
-        let contact_sub = document.getElementById('contact_suboptions');
-
-        let landlord = document.getElementById('option1');
-        let landlord_sub = document.getElementById('landlord_suboptions');
-
-        let tenant = document.getElementById('option2');
-        let tenant_sub = document.getElementById('tenant_suboptions');
-
-        let array =[home_sub, testimonial_sub, contact_sub, landlord_sub, tenant_sub];
-
-        function show(element) {
-            clearTimeout(element.timeoutId);
-            for (let i = 0; i < array.length; i++) {
-                hideNow(array[i]);
-            }
-            
-            element.removeAttribute('hidden');
-        }
-        
-        function hide(element) {
-            element.timeoutId = setTimeout(() => {
-                element.setAttribute('hidden', true);
-            }, 500);
-
-        }
-
-        function hideNow(element) {
-            clearTimeout(element.timeoutId);
-            element.setAttribute('hidden', true);
-        }
-
-        home.addEventListener('mouseover', () => {show(home_sub); });
-        home.addEventListener('mouseout', () => { hide(home_sub);  });
-        home_sub.addEventListener('mouseover', () => {show(home_sub);});
-        home_sub.addEventListener('mouseout', () => { hide(home_sub); });
-
-        testimonial.addEventListener('mouseover', () => {show(testimonial_sub); });
-        testimonial.addEventListener('mouseout', () => { hide(testimonial_sub);  });
-        testimonial_sub.addEventListener('mouseover', () => {show(testimonial_sub);});
-        testimonial_sub.addEventListener('mouseout', () => { hide(testimonial_sub); });
-
-        contact.addEventListener('mouseover', () => {show(contact_sub); });
-        contact.addEventListener('mouseout', () => { hide(contact_sub);  });
-        contact_sub.addEventListener('mouseover', () => {show(contact_sub);});
-        contact_sub.addEventListener('mouseout', () => { hide(contact_sub); });
-
-        landlord.addEventListener('mouseover', () => {show(landlord_sub); });
-        landlord.addEventListener('mouseout', () => { hide(landlord_sub);  });
-        landlord_sub.addEventListener('mouseover', () => {show(landlord_sub);});
-        landlord_sub.addEventListener('mouseout', () => { hide(landlord_sub); });
-        
-        tenant.addEventListener('mouseover', () => {show(tenant_sub); });
-        tenant.addEventListener('mouseout', () => { hide(tenant_sub);  });
-        tenant_sub.addEventListener('mouseover', () => {show(tenant_sub);});
-        tenant_sub.addEventListener('mouseout', () => { hide(tenant_sub); });
-        </script>
-        ";
-
-    }
-    else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
-        echo "
-        <script>
-        let testimonial = document.getElementById('option3');
-        let testimonial_sub = document.getElementById('testimonial_suboptions');
-
-        let landlord = document.getElementById('option5');
-        let landlord_sub = document.getElementById('landlord_suboptions');
-
-        let array =[testimonial_sub, landlord_sub];
-
-        function show(element) {
-            clearTimeout(element.timeoutId);
-            for (let i = 0; i < array.length; i++) {
-                hideNow(array[i]);
-            }
-            element.removeAttribute('hidden');
-        }
-        
-        function hide(element) {
-            element.timeoutId = setTimeout(() => {
-                element.setAttribute('hidden', true);
-            }, 500);
-        }
-
-        function hideNow(element) {
-            clearTimeout(element.timeoutId);
-            element.setAttribute('hidden', true);
-        }
-
-        testimonial.addEventListener('mouseover', () => {show(testimonial_sub); });
-        testimonial.addEventListener('mouseout', () => { hide(testimonial_sub);  });
-        testimonial_sub.addEventListener('mouseover', () => {show(testimonial_sub);});
-        testimonial_sub.addEventListener('mouseout', () => { hide(testimonial_sub); });
-
-        landlord.addEventListener('mouseover', () => {show(landlord_sub); });
-        landlord.addEventListener('mouseout', () => { hide(landlord_sub);  });
-        landlord_sub.addEventListener('mouseover', () => {show(landlord_sub);});
-        landlord_sub.addEventListener('mouseout', () => { hide(landlord_sub); });
-        </script>
-        ";
-
-    }
-    else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
-        echo "
-        <script>
-        let testimonial = document.getElementById('option3');
-        let testimonial_sub = document.getElementById('testimonial_suboptions');
-
-        let tenant = document.getElementById('option5');
-        let tenant_sub = document.getElementById('tenant_suboptions');
-
-        let array =[testimonial_sub, tenant_sub];
-
-        function show(element) {
-            clearTimeout(element.timeoutId);
-            for (let i = 0; i < array.length; i++) {
-                hideNow(array[i]);
-            }
-            element.removeAttribute('hidden');
-        }
-        
-        function hide(element) {
-            element.timeoutId = setTimeout(() => {
-                element.setAttribute('hidden', true);
-            }, 500);
-        }
-
-        function hideNow(element) {
-            clearTimeout(element.timeoutId);
-            element.setAttribute('hidden', true);
-        }
-
-        testimonial.addEventListener('mouseover', () => {show(testimonial_sub); });
-        testimonial.addEventListener('mouseout', () => { hide(testimonial_sub);  });
-        testimonial_sub.addEventListener('mouseover', () => {show(testimonial_sub);});
-        testimonial_sub.addEventListener('mouseout', () => { hide(testimonial_sub); });
-
-        tenant.addEventListener('mouseover', () => {show(tenant_sub); });
-        tenant.addEventListener('mouseout', () => { hide(tenant_sub);  });
-        tenant_sub.addEventListener('mouseover', () => {show(tenant_sub);});
-        tenant_sub.addEventListener('mouseout', () => { hide(tenant_sub); });
-        </script>
-        ";
-
-    }
-
-    // Generate a random number between 1 and 3
-    $random_number = rand(1, 2);
-    $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
-    $result = mysqli_query($db_connection, $query);
-
-    if ($result) { 
-        while($row = mysqli_fetch_assoc($result)) { 
-            echo "
-            <div class='ad-container'>
-            <div class='main_ad'>
-                <img src='" . $row['picture'] . "0.jpg' alt=''>
-                <b>Contact Details:</b>
-                <b>". $row['service_name']. "</b>
-                <b>". $row['email']. "</b>
-                <b>". $row['phone']. "</b>
-                <b>". $row['text']. "</b>
-                </div>
-            </div>";
-        }
-    }
-    ?>
 
 </html>
 

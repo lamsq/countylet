@@ -168,28 +168,29 @@
                     <div id='index_edit_photo'>
                         <label for='edit_photo'>Show photo:</label>
                         <input type='checkbox' id='edit_photo_box' name='edit_photo_box'"; 
-                        if(isset($index_show) && $index_show[0]['display']==1) echo " checked";
+                        if((isset($index_show) && $index_show[0]['display']==1) || isset($_POST['edit_photo_box']))  echo " checked";
                         echo "> </div> 
 
                     <div id='index_edit_type'>
                         <label for='edit_type'>Show type:</label>
                         <input type='checkbox' id='edit_type_box' name='edit_type_box'"; 
-                        if(isset($index_show) && $index_show[1]['display']==1) echo " checked";
+                        if((isset($index_show) && $index_show[1]['display']==1) || isset($_POST['edit_type_box'])) echo " checked";
                         echo "> </div> 
 
                     <div id='index_edit_price'>
                         <label for='edit_price'>Show price:</label>
                         <input type='checkbox' id='edit_price_box' name='edit_price_box'"; 
-                        if(isset($index_show) && $index_show[2]['display']==1) echo " checked";
+                        if((isset($index_show) && $index_show[2]['display']==1) || isset($_POST['edit_price_box'])) echo " checked";
                         echo "> </div> 
 
                     <div id='index_edit_text'>
                         <label for='edit_text'>Show description:</label>
                         <input type='checkbox' id='edit_text_box' name='edit_text_box' "; 
-                        if(isset($index_show) && $index_show[3]['display']==1) echo " checked";
+                        if((isset($index_show) && $index_show[3]['display']==1) || isset($_POST['edit_text_box'])) echo " checked";
                         echo "></div> 
                         
-                    <input class='save_index' type='submit' id='save_index' name='save_index' value='Save'>
+                    <input class='save_index' type='submit' id='save_index' name='save_index' value='Save'";
+                     if ( isset($_POST['save_index']) ) echo "disabled".">
 
                 </form>";
 
@@ -237,31 +238,17 @@
                     $result = mysqli_query($db_connection, $query);
                             
                     if ($result){ 
-                        echo "<div class='changed_msg'>Settings successfully saved;</div>";                              
+                        echo "<div class='changed_msg'>Settings successfully saved;</div>";   
+                         
                     } else { 
                         echo "<h3>Something went wrong, try again;</h3>";
                     }
 
-                    require_once '../mysql_connect.php';                           
-                    $query = "SELECT * FROM index_show;";
-                    $result = mysqli_query($db_connection, $query);
-                    $index_show = array();
 
-                    if ($result){ 
-                        
-                        while($row = mysqli_fetch_assoc($result)){ 
-                            $index_show[]=$row;
-                        }                                                    
-                        mysqli_free_result($result); 
-                        
-                    } else { 
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
-
-                        }
-                    } else {
-                        echo "Access denied;";
-                    }
+                }
+            } else {
+                echo "Access denied;";
+            }
 
         ?>
 

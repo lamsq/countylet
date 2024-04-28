@@ -19,7 +19,6 @@ html {
     
 }
 
-
 .title_description div {
    
     margin: 0rem auto;
@@ -35,7 +34,6 @@ body, html {
     
 }
 
-
 .container {
     display: flex; 
     justify-content: center; 
@@ -43,13 +41,11 @@ body, html {
     background-color: #071108;
 }
 
-
 .boxes {
     display: flex; 
     justify-content: center;
     
 }
-
 
 .box {
     width: 30%; 
@@ -62,8 +58,6 @@ body, html {
     justify-content: center;
 
 }
-
-
 
 .options {
     display: flex;
@@ -84,7 +78,6 @@ main {
     margin: auto;
 }
 
-
 .suboptions  {
     display: flex;
     justify-content: center;
@@ -98,7 +91,6 @@ main {
     border-left: 1px solid #ccc;
     
 }
-
 
 #log_reg {
     justify-content: center;
@@ -116,7 +108,6 @@ main {
 #login_suboptions {
     display: block;
     padding: 0.5rem 35%;
-    
     
 }
 
@@ -165,6 +156,32 @@ main {
     
 }
 
+
+
+
+
+
+
+/* HEADER */
+
+.options a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #364652;
+    
+}
+
+.suboptions a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5b68;
+}
+
+.suboptions a:hover, .options a:hover {
+    color: rgb(37, 151, 42);
+}
 
 
 
@@ -224,8 +241,6 @@ main {
 #bed_dropdown {
     width: 4rem;
 }
-
-
 
 .price-input { 
 	 
@@ -308,6 +323,10 @@ input::-webkit-inner-spin-button {
 
 
 
+
+
+
+
 /* INDEX-EDIT */
 #index_edit div, .changed_msg{
     margin: 1rem 0rem;
@@ -318,6 +337,19 @@ input::-webkit-inner-spin-button {
     padding: 1rem;
     background-color: #faffb9;
 }
+
+.changed_msg {
+    padding: 1rem;
+    font-size: 1.3rem;
+    font-weight: 800;
+    background-color: #acd8ac;
+    width: fit-content;
+}
+
+
+
+
+
 
 
 
@@ -375,6 +407,11 @@ input::-webkit-inner-spin-button {
 
 
 
+
+
+
+
+
 /* ADVERTS */ 
 
 .ad-container {
@@ -396,6 +433,12 @@ input::-webkit-inner-spin-button {
     height: auto; /* Maintain aspect ratio */
     display: block;
 }
+
+
+
+
+
+
 
 
 
@@ -429,6 +472,13 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
     font-size: 1rem;
 }
+
+
+
+
+
+
+
 
 
 
@@ -507,53 +557,61 @@ input::-webkit-inner-spin-button {
 
 
 
+
+
+
+
+
+
+
+
+
 /* CONTACT US */
 
-.contact_photo_info {
-    display: flex;
-    background-color: #ddffce;
-    padding: 1rem;
-    margin: 1rem auto;
-    font-size: 1.2rem;
-}
-
-.contact_photo{
-    width: fit-content;
-}
-
-.contact_photo img {
-    width: 15rem; 
-    height: 20rem; 
-    object-fit: cover; 
-    object-position: center; 
-
-}
-
-.contact_info {
-    padding: 0rem 1rem;
-}
-
-.contact_name_surname{
-    display: flex;
-    width: fit-content;
-    padding: 0.5rem 1rem;
-    background-color: #ddbcad;
-}
-
-.contact_name_surname {
-
-    font-weight: bold;
+#contact_us_subtitle {
     font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color: darkkhaki;
 }
 
-.contact_role, .contact_department, .contact_email, .contact_phone {
+#contact_us_form {
+    padding: 1rem;
+    background-color: rgb(252, 252, 205);
+
+}
+
+.contact_us_name, 
+.contact_us_email,
+.contact_us_phone,
+.contact_us_msg {
+    
+    padding: 1rem 0rem;
+}
+
+.contact_us_name div label,
+.contact_us_email div label,
+.contact_us_phone div label,
+.contact_us_msg div label {
+    font-size: 1.2rem;
     font-weight: 600;
-    color: #777777;
 }
 
-.contact_email, .contact_phone {
-    font-weight: 700;
-    color: #1F2C2D;
+.contact_us_input {
+    width: 50%;
 }
 
+.contact_us_errors {
+    padding: 1rem;
+    background-color: rgb(245, 168, 165);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.contact_us_result {
+    padding: 1rem;
+    background-color: rgb(201, 255, 187);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
 

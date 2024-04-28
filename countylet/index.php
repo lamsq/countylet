@@ -8,6 +8,7 @@
     <title>CountyLet</title> <!-- page title-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap CSS -->
     <link href="style.css" rel="stylesheet"><!-- CSS -->
+    
 </head>
 
 <body>
@@ -59,20 +60,6 @@
 
             ?>
         </div>
-
-            <div id="msg" hidden>
-                <div >
-                    <?php                         
-                        if(isset($_COOKIE['loggedin_msg'])){
-                            echo $_COOKIE['loggedin_msg'];
-                        } else if(isset($_COOKIE['loggedout_msg'])){
-                            echo $_COOKIE['loggedout_msg'];
-                        } else if(isset($_COOKIE['registered'])){
-                            echo $_COOKIE['registered']; //"Successfully registered"
-                        } 
-                    ?>
-                </div>
-            </div> 
 
                 <?php 
 
@@ -136,6 +123,19 @@
                     }
 
                 ?>
+                <div id="msg" hidden>
+                <div >
+                    <?php                         
+                        if(isset($_COOKIE['loggedin_msg'])){
+                            echo $_COOKIE['loggedin_msg'];
+                        } else if(isset($_COOKIE['loggedout_msg'])){
+                            echo $_COOKIE['loggedout_msg'];
+                        } else if(isset($_COOKIE['registered'])){
+                            echo $_COOKIE['registered']; //"Successfully registered"
+                        } 
+                    ?>
+                </div>
+            </div>
                 
     </header>
 

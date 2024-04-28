@@ -60,20 +60,6 @@
             ?>
         </div>
 
-            <div id="msg" hidden>
-                <div >
-                    <?php                         
-                        if(isset($_COOKIE['loggedin_msg'])){
-                            echo $_COOKIE['loggedin_msg'];
-                        } else if(isset($_COOKIE['loggedout_msg'])){
-                            echo $_COOKIE['loggedout_msg'];
-                        } else if(isset($_COOKIE['registered'])){
-                            echo $_COOKIE['registered']; //"Successfully registered"
-                        } 
-                    ?>
-                </div>
-            </div> 
-
                 <?php 
 
                     if (isset($_SESSION["role"])){
@@ -136,92 +122,184 @@
                     }
 
                 ?>
+                <div id="msg" hidden>
+                <div >
+                    <?php                         
+                        if(isset($_COOKIE['loggedin_msg'])){
+                            echo $_COOKIE['loggedin_msg'];
+                        } else if(isset($_COOKIE['loggedout_msg'])){
+                            echo $_COOKIE['loggedout_msg'];
+                        } else if(isset($_COOKIE['registered'])){
+                            echo $_COOKIE['registered']; //"Successfully registered"
+                        } 
+                    ?>
+                </div>
+            </div>
                 
     </header>
+
+    <?php                     
+
+
+        $contact_error = array();
+
+        $name="";
+        $email="";
+        $phone ="";
+        $msg="";
+
+        $contact_us_completed=false;
+
+        function sanitized($input) {  
+            $input = strip_tags($input); //strip tags
+            $input = htmlspecialchars($input); //converting special characters
+            $input = stripslashes($input);  //strip quotemarks
+            $input = trim($input);  //sctrip whitespaces
+            return $input; //returns edited value
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['contact_us_submit_button'])){
+
+            if (empty($_POST['contact_us_name_input'])){
+                $contact_error[]="Enter your name;";
+            } elseif (!preg_match('/^[a-zA-Z\s]*$/', $_POST['contact_us_name_input'])){
+                $contact_error[]="Name contains forbidden characters;";
+            } else {
+                $name = htmlspecialchars(sanitized($_POST['contact_us_name_input']));
+            }
+
+            if (empty($_POST['contact_us_email_input'])){
+                $contact_error[]="Enter your email;";
+            } elseif(!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', htmlspecialchars(sanitized($_POST['contact_us_email_input'])))){
+                $contact_error[]="Incorrect email format;";
+            } else {
+                $email = htmlspecialchars(sanitized($_POST['contact_us_email_input']));
+            }
+
+            if (empty($_POST['contact_us_phone_input'])){
+                $contact_error[]="Enter your phone number;";
+            } else if (!preg_match('/^\+?\d{10,}$/', htmlspecialchars(sanitized($_POST['contact_us_phone_input'])))){
+                $contact_error[]="Incorrect phone number format;";
+            } else {
+                $phone = htmlspecialchars(sanitized($_POST['contact_us_phone_input']));
+            }
+            
+            if (empty($_POST['contact_us_msg_input'])){
+                $contact_error[]="Enter your message;";
+            } else if (999<strlen(htmlspecialchars(sanitized($_POST['contact_us_msg_input'])))){
+                $contact_error[]="The message is too long;";
+            }else {
+                $msg = htmlspecialchars(sanitized($_POST['contact_us_msg_input']));
+            }   
+            
+
+            if (empty($contact_error)){
+
+                
+                require_once '../mysql_connect.php';               
+                $query = "INSERT INTO contact_us (name, email, phone, message, done) VALUES ('$name', '$email', '$phone', '$msg', 0)"; 
+                
+                $result = mysqli_query($db_connection, $query);
+
+                if ($result){     
+                    
+                    $contact_us_completed=true;
+                                
+                    //mysqli_free_result($result);                         
+                } else { 
+                    echo "<h3>Something went wrong, try again;</h3>";
+                }
+
+            }
+
+        }
+
+    ?>
 
     <main>
 
     <div id="reviews">
 
-    <div id='reviews_subtitle'>Contact us </div>
-
-    <?php                     
-
-        $contact_us = array();
-        
-        require_once '../mysql_connect.php';   
-                                    
-        $query = "SELECT * FROM contact_us;"; 
-        $result = mysqli_query($db_connection, $query);
-
-        if ($result){                         
-            while($row = mysqli_fetch_assoc($result)){ 
-                $contact_us[]=$row;
-            }                    
-            //mysqli_free_result($result);                         
-        } else { 
-            echo "<h3>Something went wrong, try again;</h3>";
-        }
+        <div id='contact_us_subtitle'>Contact us </div>
 
 
-        if (count($contact_us)==0) {
-            echo "<div id='no_results'>Everyone is fired;</div>";
-        }
+        <div>
 
-        
-        for($c=0; $c<count($contact_us); $c++){
+                    <div id="contact_us_form">
+                        <form method="POST" novalidate action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <div class="contact_us_name">
+                                <div>
+                                    <label>Full name:</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="contact_us_name_input" name="contact_us_name_input" class="contact_us_input" value="<?php if(isset($_POST['contact_us_name_input'])) echo htmlspecialchars($_POST['contact_us_name_input']); ?>">
+                                </div>
+                            </div> 
+                            
+                            <div class="contact_us_email">
+                                <div>
+                                    <label>Email:</label>
+                                </div>
+                                <div>
+                                    <input type="email" id="contact_us_email_input" name="contact_us_email_input" class="contact_us_input" value="<?php if(isset($_POST['contact_us_email_input'])) echo htmlspecialchars($_POST['contact_us_email_input']); ?>">
+                                </div>
+                            </div>
 
-            echo "<div class='contact_us'>
-                <div class='contact_photo_info'>
-                    <div class='contact_photo'>"; 
-                        echo "<img  ";
-                        echo "src='".$contact_us[$c]['photo']."0.jpg'";   
-                        echo "alt=''>";
-                    echo "</div>
+                            <div class="contact_us_phone">
+                                <div>
+                                    <label>Phone number:</label>
+                                </div>
+                                <div>
+                                    <input type="number" id="contact_us_phone_input" name="contact_us_phone_input" class="contact_us_input" value="<?php if(isset($_POST['contact_us_phone_input'])) echo htmlspecialchars($_POST['contact_us_phone_input']); ?>" >
+                                </div>
+                            </div>
 
-                    <div class='contact_info'>";
-
-                        echo "<div class='contact_role'>";
-                        echo $contact_us[$c]['role'];
-                        echo "</div>
-
-                        <div class='contact_name_surname'>";
-
-                            echo "<div class='contact_name'>";
-                            echo $contact_us[$c]['name']."&nbsp;";
-                            echo "</div>
-
-                            <div class='contact_surname'>";
-                            echo $contact_us[$c]['surname'];
-                            echo "</div>
-
-
-                        </div>
-
-                        <div class='contact_department'>";
-                            echo $contact_us[$c]['department'];
-                        echo "</div>
-
-                        <div class='contact_email'>";
-                            echo $contact_us[$c]['email'];
-                        echo "</div>
-
-                        <div class='contact_phone'>";
-                            echo $contact_us[$c]['phone'];
-                        echo "</div>
-
+                            <div class="contact_us_msg">
+                                <div>
+                                    <label>Your message:</label>
+                                </div>
+                                <div>
+                                    <textarea type="text" id="contact_us_msg_input" name="contact_us_msg_input" class="contact_us_input"  cols="40" rows="5" value=""><?php if(isset($_POST['contact_us_msg_input'])) echo htmlspecialchars($_POST['contact_us_msg_input']); ?></textarea>
+                                </div>
+                            </div>
+                                                
+                            <div class="contact_us_submit">
+                                <input type="submit" name="contact_us_submit_button"  class="contact_us_submit_button" value="Submit" <?php if (isset($contact_us_completed) && $contact_us_completed==true) echo " disabled" ?> >
+                            </div>                    
+                        </form>
                     </div>
-                </div>
-                
 
-                
+                    <?php 
+                    
+                    
+                    if (!empty($contact_error)) { 
+                        
+                        echo "<div class='contact_us_errors'>";
+
+                        foreach ($contact_error as $k=>$r){
+                            echo "<div>".$r."</div>";
+                        }
+
+                        echo "</div>";
+
+                    } 
+                    
+                    if (isset($contact_us_completed) && $contact_us_completed==true){
+                        echo "<div class='contact_us_result'>";
+                        echo "Successfully submitted;";
+                        echo "</div>";
+                    }
+                    
+                    
+                    ?>
 
 
-            </div>";
 
-        }
-    ?>
-    </div>  
+
+
+            </div>
+
+        </div>  
 
     </main>
 
@@ -396,6 +474,7 @@
         }
 
         // Generate a random number between 1 and 3
+        require_once '../mysql_connect.php';      
         $random_number = rand(1, 2);
         $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
         $result = mysqli_query($db_connection, $query);

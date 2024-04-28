@@ -161,7 +161,9 @@
                         <div>Leave your review:</div> 
                             
                         <div id="" class=""> 
-                            <textarea type="text" class="review_field" name="review_field" cols="40" rows="5" value=""> </textarea>
+                            <textarea type="text" class="review_field" name="review_field" cols="40" rows="5" value=""> 
+                            <?php if(isset($_POST['review_field'])) echo htmlspecialchars($_POST['review_field']); ?>
+                            </textarea>
                         </div> 
                         
                     </div> 

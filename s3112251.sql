@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 26 2024 г., 03:48
+-- Время создания: Апр 28 2024 г., 04:19
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -48,6 +48,30 @@ INSERT INTO `advert` (`id`, `company_name`, `service_name`, `email`, `phone`, `t
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `contact_us`
+--
+
+CREATE TABLE `contact_us` (
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(30) NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `id` int(11) NOT NULL,
+  `done` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `contact_us`
+--
+
+INSERT INTO `contact_us` (`name`, `email`, `phone`, `message`, `id`, `done`) VALUES
+('wefwef', 'test@test.tt', '6565655555', 'wedfwef wef wef wef', 6, 0),
+('wefwef', 'test@test.tt', '6565655555', 'wedfwef wef wef wef', 7, 0),
+('awdawd', 'fe4fw@sef.rr', '4566434333', 'wwef wef wefw ef wef', 8, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `contracts`
 --
 
@@ -70,6 +94,27 @@ CREATE TABLE `contracts` (
 INSERT INTO `contracts` (`tenant_id`, `property_id`, `fee`, `tenancy_length`, `start`, `end`, `paid`, `owed`, `contract`) VALUES
 (6, 1, 1200, 4, '2026-04-30', '2028-05-30', 0, 1200, 'contract text: lorem'),
 (6, 2, 3000, 5, '2024-04-24', '2028-09-24', 300, 2700, 'Terms and Conditions:  Term of Tenancy: This agree');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `index_show`
+--
+
+CREATE TABLE `index_show` (
+  `display` tinyint(1) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `index_show`
+--
+
+INSERT INTO `index_show` (`display`, `name`) VALUES
+(1, 'edit_photo_box'),
+(1, 'edit_type_box'),
+(1, 'edit_price_box'),
+(1, 'edit_text_box');
 
 -- --------------------------------------------------------
 
@@ -135,7 +180,7 @@ INSERT INTO `property` (`type`, `bedrooms`, `description`, `photos`, `property_i
 ('house', 4, 'Discover the joys of lakeside living at this inviting lakefront haven. Situated on the shores of a picturesque lake, this modern cabin offers stunning water views and direct access to water activities. Enjoy fishing off the private dock, kayaking on the lake, or simply relaxing on the waterfront deck. The interior boasts a bright and airy living space with large windows, a fully equipped kitchen, and comfortable sleeping quarters. Whether you\'re seeking a romantic getaway or a family vacation, this property provides a perfect blend of relaxation and adventure. Unwind with serene sunsets reflected on the water and create lasting memories at this charming lakefront retreat.', 'property/6/', 6, 5, 990, 'D08TY89', 'Dublin, Center, Rathmines', 11, 0, NULL, NULL),
 ('apartment', 3, 'Live in luxury at this sophisticated city skyline penthouse. Perched atop a high-rise building, this spacious penthouse offers panoramic views of the city skyline through floor-to-ceiling windows. Step onto the expansive terrace to enjoy al fresco dining with breathtaking urban vistas. Inside, the penthouse features a designer kitchen, an elegant living area, and luxurious bedrooms with plush furnishings. Perfect for discerning travelers and those seeking a lavish city experience, this property is conveniently located near upscale restaurants, galleries, and nightlife. Treat yourself to the ultimate urban retreat with unparalleled views and upscale amenities.', 'property/7/', 7, 18, 1900, 'D08TY45', 'Dublin 17, Abbey road', 7, 1, NULL, NULL),
 ('house', 3, ' Indulge in wine country living at this charming vineyard cottage surrounded by rolling vineyards. Located on a picturesque winery estate, this cottage offers a unique blend of rustic charm and modern comfort. Sip local wines on the private patio overlooking the vineyards, take leisurely walks through the estate\'s gardens, or tour nearby wineries. The interior features a cozy living area with a fireplace, a fully equipped kitchen, and a comfortable bedroom with vineyard views. Whether you\'re a wine enthusiast or simply seeking a peaceful getaway, this vineyard cottage promises a relaxing retreat immersed in wine country ambiance.', 'property/8/', 8, 5, 660, 'D08RY89', 'Dublin, Center, Rockwell street', 2, 1, NULL, NULL),
-('house', 1, 'Embrace winter wonderland at this inviting ski chalet nestled in the mountains. Located near ski slopes and winter trails, this cozy chalet is perfect for snow enthusiasts. After a day on the slopes, return to this warm retreat featuring a stone fireplace, a spacious lounge area, and a hot tub with mountain views. The chalet offers a fully equipped kitchen for apres-ski meals and comfortable bedrooms designed for restful nights. Whether it\'s a family ski vacation or a romantic winter escape, this property combines alpine charm with modern amenities. Experience the magic of snow-covered landscapes and cozy evenings by the fire at this ski chalet paradise.', 'property/9/', 9, 4, 1450, 'D09TY60', 'Dublin, Circular road', 90, 1, NULL, NULL);
+('apartment', 1, 'Embrace winter wonderland at this inviting ski chalet nestled in the mountains. Located near ski slopes and winter trails, this cozy chalet is perfect for snow enthusiasts. After a day on the slopes, return to this warm retreat featuring a stone fireplace, a spacious lounge area, and a hot tub with mountain views. The chalet offers a fully equipped kitchen for apres-ski meals and comfortable bedrooms designed for restful nights. Whether it\'s a family ski vacation or a romantic winter escape, this property combines alpine charm with modern amenities. Experience the magic of snow-covered landscapes and cozy evenings by the fire at this ski chalet paradise.', 'property/9/', 9, 4, 1450, 'D09TY60', 'Dublin, Circular road', 90, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -172,7 +217,9 @@ INSERT INTO `roles` (`user_id`, `user_role`) VALUES
 (28, 'tenant'),
 (29, 'tenant'),
 (30, 'tenant'),
-(31, 'tenant');
+(31, 'tenant'),
+(32, 'tenant'),
+(33, 'tenant');
 
 -- --------------------------------------------------------
 
@@ -185,22 +232,27 @@ CREATE TABLE `testimonial` (
   `text` varchar(600) NOT NULL,
   `id` int(11) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
-  `approved` tinyint(1) NOT NULL DEFAULT 0
+  `approved` tinyint(1) NOT NULL DEFAULT 0,
+  `service` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `testimonial`
 --
 
-INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`) VALUES
-(4, 'Exceptional service from this letting agency! From the moment I contacted them about finding a rental property, they were professional and efficient. They understood my requirements perfectly and showed me several properties that matched my needs. The whole renting process was smooth, and their team was responsive to all my queries. I highly recommend them to anyone looking for a stress-free renting experience.', 4, '2024-04-25', 1),
-(5, 'I had a fantastic experience with this letting agency. They helped me find the perfect apartment within my budget and in a great location. The staff was friendly and knowledgeable, guiding me through every step of the rental process. They were prompt in addressing any concerns I had and made the paperwork easy to understand. I am grateful for their support and would definitely use their services again.', 5, '2024-04-25', 0),
-(6, 'Highly impressed with the professionalism of this letting agency. They made the process of finding a new rental property incredibly easy. The agents were attentive to my requirements and showed genuine interest in finding me the right home. Communication was excellent throughout, and they were always quick to respond to emails and calls. I would not hesitate to recommend them to anyone searching for a rental property.', 6, '2024-04-25', 0),
-(15, 'This letting agency is outstanding! They assisted me in finding a wonderful home for my family. The team was knowledgeable about the local area and provided valuable insights during property viewings. They negotiated on my behalf and ensured I secured a rental agreement that suited my needs. I appreciate their dedication and would use their services again in the future.', 7, '2024-04-25', 1),
-(16, 'I had a great experience with this letting agency. The staff was friendly, professional, and helpful from start to finish. They listened to what I was looking for and provided options that matched my criteria. The whole process was efficient, and they were transparent about fees and terms. I would definitely recommend this agency to anyone seeking a rental property.', 8, '2024-04-24', 0),
-(17, 'Five-star service from this letting agency! They were proactive in helping me find a suitable rental property within my budget. The agents were attentive, courteous, and knowledgeable about the local rental market. They addressed all my concerns promptly and made sure the entire renting process went smoothly. Im delighted with their service and grateful for their assistance.', 9, '2024-04-24', 1),
-(18, 'Excellent experience with this letting agency. The team was highly professional and went above and beyond to assist me in finding the right rental property. They were patient and understanding of my needs, ensuring that I was satisfied with my choice. Communication was clear throughout, and they provided valuable advice during the negotiation process. I would recommend them without hesitation.', 10, '2024-04-23', 1),
-(19, 'This letting agency is top-notch! They made my search for a rental property stress-free and enjoyable. The agents were knowledgeable about the market and showed me properties that matched my preferences perfectly. They guided me through the paperwork and kept me informed at every stage. Overall, a fantastic experience working with them.', 11, '2024-04-23', 1);
+INSERT INTO `testimonial` (`user_id`, `text`, `id`, `date`, `approved`, `service`) VALUES
+(4, 'Exceptional service from this letting agency! From the moment I contacted them about finding a rental property, they were professional and efficient. They understood my requirements perfectly and showed me several properties that matched my needs. The whole renting process was smooth, and their team was responsive to all my queries. I highly recommend them to anyone looking for a stress-free renting experience.', 4, '2024-04-25', 1, 'rent'),
+(5, 'I had a fantastic experience with this letting agency. They helped me find the perfect apartment within my budget and in a great location. The staff was friendly and knowledgeable, guiding me through every step of the rental process. They were prompt in addressing any concerns I had and made the paperwork easy to understand. I am grateful for their support and would definitely use their services again.', 5, '2024-04-25', 1, 'let'),
+(6, 'Highly impressed with the professionalism of this letting agency. They made the process of finding a new rental property incredibly easy. The agents were attentive to my requirements and showed genuine interest in finding me the right home. Communication was excellent throughout, and they were always quick to respond to emails and calls. I would not hesitate to recommend them to anyone searching for a rental property.', 6, '2024-04-25', 0, 'let'),
+(15, 'This letting agency is outstanding! They assisted me in finding a wonderful home for my family. The team was knowledgeable about the local area and provided valuable insights during property viewings. They negotiated on my behalf and ensured I secured a rental agreement that suited my needs. I appreciate their dedication and would use their services again in the future.', 7, '2024-04-25', 1, 'let'),
+(16, 'I had a great experience with this letting agency. The staff was friendly, professional, and helpful from start to finish. They listened to what I was looking for and provided options that matched my criteria. The whole process was efficient, and they were transparent about fees and terms. I would definitely recommend this agency to anyone seeking a rental property.', 8, '2024-04-24', 1, 'let'),
+(17, 'Five-star service from this letting agency! They were proactive in helping me find a suitable rental property within my budget. The agents were attentive, courteous, and knowledgeable about the local rental market. They addressed all my concerns promptly and made sure the entire renting process went smoothly. Im delighted with their service and grateful for their assistance.', 9, '2024-04-24', 1, 'rent'),
+(18, 'Excellent experience with this letting agency. The team was highly professional and went above and beyond to assist me in finding the right rental property. They were patient and understanding of my needs, ensuring that I was satisfied with my choice. Communication was clear throughout, and they provided valuable advice during the negotiation process. I would recommend them without hesitation.', 10, '2024-04-23', 1, 'let'),
+(19, 'This letting agency is top-notch! They made my search for a rental property stress-free and enjoyable. The agents were knowledgeable about the market and showed me properties that matched my preferences perfectly. They guided me through the paperwork and kept me informed at every stage. Overall, a fantastic experience working with them.', 11, '2024-04-23', 1, 'rent'),
+(4, 'The letting agency has been attentive and responsive throughout my tenancy. Their communication has been clear and timely, ensuring any concerns or maintenance issues were promptly addressed. The process of renting through them was smooth, with thorough explanations provided for all necessary documentation and procedures. However, there were occasional delays in resolving maintenance requests, which could have been improved. Overall, my experience with the letting agency has been positive, with their professionalism and efficiency contributing to a satisfactory renting experience.', 16, '2024-04-26', 1, 'manage'),
+(4, 'The letting agency has been attentive and responsive throughout my tenancy. Their communication has been clear and timely, ensuring any concerns or maintenance issues were promptly addressed. The process of renting through them was smooth, with thorough explanations provided for all necessary documentation and procedures. However, there were occasional delays in resolving maintenance requests, which could have been improved. Overall, my experience with the letting agency has been positive, with their professionalism and efficiency contributing to a satisfactory renting experience.', 17, '2024-04-26', 1, 'manage'),
+(4, 'awdawd', 18, '2024-04-26', 0, 'manage'),
+(4, 'Test', 19, '2024-04-26', 0, 'manage');
 
 -- --------------------------------------------------------
 
@@ -240,7 +292,9 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 (28, 'finaltest', '$2y$10$3/X4g3TLPQbPpiK4ceACzOhH9On/lAKIXexUyoTjLu1oNYQuSIfJa', 'finaltest@test.ru', 'testtest'),
 (29, 'aefwefw', '$2y$10$xi38PIGl1hGJrGKp3oGPreOMvEdD2JNhEbS2LQBvGQsoA4GufrgIS', 'eyhedh@aedwef.serf', 'werfwerg'),
 (30, 'aefwefw', '$2y$10$W40tksN2NDDwA7wjodfncezTYziGMN3uDKTZFc09p6chDx1r9R1q6', 'eyhfgb@aedwef.serf', 'werfwerg'),
-(31, 'adwd', '$2y$10$TUtZu9ToY0IP7VWCfewe8.8JQoK5MhWWaBpf2RGAN1ewXTw8gCJPG', 'awd@eee.rrt', 'rthtu');
+(31, 'adwd', '$2y$10$TUtZu9ToY0IP7VWCfewe8.8JQoK5MhWWaBpf2RGAN1ewXTw8gCJPG', 'awd@eee.rrt', 'rthtu'),
+(32, 'Adnim', '$2y$10$CSlEoOZKu7M2XDmI85rO2e2dwPSxwMjCfjGV4eoCInUg5PKBzNBlu', 'Aspefkwpoerf@dawed.rr', 'wserfwerf'),
+(33, 'newTest', '$2y$10$wY4TsFlbT9wCFl7toSWHf.0ApneoCCcijqEQf0PWvS5Zik8y3yHYW', 'ttetete@etette.tetet', 'tetetete');
 
 --
 -- Индексы сохранённых таблиц
@@ -250,6 +304,12 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `surname`) VALUES
 -- Индексы таблицы `advert`
 --
 ALTER TABLE `advert`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `contact_us`
+--
+ALTER TABLE `contact_us`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -304,6 +364,12 @@ ALTER TABLE `advert`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT для таблицы `contact_us`
+--
+ALTER TABLE `contact_us`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT для таблицы `property`
 --
 ALTER TABLE `property`
@@ -313,13 +379,13 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT для таблицы `testimonial`
 --
 ALTER TABLE `testimonial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

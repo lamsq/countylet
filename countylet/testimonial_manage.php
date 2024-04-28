@@ -12,7 +12,7 @@
 
 <body>
     
-    <header>
+<header>
         <div class="options">
 
             <?php
@@ -59,20 +59,6 @@
 
             ?>
         </div>
-
-            <div id="msg" hidden>
-                <div >
-                    <?php                         
-                        if(isset($_COOKIE['loggedin_msg'])){
-                            echo $_COOKIE['loggedin_msg'];
-                        } else if(isset($_COOKIE['loggedout_msg'])){
-                            echo $_COOKIE['loggedout_msg'];
-                        } else if(isset($_COOKIE['registered'])){
-                            echo $_COOKIE['registered']; //"Successfully registered"
-                        } 
-                    ?>
-                </div>
-            </div> 
 
                 <?php 
 
@@ -136,6 +122,19 @@
                     }
 
                 ?>
+                <div id="msg" hidden>
+                <div >
+                    <?php                         
+                        if(isset($_COOKIE['loggedin_msg'])){
+                            echo $_COOKIE['loggedin_msg'];
+                        } else if(isset($_COOKIE['loggedout_msg'])){
+                            echo $_COOKIE['loggedout_msg'];
+                        } else if(isset($_COOKIE['registered'])){
+                            echo $_COOKIE['registered']; //"Successfully registered"
+                        } 
+                    ?>
+                </div>
+            </div>
                 
     </header>
 

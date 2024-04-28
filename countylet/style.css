@@ -3,11 +3,14 @@
 /* INDEX */
 
 :root {
-    --charcoal: #364652;
-    --metal: #1F2C2D;
-    --night: #071108;
-    --onyx: #353937;
-    --gray: #636165;
+    --charcoal: #244855;
+    --subcharcoal: #376170;
+    --orange: #E64833;
+    --brown: #874F41;
+    --bgray: #90AEAD;
+    --gwhite: #FBE9D0;
+
+
     --thistle: #BFB1C1;
     --pinkgray: #BAB8C4;
     --gray: #B5BEC6;
@@ -19,12 +22,20 @@ html {
     
 }
 
+.company_name {
+    background-color: var(--orange);
+    padding: 1rem;
+    color: var(--gwhite);
+}
+
 .title_description div {
-   
     margin: 0rem auto;
-    padding-top: 1rem;
-    text-align: center;
     
+}
+
+.company_description {
+    padding: 1rem;
+    background-color: var(--gwhite);
 }
 
 body, html {
@@ -44,16 +55,14 @@ body, html {
 .boxes {
     display: flex; 
     justify-content: center;
+    background-color: var(--gwhite);
     
 }
 
 .box {
     width: 30%; 
     height: auto; 
-    
-    max-height: 200px;
-    background-color: #ffffff; 
-    
+    background-color: var(--gwhite); 
     margin: 1.5rem 1rem ; 
     justify-content: center;
 
@@ -62,7 +71,8 @@ body, html {
 .options {
     display: flex;
     justify-content: center;
-    background-color: var(--pinkgray);
+    background-color: var(--charcoal);
+    
 }
 
 .option {
@@ -70,7 +80,7 @@ body, html {
     padding: 1rem 1.5rem;
     border-right: 1px solid #ccc; 
     border-left: 1px solid #ccc;
-    
+    color: var(--gwhite);
 }
 
 main {
@@ -81,7 +91,8 @@ main {
 .suboptions  {
     display: flex;
     justify-content: center;
-    background-color: var(--blue);
+    background-color: var(--subcharcoal);
+    
 }
 
 .suboption {
@@ -89,7 +100,7 @@ main {
     padding: 1rem 1.5rem;
     border-right: 1px solid #ccc; 
     border-left: 1px solid #ccc;
-    
+    color: var(--gwhite);
 }
 
 #log_reg {
@@ -100,8 +111,9 @@ main {
 #log_reg a div {
     text-align: center;
     padding: 0.5rem 1rem; 
-    border: 1px solid #ccc; 
-    margin: 0 1rem;
+    border-left: 1px solid #ccc; 
+    border-right: 1px solid #ccc; 
+    margin: auto;
 
 }
 
@@ -148,12 +160,20 @@ main {
 }
 
 .box .type {
-    background-color: rgb(253, 255, 193);
-    
+    background-color: var(--bgray) ;
+    color: var(--gwhite);
     padding: 0rem 1rem;
     font-size: 110%;
     width: fit-content;
     
+}
+
+
+.login_button, .reg_button {
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
 }
 
 
@@ -180,9 +200,25 @@ main {
 }
 
 .suboptions a:hover, .options a:hover {
-    color: rgb(37, 151, 42);
+    color: var(--orange);
 }
 
+#log_reg div {
+    color: var(--gwhite);
+}
+
+.form-group-b, .form-group-div {
+    margin: 1rem 0rem;
+}
+
+#login_form, #registration_form {
+    color: var(--gwhite);
+}
+
+#registration_form form .error, #login_form form .error {
+    background-color: var(--gwhite);
+    padding: 0.5rem;
+}
 
 
 
@@ -200,11 +236,17 @@ main {
 
 .search{
     padding: 1rem;
-    background-color: #fdfdd8;
+    background-color: var(--gwhite);
 }
 
+
 .search_subtitle {
-    margin: 0.5rem 0rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color:var(--orange);
+    color: var(--gwhite);
+    font-size: 1.1rem;
 }
 
 .search form div {
@@ -228,14 +270,14 @@ main {
     appearance:unset;
 	width: 6rem;
 	height: 2rem; 
-	border-radius: 1rem; 
+	 
 	text-align: center; 
 	border: 0px; 
-	background: #e4e4e4; 
+	 
 } 
 
 #bed_dropdown_div, .price-input {
- width: 50%;
+    width: 50%;
 }
 
 #bed_dropdown {
@@ -243,7 +285,6 @@ main {
 }
 
 .price-input { 
-	 
     display: flex;
 } 
 
@@ -272,7 +313,7 @@ input::-webkit-inner-spin-button {
 }
 
 .boxes_search {
-    border-bottom: 5px solid rgb(230, 230, 230);
+    
     margin: 1rem auto;
 }
 
@@ -282,6 +323,8 @@ input::-webkit-inner-spin-button {
 
 .search_results_row {
     display: flex;
+    background-color: var(--gwhite);
+    padding: 1rem;
 }
 
 .main_photo_search{
@@ -302,15 +345,16 @@ input::-webkit-inner-spin-button {
 .price_search {
     font-weight: bold;
     font-size: 1.5rem;
-    background-color: #e6fae4;
+    background-color: var(--orange);
+    color: var(--gwhite);
     width: fit-content;
     padding: 0rem 0.5rem;
 }
 
 #search_results{
-    margin: 1rem 0rem;
     font-size: 1.5rem;
     font-weight: bold;
+    padding: 0rem 1rem;
 }
 
 .errors_search {
@@ -320,6 +364,17 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
+.search_button {
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
+}
+
+
+
+
+
 
 
 
@@ -328,14 +383,16 @@ input::-webkit-inner-spin-button {
 
 
 /* INDEX-EDIT */
-#index_edit div, .changed_msg{
+#index_edit div{
     margin: 1rem 0rem;
 
 }
 
 #index_edit{
     padding: 1rem;
-    background-color: #faffb9;
+    background-color: var(--gwhite);
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .changed_msg {
@@ -343,9 +400,16 @@ input::-webkit-inner-spin-button {
     font-size: 1.3rem;
     font-weight: 800;
     background-color: #acd8ac;
-    width: fit-content;
+   
+    
 }
 
+.save_index {
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
+}
 
 
 
@@ -358,13 +422,13 @@ input::-webkit-inner-spin-button {
 /* TESTIMONIALS */
 #reviews .review {
     margin: 1rem auto;    
-    background-color: #f5ffee;
+    background-color: var(--gwhite);
 }
 
 .review .name_date_review {
     display: flex;
     padding: 1rem;
-    border-bottom: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid white ;
 }
 
 .name, .date {
@@ -374,8 +438,8 @@ input::-webkit-inner-spin-button {
 .date {
     text-align: right;
     font-weight: bold;
-    margin-top: auto;
     
+    margin: auto 0rem;
 }
 
 .name {
@@ -387,7 +451,8 @@ input::-webkit-inner-spin-button {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    background-color: darkkhaki;
+    background-color: var(--orange);
+    color: var(--gwhite);
 }
 
 .text_review {
@@ -398,7 +463,8 @@ input::-webkit-inner-spin-button {
     font-size: 1rem;
     color:#777777;
     padding: 1rem;
-    border-top: 1px solid rgb(230, 230, 230);
+    border-top: 1px solid white;
+    margin: auto 0rem;
 }
 
 
@@ -445,7 +511,7 @@ input::-webkit-inner-spin-button {
 
 /* TESTIMONIAL ADD */
 .testimonial_add{
-    background-color: lemonchiffon;
+    background-color: var(--gwhite) ;
     padding: 0.5rem 1rem;
 }
 
@@ -453,7 +519,8 @@ input::-webkit-inner-spin-button {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    background-color: darkkhaki;
+    background-color: var(--orange);
+    color: var(--gwhite);
 }
 
 .testimonial_add div {
@@ -473,6 +540,20 @@ input::-webkit-inner-spin-button {
     font-size: 1rem;
 }
 
+.review_submit {
+
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
+    margin-bottom: 0.5rem;
+   
+}
+
+.review_input_field_title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
 
 
 
@@ -488,67 +569,81 @@ input::-webkit-inner-spin-button {
 
 
 
-/* TESTIMONIAL MANAGE */
 
-.testimonial_manage_title{
+
+
+
+
+/* CONTACT_US MANAGE */
+
+
+.contact_us_manage_title {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    background-color: darkkhaki;
+    background-color: var(--orange);
+    color: var(--gwhite);
 }
 
-
-#reviews .review, .manage_testimonials {
+ .manage_contact_us {
     margin: 1rem auto;    
-    background-color: #f5ffee;
+    background-color: var(--gwhite);
 }
 
-.manage_testimonials .name_date_manage {
+.manage_contact_us .name_email_manage_contact_us {
     display: flex;
     padding: 1rem;
-    border-bottom: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid white;
 }
 
-.name_manage, .date_manage {
+.name_manage_contact_us, .email_manage_contact_us {
     width: 50%;
 }
 
-.date_manage {
+.email_manage_contact_us {
     text-align: right;
     font-weight: bold;
     margin-top: auto;
-    
+    margin: auto 0rem;
 }
 
-.name_manage {
+.name_manage_contact_us {
     font-weight: bold;
     font-size: 1.5rem;
 }
 
-.role_approve_manage {
+.phone_approve_manage_contat_us {
     display: flex;
     padding: 1rem;
-    border-top: 1px solid rgb(230, 230, 230);
+    border-top: 1px solid white;
 }
 
-.text_manage {
+.text_manage_contact_us {
     padding: 1rem;
 }
 
-.role_manage, .approve_manage {
+.phone_manage_contact_us, .approve_manage_contact_us {
     width:50%;
 }
 
-.approve_manage {
+.approve_manage_contact_us {
     text-align: right;
     font-weight: 700;
     color: #477e47;
     
 }
 
-.role_manage {
+.phone_manage_contact_us {
     font-size: 1rem;
     color:#777777;
+    margin: auto 0rem;
+}
+
+.contact_us_done {
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
 }
 
 
@@ -568,18 +663,21 @@ input::-webkit-inner-spin-button {
 
 /* CONTACT US */
 
+
 #contact_us_subtitle {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    background-color: darkkhaki;
+    background-color: var(--orange);
+    color: var(--gwhite);
 }
 
 #contact_us_form {
     padding: 1rem;
-    background-color: rgb(252, 252, 205);
-
+    background-color: var(--gwhite);
+    
 }
+
 
 .contact_us_name, 
 .contact_us_email,
@@ -606,6 +704,7 @@ input::-webkit-inner-spin-button {
     background-color: rgb(245, 168, 165);
     font-size: 1.2rem;
     font-weight: bold;
+    color: var(--charcoal);
 }
 
 .contact_us_result {
@@ -615,3 +714,89 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
+.contact_us_submit_button {
+    background-color: var(--brown);
+    color: var(--gwhite);
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TESTIMONIAL MANAGE */
+
+.testimonial_manage_title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    background-color: var(--orange) ;
+    color: var(--gwhite);
+}
+
+
+ .manage_testimonials {
+    margin: 1rem auto;    
+    background-color: var(--gwhite);
+}
+
+.manage_testimonials .name_date_manage {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid white;
+}
+
+.name_manage, .date_manage {
+    width: 50%;
+}
+
+.date_manage {
+    text-align: right;
+    font-weight: bold;
+    margin-top: auto;
+    margin: auto 0rem;
+}
+
+.name_manage {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.role_approve_manage {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid white;
+}
+
+.text_manage {
+    padding: 1rem;
+}
+
+.role_manage, .approve_manage {
+    width:50%;
+}
+
+.approve_manage {
+    text-align: right;
+    font-weight: 700;
+    color: #477e47;
+    
+}
+
+.role_manage {
+    font-size: 1rem;
+    color:#777777;
+    margin: auto 0rem;
+}

@@ -146,8 +146,17 @@
             <!-- bootstrap form-group -->
             <div class="">
                 <!-- form title -->
-                <div><h1>CountyLet</h1></div>
-                <div><h5 class="">Your trusted agency for renting and managing quality residential and commercial properties in Dublin.</br> We specialize in personalized service, ensuring seamless transactions and satisfied landlords and tenants.</h5></div>
+                <div class='company_name'><h1>CountyLet</h1></div>
+                <div class='company_description'><h5 class="">
+
+                Your Gateway to Seamless Property Solutions
+
+                    </br></br>Nestled in the heart of Dublin, CountyLet stands tall as a beacon of excellence in property management. With a rich tapestry of experience, a dedication to client satisfaction, and a commitment to excellence, we are your premier partner in navigating the intricate landscape of property letting in Ireland’s capital city and beyond.
+
+                    </br></br>CountyLet was born from a vision of simplifying the rental process for both landlords and tenants alike. Our mission is to provide a seamless experience marked by transparency, integrity, and efficiency, ensuring that every interaction with us exceeds expectations.
+
+                
+                </h5></div>
             </div>
         </div>
 

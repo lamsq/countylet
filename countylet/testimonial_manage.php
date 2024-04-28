@@ -282,7 +282,7 @@
                     if (!$result){ 
                         echo "<h3>Something went wrong, try again;</h3>";
                         
-                    }
+                    } 
 
                     break;
                 }

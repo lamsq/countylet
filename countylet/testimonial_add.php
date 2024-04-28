@@ -158,7 +158,7 @@
             <form id="review_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="POST" novalidate>
 
                     <div class="review_input_field"> 
-                        <div>Leave your review:</div> 
+                        <div class="review_input_field_title">Leave your review:</div> 
                             
                         <div id="" class=""> 
                             <textarea type="text" class="review_field" name="review_field" cols="40" rows="5" value=""> 

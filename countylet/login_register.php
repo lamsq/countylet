@@ -233,28 +233,28 @@
     <div id="login_suboptions" class="suboptions">    
 
                     <div id="log_reg">
-                        <a id="log" onclick="history.back()" href="#"><div id="">< </div></a>
-                        <a id="log" href="index.php"><div id="">Home</div></a>
+                        <a id="back" onclick="history.back()" href="#"><div id="">< </div></a>
+                        <a id="home" href="index.php"><div id="">Home</div></a>
                         <a id="log" onclick="show_log()" href="#"><div id="">Login</div></a>
                         <a id="reg" onclick="show_reg()" href="#"><div id="">Register</div></a>
                     </div>
         
                     <div id="login_form">
                         <form method="post" novalidate action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Email Address</label>
-                                <input type="email" id="email_input" name="email" class="form-control" value=" <?php if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']); ?> " autofocus/>
+                                <input type="email" id="email_input" name="email" class="form-control" value="<?php if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']); ?>"/>
                             </div> 
                             
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Password</label>
                                 <input type="password" id="password_input" name="password" class="form-control" >
                             </div>
                         
                             <?php if (!empty($error)) { echo '<div class="error">' . $error . '</div>'; } ?>
                                                         
-                            <div class="form-group">
-                                <input type="submit" name="login"  class="btn btn-primary" value="Log in">
+                            <div class="form-group-b">
+                                <input type="submit" name="login"  class="login_button" value="Log in">
                             </div>                    
                         </form>
                     </div>
@@ -264,32 +264,32 @@
 
                         <form method="post" novalidate action="<?php echo $_SERVER['PHP_SELF'];?>">
 
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Name</label>
                                 <input type="text" name="name" class="form-control" value="<?php if(isset($_POST['name'])) echo htmlspecialchars($_POST['name']);?>">
                             </div>   
 
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Surname</label>
                                 <input type="text" name="surname" class="form-control" value="<?php if(isset($_POST['surname'])) echo htmlspecialchars($_POST['surname']);?>">
                             </div> 
                             
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Email Address</label>
                                 <input type="email" name="email" class="form-control" placeholder="example@email.com" value="<?php  if(isset($_POST['email'])) echo htmlspecialchars($_POST['email']);?>" >
                             </div>    
 
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Password</label>
                                 <input type="password" name="password" class="form-control" >
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group-div">
                                 <label>Confirm Password</label>
                                 <input type="password" name="confirm_password" class="form-control" >
                             </div>
                             
-                            <div id="choose_role" class="form-group">
+                            <div id="choose_role" class="form-group-div">
                                 I am:</br>
                                 <input type="radio" id="tenant" class="" name="role" value="tenant">
                                 <label for="html">Tenant</label><br>
@@ -299,8 +299,8 @@
 
                             <?php if (!empty($error_reg)) {echo '<div class="error">' . $error_reg . '</div>'; } ?>
 
-                            <div class="form-group">
-                                <input type="submit" name="reg" class="btn btn-primary" value="Register">
+                            <div class="form-group-b">
+                                <input type="submit" name="reg" class="reg_button" value="Register">
                             </div>
                         </form>
                     </div> 

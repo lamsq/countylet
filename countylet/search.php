@@ -141,9 +141,9 @@
 
 
     <main>
-        
+    <div class="search_subtitle"><h2 >Search your property</h2></div>
         <div class="search">
-            <div class="search_subtitle"><h2 >Search your property:</h2></div>
+            
             <form id="form_id" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="GET" novalidate>
 
                 <div class="search_dates">

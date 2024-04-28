@@ -247,7 +247,7 @@
 
                 }
             } else {
-                echo "Access denied;";
+                echo "<div class='contact_us_manage_title'>Access denied;</div>";
             }
 
         ?>

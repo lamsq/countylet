@@ -13,12 +13,15 @@
 <body>
     
 <header>
-        <div class="options">
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -61,7 +64,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -124,6 +127,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -141,14 +145,14 @@
     <?php                     
 
 
-        $contact_error = array();
+        $contact_error = array(); //array to store the form data
 
         $name="";
         $email="";
         $phone ="";
         $msg="";
 
-        $contact_us_completed=false;
+        $contact_us_completed=false; //flag for completed form
 
         function sanitized($input) {  
             $input = strip_tags($input); //strip tags
@@ -158,7 +162,9 @@
             return $input; //returns edited value
         }
 
+        //condition for the pressed button
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['contact_us_submit_button'])){
+            //conditions to check each input field 
 
             if (empty($_POST['contact_us_name_input'])){
                 $contact_error[]="Enter your name;";
@@ -192,10 +198,10 @@
                 $msg = htmlspecialchars(sanitized($_POST['contact_us_msg_input']));
             }   
             
-
+            //if there are no errors 
             if (empty($contact_error)){
 
-                
+                //sets the query and send it to the db
                 require_once '../mysql_connect.php';               
                 $query = "INSERT INTO contact_us (name, email, phone, message, done) VALUES ('$name', '$email', '$phone', '$msg', 0)"; 
                 
@@ -218,6 +224,7 @@
 
     <main>
 
+
     <div id="reviews">
 
         <div id='contact_us_subtitle'>Contact us </div>
@@ -226,6 +233,8 @@
         <div>
 
                     <div id="contact_us_form">
+
+                        <!-- contact us form with php script action-->
                         <form method="POST" novalidate action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="contact_us_name">
                                 <div>
@@ -271,7 +280,7 @@
 
                     <?php 
                     
-                    
+                    //script to print the errors
                     if (!empty($contact_error)) { 
                         
                         echo "<div class='contact_us_errors'>";
@@ -284,6 +293,7 @@
 
                     } 
                     
+                    //if flag is toggled
                     if (isset($contact_us_completed) && $contact_us_completed==true){
                         echo "<div class='contact_us_result'>";
                         echo "Successfully submitted;";
@@ -292,9 +302,6 @@
                     
                     
                     ?>
-
-
-
 
 
             </div>

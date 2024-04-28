@@ -13,12 +13,15 @@
 <body>
     
 <header>
-        <div class="options">
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -61,7 +64,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -124,6 +127,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -139,12 +143,14 @@
     </header>
 
     <?php 
-
+        //condition that makes page available for admin only
         if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
             $reviews_array = array();
             $authors_array = array();
             $roles_array = array();
             require_once '../mysql_connect.php';   
+
+            //sets up the query and sends it to get unhandled messages, users and their roles
                                         
             $query = "SELECT * FROM testimonial WHERE approved=0 ORDER BY date ASC;"; 
             $result = mysqli_query($db_connection, $query);
@@ -196,7 +202,7 @@
     ?>
 
     <main> 
-
+        <!-- page subtitle -->
         <div class="testimonial_manage_title">
             <?php 
                 if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
@@ -206,13 +212,13 @@
                 }            
             ?>                    
         </div>
-        
+          <!-- html elements for the testimonials that were not approved -->
         <div class="testimonial_manage" <?php if(!isset($_SESSION['role']) || $_SESSION['role']!='admin' || empty($reviews_array)) echo "hidden" ?>>
 
             <form id="manage_box" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="POST" novalidate>
 
                 <?php 
-
+                    //loop that goes through the array and populate data into html elements
                     for($r=0; $r<count($reviews_array); $r++){
 
                         echo "
@@ -267,13 +273,14 @@
         </div>
 
         <?php
+            //condition for approve button
 
             for($r=0; $r<count($reviews_array); $r++){
 
                 $button = "review".$r;
 
                 if($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST[$button])){
-
+                    //sets the approved property to 1 in button was pressed
                     require_once '../mysql_connect.php';
                     $query= "UPDATE testimonial SET approved=1 WHERE id=".$reviews_array[$r]['id'].";";
                     $result = mysqli_query($db_connection, $query);

@@ -11,13 +11,16 @@
 </head>
 
 <body>
-<header>
-        <div class="options">
+    <header>
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -60,7 +63,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -123,6 +126,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -140,7 +144,9 @@
     <main> 
 
         <div class="testimonial_add_title">
-            <?php if(isset($_SESSION['role'])){
+            <?php 
+            //condition for the page to be displayed for authorized users only
+            if(isset($_SESSION['role'])){
                 echo "Testimonial add";
             } else {
                 echo "Access denied;";
@@ -152,7 +158,7 @@
 
         
         <div class="testimonial_add" <?php if(!isset($_SESSION['role'])) echo "hidden" ?>>
-
+            <!-- //form that gets data for the testimonial -->
             <form id="review_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="POST" novalidate>
 
                     <div class="review_input_field"> 
@@ -190,6 +196,10 @@
         $added = false;
         
         if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['review']) && (isset($_SESSION['role']))){
+            
+            
+            //condition to check input and send the qeury to the db
+
 
             if(!empty($_POST['review_field']) ){
 

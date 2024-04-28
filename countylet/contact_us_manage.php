@@ -13,12 +13,15 @@
 <body>
     
 <header>
-        <div class="options">
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -61,7 +64,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -124,6 +127,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -139,7 +143,7 @@
     </header>
 
     <?php 
-
+        //condition for admin users only
         if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
 
             $contact_us_msgs = array();            
@@ -171,7 +175,7 @@
     ?>
 
     <main> 
-
+        <!-- page subtitle -->
         <div class="contact_us_manage_title">
             <?php 
                 if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
@@ -181,15 +185,15 @@
                 }            
             ?>                    
         </div>
-        
+        <!-- page content -->
         <div class="contact_us_manage" <?php if(!isset($_SESSION['role']) || $_SESSION['role']!='admin' || empty($contact_us_msgs)) echo "hidden" ?>>
 
             <form id="contact_us_manage_box" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="POST" novalidate>
 
                 <?php 
-
+                    // script that goes through the messages that were not handled by admin
                     for($r=0; $r<count($contact_us_msgs); $r++){
-
+                        //prints the html elements and populate them with data from the array
                         echo "
                         <div class='manage_contact_us'>
                             <div class='name_email_manage_contact_us'>
@@ -217,7 +221,7 @@
                                 <div class='approve_manage_contact_us'>";
                                 
                                 if ( isset($_POST['contact_us_done_'.$r]) ) echo "Successfully done &nbsp;   ";
-                                    
+                                //button to handle the message 
                                 echo "<input class='contact_us_done' form='contact_us_manage_box' type='submit' name='contact_us_done_".$r."' value='Approve'";
                                 
                                 if ( isset($_POST['contact_us_done_'.$r]) ) echo "disabled";
@@ -238,8 +242,8 @@
             
         </div>
 
-        <?php
-
+        <?php 
+            //loop goes through the buttons and checks which of them were pressed
             for($r=0; $r<count($contact_us_msgs); $r++){
 
                 $button = "contact_us_done_".$r;
@@ -250,9 +254,6 @@
                     $query= "UPDATE contact_us SET done=1 WHERE id=".$contact_us_msgs[$r]['id'].";";
                     $result = mysqli_query($db_connection, $query);
 
-                    if($result){
-
-                    }
                                 
                     if (!$result){ 
                         echo "<h3>Something went wrong, try again;</h3>";

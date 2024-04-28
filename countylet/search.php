@@ -11,14 +11,17 @@
 </head>
 
 <body>
-    
-<header>
-        <div class="options">
+
+    <header>
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -61,7 +64,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -124,6 +127,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -142,9 +146,9 @@
     <main>
     <div class="search_subtitle"><h2 >Search your property</h2></div>
         <div class="search">
-            
+            <!-- form for search filters -->
             <form id="form_id" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="GET" novalidate>
-
+                <!-- filter for dates -->
                 <div class="search_dates">
                     <div id="start_date_div">
                         <label for="start_date">Start Date:</label>
@@ -156,7 +160,7 @@
                         <input type="date" id="end_date" name="end_date" value=" <?php if(isset($_GET['end_date'])) echo htmlspecialchars($_GET['end_date'])?> ">
                     </div>
                 </div>
-
+                        <!-- filter for bedrooms -->
                 <div id="bed_dropdown_div">
                 <label for="bedrooms">Number of Bedrooms:</label>
                 <select id="bed_dropdown" name="bed_dropdown">
@@ -167,7 +171,7 @@
                         <option value="4">4</option>
                 </select>
                 </div>
-        
+                        <!-- filter for price -->
                     <div class="price-input"> 
                         <div id="min_price_div" class="price-field"> 
                             <span>Price range: From</span> 
@@ -178,7 +182,7 @@
                             <input type="number" class="max-input" name="max_price" value="5000"> 
                         </div> 
                     </div> 
-                    
+                <!-- button to get the results -->
                 <input class="search_button" type="submit" name="search" value="Search">
             </form>
         </div>    
@@ -205,7 +209,7 @@
                     // Retrieve and sanitize the input
                     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
                         
-                        // Ensure $_POST['purchaseDate'] and $_POST['warrantyExpDate'] are set
+                        // Ensure $_POST['start_date'] and $_POST['start_date'] are set
                         $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
                         $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
@@ -255,8 +259,10 @@
                             $max_price=null;
                         }
                         
+                        //if therer are no errors 
                         if(empty($search_errors)){
 
+                            //connects to the db and gets the results with set filters
                             require_once '../mysql_connect.php';                           
                             $query = "SELECT * FROM property WHERE available=1 "; 
                            
@@ -302,6 +308,7 @@
         <!-- content -->
         <div class="errors_search" id="errors_search_id">
             <?php 
+            //loop that goes through errors and print them
                 foreach ($search_errors as $search_err){
                     echo "<div >";
                     echo $search_err;
@@ -311,6 +318,8 @@
         </div>
 
             <?php 
+
+                // condition to print the results 
 
                 if(isset($search_done)) {
                 echo "<div id='search_results'>Results found: ".count($boxes_search_results)."</div>";}

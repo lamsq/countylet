@@ -12,14 +12,17 @@
 </head>
 
 <body>
-    
+     
     <header>
-        <div class="options">
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -62,7 +65,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -125,6 +128,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -145,8 +149,9 @@
         <div class="title_description">
             <!-- bootstrap form-group -->
             <div class="">
-                <!-- form title -->
+                <!-- company name -->
                 <div class='company_name'><h1>CountyLet</h1></div>
+                <!-- company description -->
                 <div class='company_description'><h5 class="">
 
                 Your Gateway to Seamless Property Solutions
@@ -160,11 +165,11 @@
             </div>
         </div>
 
-        <!-- content -->
+        <!-- boxes for the last properties added -->
         <div class="boxes">
 
                 <?php
-
+                    //gets data for index_show table to check what data should be displayed
                     require_once '../mysql_connect.php';                           
                     $query = "SELECT * FROM index_show;";
                     $result = mysqli_query($db_connection, $query);
@@ -181,6 +186,8 @@
                         echo "<h3>Something went wrong, try again;</h3>";
                     }
 
+                    // property arrays to get the last 3 records from the db
+
                     $property0=array();
                     $property1=array();
                     $property2=array();
@@ -193,6 +200,8 @@
                     if ($result){ // Check if query was successful
                         
                         $ads_counter=3;
+
+                        //loop to populate the array 
 
                         while($row = mysqli_fetch_assoc($result)){ // Loop through the data
                             $ads_counter--;
@@ -211,6 +220,8 @@
                                 break;
                             }                             
                         }
+
+                        //condition that print property boxes depends on the amount in db
 
                         if($ads_counter!=0){
 
@@ -244,6 +255,8 @@
                     
                 ?>
 
+
+                <!-- html elements to display properties -->
                 <div class="box" id="box2">
                     <div class="img" <?php if($index_show[0]['display']==0) echo " hidden " ?>>
                         <img <?php 
@@ -292,7 +305,9 @@
                 
 
 
-    <?php //scripts to show/hide suboptions when user hovers header options
+    <?php 
+    
+        //scripts to show/hide suboptions when user hovers header options
 
         if(isset($_COOKIE['loggedin_msg']) || isset($_COOKIE['loggedout_msg']) || isset($_COOKIE['registered'])){
             echo "
@@ -302,6 +317,7 @@
             </script> ";
         }
 
+        //if user is admin
         if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
             echo "
             <script>
@@ -371,6 +387,7 @@
             ";
 
         }
+        //if user is landlord
         else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="landlord"){
             echo "
             <script>
@@ -414,6 +431,7 @@
             ";
 
         }
+        //if user is tenant
         else if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="tenant"){
             echo "
             <script>
@@ -458,7 +476,7 @@
 
         }
 
-        // Generate a random number between 1 and 3
+        // script to show ads
         $random_number = rand(1, 2);
         $query = "SELECT * FROM advert WHERE id = '" . $random_number . "'";
         $result = mysqli_query($db_connection, $query);

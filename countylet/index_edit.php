@@ -11,13 +11,17 @@
 </head>
 
 <body>
-    <header>
-        <div class="options">
+
+<header>
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -60,7 +64,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -123,6 +127,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -139,115 +144,121 @@
 
     <main>     
         
-        <?php if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
+        <?php 
+        //condition to check if user is admin
+        if (isset($_COOKIE['logged_in']) && $_SESSION["role"]=="admin"){
 
-        require_once '../mysql_connect.php';                           
-        $query = "SELECT * FROM index_show;";
-        $result = mysqli_query($db_connection, $query);
-        
-        if (!isset($index_show)){
-            $index_show = array();
-        }
-
-        if ($result){ 
+            require_once '../mysql_connect.php';                           
+            $query = "SELECT * FROM index_show;";
+            $result = mysqli_query($db_connection, $query);
             
-            while($row = mysqli_fetch_assoc($result)){ 
-                $index_show[]=$row;
+            if (!isset($index_show)){
+                $index_show = array();
             }
-                                        
-            mysqli_free_result($result); 
-            
-        } else { 
-            echo "<h3>Something went wrong, try again;</h3>";
-        }
 
-                echo "
-                <form id='index_edit' action='". htmlspecialchars($_SERVER["PHP_SELF"])."' method='POST' novalidate>
-
-                    <div id='index_edit_photo'>
-                        <label for='edit_photo'>Show photo:</label>
-                        <input type='checkbox' id='edit_photo_box' name='edit_photo_box'"; 
-                        if((isset($index_show) && $index_show[0]['display']==1) || isset($_POST['edit_photo_box']))  echo " checked";
-                        echo "> </div> 
-
-                    <div id='index_edit_type'>
-                        <label for='edit_type'>Show type:</label>
-                        <input type='checkbox' id='edit_type_box' name='edit_type_box'"; 
-                        if((isset($index_show) && $index_show[1]['display']==1) || isset($_POST['edit_type_box'])) echo " checked";
-                        echo "> </div> 
-
-                    <div id='index_edit_price'>
-                        <label for='edit_price'>Show price:</label>
-                        <input type='checkbox' id='edit_price_box' name='edit_price_box'"; 
-                        if((isset($index_show) && $index_show[2]['display']==1) || isset($_POST['edit_price_box'])) echo " checked";
-                        echo "> </div> 
-
-                    <div id='index_edit_text'>
-                        <label for='edit_text'>Show description:</label>
-                        <input type='checkbox' id='edit_text_box' name='edit_text_box' "; 
-                        if((isset($index_show) && $index_show[3]['display']==1) || isset($_POST['edit_text_box'])) echo " checked";
-                        echo "></div> 
-                        
-                    <input class='save_index' type='submit' id='save_index' name='save_index' value='Save'";
-                     if ( isset($_POST['save_index']) ) echo "disabled".">
-
-                </form>";
-
-
-                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_index'])){
-
-                    $query = "UPDATE index_show SET display =  CASE";
-                    
-                    require_once '../mysql_connect.php';                            
-                           
-                    if (isset($_POST['edit_photo_box'])) {
-                        $query = $query." WHEN name = 'edit_photo_box' THEN 1";
-                        //$index_show[0]['display']=1;                        
-                    } else {
-                        $query = $query." WHEN name = 'edit_photo_box' THEN 0";
-                        //$index_show[0]['display']=0;
-                    }
-        
-                    if (isset($_POST['edit_type_box'])) {
-                        $query = $query." WHEN name = 'edit_type_box' THEN 1";
-                        //$index_show[1]['display']=1; 
-                    } else {
-                        $query = $query." WHEN name = 'edit_type_box' THEN 0";
-                        //$index_show[1]['display']=0; 
-                    }
-        
-                    if (isset($_POST['edit_price_box'])) {
-                        $query = $query." WHEN name = 'edit_price_box' THEN 1";
-                        //$index_show[2]['display']=1; 
-                    } else {
-                        $query = $query." WHEN name = 'edit_price_box' THEN 0";
-                        //$index_show[2]['display']=0; 
-                    }
-        
-                    if (isset($_POST['edit_text_box'])) {
-                        $query = $query." WHEN name = 'edit_text_box' THEN 1";
-                        //$index_show[3]['display']=1; 
-                    } else {
-                        $query = $query." WHEN name = 'edit_text_box' THEN 0";
-                        //$index_show[3]['display']=0; 
-                    }
-
-                    $query = $query." END WHERE name IN ('edit_photo_box', 'edit_type_box', 'edit_price_box', 'edit_text_box');";                   
-
-                    $result = mysqli_query($db_connection, $query);
-                            
-                    if ($result){ 
-                        echo "<div class='changed_msg'>Settings successfully saved;</div>";   
-                         
-                    } else { 
-                        echo "<h3>Something went wrong, try again;</h3>";
-                    }
-
-
+            if ($result){ 
+                
+                while($row = mysqli_fetch_assoc($result)){ 
+                    $index_show[]=$row;
                 }
-            } else {
-                echo "<div class='contact_us_manage_title'>Access denied;</div>";
+                                            
+                mysqli_free_result($result); 
+                
+            } else { 
+                echo "<h3>Something went wrong, try again;</h3>";
             }
+
+                    //form to show the checkbox for each property 
+                    echo "  
+
+                    
+                    <form id='index_edit' action='". htmlspecialchars($_SERVER["PHP_SELF"])."' method='POST' novalidate>
+
+                        <div id='index_edit_photo'>
+                            <label for='edit_photo'>Show photo:</label>
+                            <input type='checkbox' id='edit_photo_box' name='edit_photo_box'"; 
+                            if((isset($index_show) && $index_show[0]['display']==1) || isset($_POST['edit_photo_box']))  echo " checked";
+                            echo "> </div> 
+
+                        <div id='index_edit_type'>
+                            <label for='edit_type'>Show type:</label>
+                            <input type='checkbox' id='edit_type_box' name='edit_type_box'"; 
+                            if((isset($index_show) && $index_show[1]['display']==1) || isset($_POST['edit_type_box'])) echo " checked";
+                            echo "> </div> 
+
+                        <div id='index_edit_price'>
+                            <label for='edit_price'>Show price:</label>
+                            <input type='checkbox' id='edit_price_box' name='edit_price_box'"; 
+                            if((isset($index_show) && $index_show[2]['display']==1) || isset($_POST['edit_price_box'])) echo " checked";
+                            echo "> </div> 
+
+                        <div id='index_edit_text'>
+                            <label for='edit_text'>Show description:</label>
+                            <input type='checkbox' id='edit_text_box' name='edit_text_box' "; 
+                            if((isset($index_show) && $index_show[3]['display']==1) || isset($_POST['edit_text_box'])) echo " checked";
+                            echo "></div> 
+                            
+                        <input class='save_index' type='submit' id='save_index' name='save_index' value='Save'";
+                        if ( isset($_POST['save_index']) ) echo "disabled".">
+
+                    </form>";
+
+                    //if save button is pressed
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_index'])){
+
+                        $query = "UPDATE index_show SET display =  CASE";
+                        
+                        require_once '../mysql_connect.php';                            
+                        //conditions to check if boxes are checked
+                        if (isset($_POST['edit_photo_box'])) {
+                            $query = $query." WHEN name = 'edit_photo_box' THEN 1";
+                                                    
+                        } else {
+                            $query = $query." WHEN name = 'edit_photo_box' THEN 0";
+                            
+                        }
+            
+                        if (isset($_POST['edit_type_box'])) {
+                            $query = $query." WHEN name = 'edit_type_box' THEN 1";
+                            
+                        } else {
+                            $query = $query." WHEN name = 'edit_type_box' THEN 0";
+                            
+                        }
+            
+                        if (isset($_POST['edit_price_box'])) {
+                            $query = $query." WHEN name = 'edit_price_box' THEN 1";
+                            
+                        } else {
+                            $query = $query." WHEN name = 'edit_price_box' THEN 0";
+                           
+                        }
+            
+                        if (isset($_POST['edit_text_box'])) {
+                            $query = $query." WHEN name = 'edit_text_box' THEN 1";
+                            
+                        } else {
+                            $query = $query." WHEN name = 'edit_text_box' THEN 0";
+                           
+                        }
+
+                        $query = $query." END WHERE name IN ('edit_photo_box', 'edit_type_box', 'edit_price_box', 'edit_text_box');";                   
+
+                        $result = mysqli_query($db_connection, $query);
+                                
+                        if ($result){ 
+                            echo "<div class='changed_msg'>Settings successfully saved;</div>";   
+                            
+                        } else { 
+                            echo "<h3>Something went wrong, try again;</h3>";
+                        }
+
+
+                    }
+        } else {
+            //if user is not admin
+            echo "<div class='contact_us_manage_title'>Access denied;</div>";
+        }
 
         ?>
 

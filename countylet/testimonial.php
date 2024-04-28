@@ -11,13 +11,16 @@
 </head>
 
 <body>
-<header>
-        <div class="options">
+    <header>
+        <div class="options">   
+
+            <!-- Script that checks the role and prints corresponding options and suboptions for each user role -->
 
             <?php
                 session_start();            
                 $msg_reg = "";
                 
+                // if the role is set (user is logged in)
                 if (isset($_SESSION["role"])){                    
 
                     //options for different access levels
@@ -60,7 +63,7 @@
         </div>
 
                 <?php 
-
+                    // if the role is set (user is logged in)
                     if (isset($_SESSION["role"])){
 
                         //conditions for different access levels with corresponding suboptions
@@ -123,6 +126,7 @@
                 ?>
                 <div id="msg" hidden>
                 <div >
+                    <!-- script that prints the message if user is logged in/out or registered -->
                     <?php                         
                         if(isset($_COOKIE['loggedin_msg'])){
                             echo $_COOKIE['loggedin_msg'];
@@ -145,6 +149,9 @@
                 <div id='reviews_subtitle'>Reviews: </div>
 
                 <?php                     
+
+                    // script connects to the db and gets the reviews that were approived by the admin
+                    
 
                     $reviews = array();
                     $authors = array();
@@ -178,7 +185,7 @@
                         echo "<div id='no_results'>No testimonials found;</div>";
                     }
 
-                    
+                    //loop that populate html elements with abtained data
                     for($c=0; $c<count($reviews); $c++){
 
                         echo "<div class='review'>
